@@ -1,0 +1,260 @@
+/* src/components/Footer.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  font-family: mulish;
+}
+
+
+
+.footer {
+  background: whitesmoke;
+  color: black;
+  padding: 4rem 2rem 2rem;
+  width: 100%;
+  margin-top: auto;
+  overflow: hidden !important;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- TOP SECTION ---------- */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-left {
+  flex: 1;
+  min-width: 280px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: black;
+}
+
+.footer-logo .logo-icon {
+  font-size: 1.8rem;
+  animation: spin 7s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.footer-tagline {
+  font-size: 1rem;
+  color: black;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+/* ---------- LINK COLUMNS ---------- */
+.footer-right {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.footer-column {
+  min-width: 150px;
+}
+
+.footer-column-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  color: black;
+}
+
+.footer-links-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.footer-link {
+  color: black;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.footer-link:hover {
+  color: saddlebrown;
+  transform: translateX(5px);
+}
+
+/* ---------- BOTTOM SECTION ---------- */
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 2rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.social-icon:hover {
+  background: #007acc;
+  color: black;
+  transform: translateY(-3px);
+}
+
+.social-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-copyright {
+  color: black;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ---------- RESPONSIVE (TABLET) ---------- */
+@media (max-width: 1024px) {
+  .footer-right {
+    gap: 2rem;
+  }
+
+  .footer-column {
+    min-width: 130px;
+  }
+}
+
+/* ---------- RESPONSIVE (MOBILE) ---------- */
+@media (max-width: 768px) {
+  .footer {
+    padding: 3rem 1.5rem 1.5rem;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    align-items: center;
+    /* ← center everything horizontally */
+    gap: 2.5rem;
+    /* ← increased spacing for breathing room */
+    text-align: center;
+    /* ← ensures all text inside is centered */
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* ← center logo & tagline */
+    min-width: 100%;
+  }
+
+  .footer-tagline {
+    margin: 0 auto;
+    /* ← center the tagline block */
+  }
+
+  .footer-right {
+    justify-content: center;
+    width: 100%;
+    gap: 2rem;
+    /* ← consistent spacing between columns */
+  }
+
+  .footer-column {
+    min-width: 140px;
+    /* ← slightly wider for easier tapping */
+    text-align: center;
+  }
+
+  .footer-links-group {
+    align-items: center;
+    /* ← center links under each title */
+  }
+}
+
+/* ---------- RESPONSIVE (SMALL PHONES) ---------- */
+@media (max-width: 480px) {
+  .footer {
+    padding: 2.5rem 1rem 1rem;
+    /* ← effective padding on all sides */
+  }
+
+  .footer-right {
+    flex-direction: row;
+    /* keep columns side‑by‑side if space allows */
+    flex-wrap: wrap;
+    /* allow wrapping gracefully */
+    justify-content: center;
+    gap: 1.5rem;
+
+  }
+
+  .footer-column {
+    min-width: 120px !important;
+    max-width: 160px !important;
+    padding-right: 3rem !important;
+    padding-left: 0 !important;
+   
+  }
+
+  .footer-column-title {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .social-icons {
+    gap: 1rem;
+  }
+
+  .social-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .footer-tagline {
+    padding-right: 2.5rem !important;
+  }
+
+  .footer-copyright{
+    padding-right: 2rem ;
+  }
+}
