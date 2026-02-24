@@ -1,7 +1,9 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import About from './pages/About';
+// Import other pages as needed (Projects, Contact)
 
 function App() {
   return (
@@ -9,11 +11,14 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* other routes */}
+        <Route path="/about" element={<About />} />
+        {/* Add more routes here */}
+        {/* <Route path="/projects" element={<Projects />} />
+        <Route path="/contact" element={<Contact />} /> */}
       </Routes>
       <Footer />
     </BrowserRouter>
   );
 }
 
-export default App; // <-- fixed export
+export default App;

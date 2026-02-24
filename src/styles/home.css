@@ -3,7 +3,69 @@
 }
 
 
+.background-wrapper {
+  position: relative;
+  overflow: hidden;
+  background-image:
+    /* 👇 Removed the top‑right radial gradient – now replaced by .shape-triangle */
+    radial-gradient(circle at 10% 20%, rgba(78, 205, 196, 0.35) 0%, transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(255, 107, 107, 0.35) 0%, transparent 40%),
+    radial-gradient(circle at 40% 60%, rgba(255, 230, 109, 0.35) 0%, transparent 35%),
+    radial-gradient(circle at 90% 10%, rgba(168, 230, 207, 0.35) 0%, transparent 30%);
+  background-attachment: fixed;
+  background-color: #ffffff;
+  padding-bottom: 5rem;
+}
 
+/* The Bottom-Left Arc/Circle */
+.background-wrapper::before {
+  content: "";
+  position: absolute;
+  bottom: -150px;
+  left: -150px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  border: 80px solid rgba(78, 205, 196, 0.6);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* The Bottom-Right Half-Moon/Shape */
+.background-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 10%;
+  right: -100px;
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.8), transparent);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  clip-path: ellipse(50% 50% at 50% 50%);
+}
+
+.shape-triangle {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 250px;
+  height: 250px;
+  background: rgba(255, 230, 109, 0.9); /* semi‑transparent yellow */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%); /* right‑angle triangle pointing bottom‑right */
+  z-index: 0;
+  pointer-events: none;
+  /* Optional soft blur to match the other shapes */
+  filter: blur(5px);
+}
+
+/* Ensure content stays ABOVE the shapes */
+.section-intro,
+.content-below-hero {
+  position: relative;
+  z-index: 1;
+}
 
 
 /* the middle one  */
@@ -112,18 +174,18 @@
 
 .cta {
   padding: 0.75rem 2rem;
-  background: transparent;
   color: black;
   font-size: 1rem;
   cursor: pointer;
   border-radius: 30px;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.7s, color 0.2s;
   font-weight: 500;
 }
 
 .cta:hover {
-  background: #ffff;
+  background: rgba(128, 128, 128, 0.336);
   color: #0a0a0a;
+
 }
 
 /* Center column – image container */
@@ -144,9 +206,9 @@
 }
 
 /* Blur image when left overlay is active (mouse on left side) */
-.imageContainer:has(.leftOverlay.active) .image {
+/* .imageContainer:has(.leftOverlay.active) .image {
   filter: blur(4px);
-}
+} */
 
 /* Overlays – cover left and right halves of the image container */
 .imageOverlay {
@@ -210,7 +272,7 @@
 }
 
 .spacer-divider {
-  width: 40px;
+  width: 30%;
   height: 2px;
   background: black;
   margin: 1rem auto;
@@ -242,10 +304,10 @@
 }
 
 /* Optional: make the image blur on both overlays (add this if you want symmetry) */
-.imageContainer:has(.leftOverlay.active) .image,
+/* .imageContainer:has(.leftOverlay.active) .image,
 .imageContainer:has(.rightOverlay.active) .image {
   filter: blur(4px);
-}
+} */
 
 
 
@@ -372,7 +434,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #eaeef2;
+  border: 2px solid white;
   justify-content: center;
   /* centers children vertically */
   text-align: center;
@@ -620,15 +682,11 @@
 }
 
 
-/* Background shapes for the content section */
 .content-below-hero {
-  background-image:
-    radial-gradient(circle at 10% 20%, rgba(78, 205, 196, 0.35) 0%, transparent 30%),
-    radial-gradient(circle at 80% 70%, rgba(255, 107, 107, 0.35) 0%, transparent 40%),
-    radial-gradient(circle at 40% 60%, rgba(255, 230, 109, 0.35) 0%, transparent 35%),
-    radial-gradient(circle at 90% 10%, rgba(168, 230, 207, 0.35) 0%, transparent 30%);
-  background-attachment: fixed;
-  /* The existing background-color: white; stays untouched from the earlier rule */
+  padding: 4rem 2rem;
+  background: transparent;
+  /* <-- important */
+  /* delete the block at the bottom that sets background-image */
 }
 
 

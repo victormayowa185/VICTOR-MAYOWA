@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
 import { TbHexagonLetterMFilled } from "react-icons/tb";
-import { useTheme } from '../context/ThemeContext.tsx'; // adjust path
+import { Link } from 'react-router-dom';
 import '../styles/navbar.css';
 
 const Navbar: React.FC = () => {
-  const { isDarkMode, toggleDarkMode } = useTheme();
-
   return (
     <nav className="navbar">
       <div className="navbar-brand">
@@ -14,16 +11,11 @@ const Navbar: React.FC = () => {
       </div>
 
       <ul className="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/projects">Projects</Link></li>
+        <li><Link to="/contact">Contact</Link></li>
       </ul>
-
-      {/* Dark mode toggle button */}
-      <button onClick={toggleDarkMode} className="theme-toggle">
-       {isDarkMode ? '☀️' : '🌙'}
-      </button>
     </nav>
   );
 };

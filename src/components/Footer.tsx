@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
               <div className="footer-links-group">
                 <a href="mailto:hello@codeworkspace.dev" className="footer-link">Email</a>
                 <a 
-                  href="https://github.com/yourusername" 
+                  href="https://github.com/victormayowa185" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="footer-link"
@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
                   GitHub
                 </a>
                 <a 
-                  href="https://twitter.com/yourusername" 
+                  href="https://twitter.com/victormayowa185" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="footer-link"
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
           {/* Social Media Icons */}
           <div className="social-icons">
             <a 
-              href="https://github.com/yourusername" 
+              href="https://github.com/victormayowa185" 
               target="_blank" 
               rel="noopener noreferrer"
               className="social-icon"
@@ -99,7 +99,7 @@ const Footer: React.FC = () => {
               </svg>
             </a>
             <a 
-              href="https://twitter.com/yourusername" 
+              href="https://twitter.com/victormayowa185" 
               target="_blank" 
               rel="noopener noreferrer"
               className="social-icon"
@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
               </svg>
             </a>
             <a 
-              href="https://linkedin.com/in/yourusername" 
+              href="https://linkedin.com/in/victormayowa185" 
               target="_blank" 
               rel="noopener noreferrer"
               className="social-icon"
