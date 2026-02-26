@@ -1,14 +1,33 @@
 /* about.css */
 
-/* ===== Base & Wrapper (same as home's background-wrapper) ===== */
+/* ===== Base & Wrapper with animated gradients ===== */
 .con {
   position: relative;
   overflow: hidden;
+  /* Three separate gradient layers, each twice the container width */
   background-image:
-    radial-gradient(circle at 10% 20%, rgba(32, 94, 90, 0.35) 0%, transparent 30%);
-  background-attachment: fixed;
-  background-color: #ffffff;
+    radial-gradient(circle at 50% 50%, rgba(78, 205, 196, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 230, 109, 0.5) 0%, transparent 50%);
+  background-color: white;
+  /* Make each layer twice as wide so we can slide them */
+  background-size: 200% 100%, 200% 100%, 200% 100%;
+  /* Initial positions: each layer starts at a different offset */
+  background-position: 0% 50%, 20% 50%, 40% 50%;
+  background-repeat: no-repeat;
+  /* Animate infinitely, alternating direction */
+  animation: moveGradients 1.3s infinite alternate ease-in-out;
   padding-bottom: 5rem;
+}
+
+/* Keyframes: shift each layer from its start to the opposite edge */
+@keyframes moveGradients {
+  0% {
+    background-position: 0% 50%, 20% 50%, 40% 50%;
+  }
+  100% {
+    background-position: 100% 50%, 120% 50%, 140% 50%;
+  }
 }
 
 /* ===== About Container (image + bio side by side) ===== */
@@ -16,7 +35,7 @@
   display: flex;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 5rem 2rem;
   gap: 4rem;
   align-items: center;
   position: relative;
@@ -47,7 +66,7 @@
 
 .about-name {
   font-size: 3rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #1a1e24;
   margin: 0 0 0.5rem;
   line-height: 1.2;
@@ -113,6 +132,7 @@
 }
 
 .about-cta:hover {
+  background-color: rgba(5, 5, 73, 0.788);
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
@@ -210,9 +230,9 @@
 .timeline-year {
   font-weight: 700;
   color: #4a90e2;
-  background: rgba(74, 144, 226, 0.1);
+  background: rgba(35, 79, 129, 0.082);
   padding: 0.3rem 1rem;
-  border-radius: 30px;
+  border-radius: 10px;
   display: inline-block;
   font-size: 0.9rem;
 }

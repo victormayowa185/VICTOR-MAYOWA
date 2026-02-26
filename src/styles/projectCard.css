@@ -1,0 +1,172 @@
+/* General Body Styles */
+body {
+  background-color: #f9fafb; /* equivalent to bg-gray-50 */
+  font-family: sans-serif;
+  margin: 0;
+}
+
+/* App Container */
+.portfolio-app {
+  min-height: 100vh;
+}
+
+/* Page Header */
+.page-header {
+  background-color: #3b82f6; /* equivalent to bg-blue-500 */
+  color: white;
+  padding: 3rem 1rem;
+}
+
+.page-header-content {
+  max-width: 80rem; /* equivalent to max-w-7xl */
+  margin: 0 auto;
+}
+
+.page-header h1 {
+  font-size: 2.25rem; /* equivalent to text-4xl */
+  font-weight: bold;
+}
+
+.page-header p {
+  margin-top: 0.5rem;
+  font-size: 1.125rem; /* equivalent to text-lg */
+  color: #dbeafe; /* equivalent to text-blue-100 */
+}
+
+/* Main Content */
+.main-content {
+  padding: 3rem 0;
+}
+
+.main-content-container {
+  max-width: 80rem; /* equivalent to max-w-7xl */
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.filter-tabs-container {
+  display: flex;
+  gap: 0.5rem;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 0.375rem; /* equivalent to rounded-md */
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* equivalent to shadow-sm */
+}
+
+.filter-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem; /* equivalent to text-sm */
+  font-weight: 500; /* equivalent to font-medium */
+  border-radius: 0.375rem; /* equivalent to rounded-md */
+  transition: background-color 0.2s, color 0.2s;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: #4b5563; /* equivalent to text-gray-600 */
+}
+
+.filter-button:hover {
+    background-color: #f3f4f6; /* equivalent to hover:bg-gray-100 */
+}
+
+.filter-button.active {
+  background-color: #3b82f6; /* equivalent to bg-blue-500 */
+  color: white;
+}
+
+/* Project Grid */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+}
+
+/* Project Card */
+.project-card {
+  background-color: white;
+  border-radius: 0.5rem; /* equivalent to rounded-lg */
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* equivalent to shadow-md */
+  overflow: hidden;
+}
+
+.project-card .image-container {
+  position: relative;
+}
+
+.project-card .project-image {
+  width: 100%;
+  height: 12rem; /* equivalent to h-48 */
+  object-fit: cover;
+}
+
+.project-card .image-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-card .logo-image {
+  height: 3rem; /* equivalent to h-12 */
+  width: auto;
+}
+
+.project-card .card-content {
+  padding: 1.5rem;
+}
+
+.project-card .card-content h3 {
+  font-size: 1.25rem; /* equivalent to text-xl */
+  font-weight: 600; /* equivalent to font-semibold */
+  margin-bottom: 0.5rem;
+  color: #1f2937; /* equivalent to text-gray-800 */
+}
+
+.project-card .card-content p {
+  color: #4b5563; /* equivalent to text-gray-600 */
+  margin-bottom: 1rem;
+}
+
+.project-card .tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.project-card .tag {
+  background-color: #e5e7eb; /* equivalent to bg-gray-200 */
+  color: #374151; /* equivalent to text-gray-700 */
+  font-size: 0.75rem; /* equivalent to text-xs */
+  font-weight: 500; /* equivalent to font-medium */
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px; /* equivalent to rounded-full */
+}
+
+/* Responsive Grid */
+@media (min-width: 768px) {
+  .project-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .page-header {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .main-content-container {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .project-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

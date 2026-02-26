@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
             <div className="footer-column">
               <h4 className="footer-column-title">Contact</h4>
               <div className="footer-links-group">
-                <a href="mailto:hello@codeworkspace.dev" className="footer-link">Email</a>
+                <a href="mailto:victormayowa185" className="footer-link">Email</a>
                 <a 
                   href="https://github.com/victormayowa185" 
                   target="_blank" 
@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
               </svg>
             </a>
             <a 
-              href="https://linkedin.com/in/victormayowa185" 
+              href="https://linkedin.com/in/victor-mayowa-🤓-1317043365" 
               target="_blank" 
               rel="noopener noreferrer"
               className="social-icon"

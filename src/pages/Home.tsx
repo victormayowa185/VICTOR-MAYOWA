@@ -66,8 +66,13 @@ const Home: React.FC = () => {
                 <li>TypeScript</li>
                 <li>Node.js</li>
               </ul>
+              <p className="spacer-note">
+                Currently building personal projects and refining my
+                development workflow through hands-on practice.
+              </p>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -161,7 +166,7 @@ const Home: React.FC = () => {
               <p style={{ fontSize: '0.8rem', margin: '0.3rem 0' }}>
                 Browser‑based coding environment
               </p>
-              <a href="#" className="card-link">
+              <a href="www.mayocode.vercel.app" className="card-link a">
                 Try IDE
               </a>
             </div>
@@ -174,6 +179,9 @@ const Home: React.FC = () => {
                 Connect
               </a>
             </div>
+
+
+
           </div>
         </div>
       </div>

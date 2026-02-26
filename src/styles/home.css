@@ -2,16 +2,9 @@
   font-family: mulish;
 }
 
-
 .background-wrapper {
   position: relative;
   overflow: hidden;
-  background-image:
-    /* 👇 Removed the top‑right radial gradient – now replaced by .shape-triangle */
-    radial-gradient(circle at 10% 20%, rgba(78, 205, 196, 0.35) 0%, transparent 30%),
-    radial-gradient(circle at 80% 70%, rgba(255, 107, 107, 0.35) 0%, transparent 40%),
-    radial-gradient(circle at 40% 60%, rgba(255, 230, 109, 0.35) 0%, transparent 35%),
-    radial-gradient(circle at 90% 10%, rgba(168, 230, 207, 0.35) 0%, transparent 30%);
   background-attachment: fixed;
   background-color: #ffffff;
   padding-bottom: 5rem;
@@ -26,7 +19,7 @@
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  border: 80px solid rgba(78, 205, 196, 0.6);
+  border: 80px solid rgba(78, 205, 196, 0.4);
   z-index: 0;
   pointer-events: none;
 }
@@ -39,7 +32,7 @@
   right: -100px;
   width: 350px;
   height: 350px;
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.8), transparent);
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.5), transparent);
   border-radius: 50%;
   z-index: 0;
   pointer-events: none;
@@ -52,11 +45,10 @@
   right: 2%;
   width: 250px;
   height: 250px;
-  background: rgba(255, 230, 109, 0.9); /* semi‑transparent yellow */
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%); /* right‑angle triangle pointing bottom‑right */
+  background: rgba(255, 230, 109, 0.5);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
   z-index: 0;
   pointer-events: none;
-  /* Optional soft blur to match the other shapes */
   filter: blur(5px);
 }
 
@@ -66,9 +58,6 @@
   position: relative;
   z-index: 1;
 }
-
-
-/* the middle one  */
 
 .section-intro {
   text-align: center;
@@ -90,19 +79,6 @@
   line-height: 1.6;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ==========================================================================
    HERO SECTION – centered image, split overlays
    ========================================================================== */
@@ -121,20 +97,16 @@
   display: grid;
   grid-template-columns: 1fr minmax(300px, 40%) 1fr;
   grid-template-rows: 1fr;
-  /* ← forces the row to fill the full height */
   height: 100%;
-  /* ← ensures the grid fills the hero */
   width: 100%;
 }
 
-/* Left column – text */
 .leftColumn {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   padding: 0 2rem 0 4rem;
-  /* adjusted padding to fit narrower column */
   padding-bottom: 30vh;
   transition: filter 0.3s ease;
   background-color: white;
@@ -143,15 +115,12 @@
 .leftColumn,
 .rightSpacer {
   min-width: 0;
-  /* Allows column to shrink below content width */
 }
 
 .leftColumn h1,
 .rightSpacer h1 {
   overflow-wrap: break-word;
-  /* Breaks long words if needed */
   word-break: break-word;
-  /* Fallback for older browsers */
 }
 
 .leftColumn.blur {
@@ -159,10 +128,11 @@
 }
 
 .name {
-  font-size: 2rem;
-  font-weight: bold;
+  text-align: left;
+  font-size: 2.5rem;
+  font-weight: 800;
   margin: 0 0 1rem 0;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 .title {
@@ -173,6 +143,7 @@
 }
 
 .cta {
+  background: white !important;
   padding: 0.75rem 2rem;
   color: black;
   font-size: 1rem;
@@ -183,19 +154,17 @@
 }
 
 .cta:hover {
-  background: rgba(128, 128, 128, 0.336);
+  background: rgba(128, 128, 128, 0.336) !important;
   color: #0a0a0a;
-
 }
 
-/* Center column – image container */
 .imageContainer {
   position: relative;
   height: 100%;
   width: 100%;
   overflow: hidden;
+  /* This keeps the zoomed image inside the container */
   background-color: #2a2a2a;
-  /* fallback if image doesn't load */
 }
 
 .image {
@@ -203,21 +172,18 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: scale(1.25);
+  /* This increases the image size by 25% */
+  transform-origin: center;
+  /* Ensures it zooms from the middle */
 }
 
-/* Blur image when left overlay is active (mouse on left side) */
-/* .imageContainer:has(.leftOverlay.active) .image {
-  filter: blur(4px);
-} */
-
-/* Overlays – cover left and right halves of the image container */
 .imageOverlay {
   position: absolute;
   top: 0;
   width: 50%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.301);
-  /* dark overlay – you can change this to any effect */
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -235,22 +201,10 @@
   opacity: 1;
 }
 
-
-
-
-
-
-
-
-
-
-/* the right side */
-
 .name2 {
-  font-size: 3.2rem;
+  font-size: 3rem;
+  font-weight: 800;
 }
-
-
 
 .rightSpacer {
   display: flex;
@@ -258,11 +212,9 @@
   justify-content: center;
   padding-bottom: 30vh;
   transition: filter 0.3s ease;
-  /* smooth blur transition */
-
 }
 
-/* Spacer content – already defined, but ensure it has a transition */
+
 .spacer-subtitle {
   font-size: 0.9rem;
   opacity: 0.7;
@@ -296,61 +248,36 @@
   font-weight: 400;
 }
 
-/* Blur effect when hovering on the left side */
+.spacer-note {
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.925);
+  line-height: 1.6;
+  margin-top: 1.5rem;
+  text-align: center;
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.8;
+}
+
+
 .rightSpacer.blur .spacer-content {
   filter: blur(2px);
   opacity: 0.9;
-  /* optional – slightly fades */
 }
-
-/* Optional: make the image blur on both overlays (add this if you want symmetry) */
-/* .imageContainer:has(.leftOverlay.active) .image,
-.imageContainer:has(.rightOverlay.active) .image {
-  filter: blur(4px);
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    CONTENT BELOW HERO (Magazine-style card grid)
    ========================================================================== */
 .content-below-hero {
   padding: 4rem 2rem;
-  background-color: white;
+  background: transparent;
 }
 
-/* Top row: two equal flex cards */
 .top-row {
   display: flex;
   max-width: 1200px;
   height: 400px !important;
-  border-radius: 0px !important;
   margin-left: auto;
   margin-right: auto;
 }
@@ -360,7 +287,6 @@
   min-width: 0;
 }
 
-/* Grid layout for rows 2 & 3 */
 .grid-layout {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -368,18 +294,9 @@
   margin: 0 auto;
 }
 
-
-
-
-
-
-/* cards design
- */
-
-/* Tall card spans 2 rows */
 .card-e {
   grid-row: span 2;
-  background-color: purple !important;
+  background-color: rgba(128, 0, 128, 0.877) !important;
   height: 600px;
   color: white;
   text-align: center;
@@ -388,7 +305,6 @@
   border: none;
 }
 
-/* Base card styles */
 .card {
   background: #ffffff;
   padding: 1.8rem 1.5rem;
@@ -398,19 +314,16 @@
   flex-direction: column;
 }
 
-/* Make Card A a row layout with two equal columns */
 .card-a {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  /* Two equal columns */
   gap: 1rem;
   align-items: center;
-  /* Optional: vertical alignment */
 }
+
 
 .card-a .image-div {
   height: 100%;
-  /* Take full height of the grid cell */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -418,16 +331,11 @@
 
 .card-a .image-div img {
   width: 100%;
-  /* Take full width of the container */
   height: auto;
-  /* Maintain aspect ratio */
   max-width: 100%;
-  /* Prevent overflow */
   object-fit: contain;
-  /* Optional: ensures whole image is visible if container has fixed height */
 }
 
-/* Card B – personal intro */
 .card-b {
   margin: 0;
   background-color: #98a2ac;
@@ -436,36 +344,16 @@
   align-items: center;
   border: 2px solid white;
   justify-content: center;
-  /* centers children vertically */
   text-align: center;
-  /* centers the text inside each child */
 }
 
-
-
-/* Optional: adjust title spacing if needed */
-.card-b .card-name {
-  color: white;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-/* Optional: make description text slightly larger or different color */
 .card-b .card-desc {
   color: white;
-
   font-size: 1.7rem;
   line-height: 1.5;
   margin-top: 0;
   margin-bottom: 1rem;
 }
-
-
-.card-b .card-tech {
-  color: #666;
-  font-size: 0.9rem;
-}
-
 
 .top-row .card-a {
   flex: 1 1 60%;
@@ -475,66 +363,64 @@
   flex: 1 1 30%;
 }
 
-
-
 .card-d {
   display: flex;
   flex-direction: column;
-  /* stack items vertically */
   align-items: center;
-  /* center horizontally */
+  /* Centers items horizontally */
   justify-content: center;
-  /* center vertically (needs a height) */
+  /* Centers items vertically */
   text-align: center;
+  /* Centers the text lines */
+  padding: 2rem;
+  height: 100%;
+  /* Ensures it fills its grid space */
 }
-
 
 .card-d .card-badge {
   align-self: center;
+  /* Force the badge to the middle */
+  margin-bottom: 1.5rem;
 }
 
+.card-d .card-title {
+  width: 100%;
+  /* Ensure title doesn't lean to one side */
+  margin-bottom: 1rem;
+}
 
+.card-d .card-desc {
+  max-width: 90%;
+  /* Prevents text from hitting the edges */
+  margin-left: auto;
+  margin-right: auto;
+}
 
-
-
-
-/* Override link alignment (default is flex-start) */
 .card-f .card-link {
   align-self: center;
 }
 
-
 .card-f {
   display: flex;
   align-items: center;
-  /* horizontally center children */
   justify-content: center;
-  /* vertically center children */
   text-align: center;
-  /* center text inside children */
 }
 
-/* Override badge alignment (default is flex-start) */
-.card-f .card-badge {
-  align-self: center;
-}
-
-/* Override link alignment (default is flex-start) */
 .card-f .card-link {
   color: saddlebrown;
   align-self: center;
 }
 
-
-
-
+.card-g{
+  background: rgba(173, 216, 230, 0.815) !important;
+}
 .card-c {
-  background-color: #ffaa00;
+  background-color: #ffaa00e5;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   align-items: center;
-
 }
 
 .card-c .card-desc {
@@ -549,7 +435,6 @@
   color: saddlebrown;
 }
 
-
 .card-c>div:first-child img {
   width: auto;
   height: 100%;
@@ -559,14 +444,14 @@
 
 .card-c>div:first-child {
   align-self: start;
-  /* 👈 aligns the whole container to the top of its grid cell */
 }
 
-/* Second column: text container – center vertically */
 .card-c>div:last-child {
   align-self: center;
-  /* 👈 centers the text block vertically */
 }
+
+
+
 
 
 .card:hover {
@@ -574,7 +459,6 @@
   border-color: #d0d9e0;
 }
 
-/* Badges */
 .card-badge {
   display: inline-block;
   font-size: 0.75rem;
@@ -589,7 +473,6 @@
   align-self: flex-start;
 }
 
-/* Titles */
 .card-title {
   font-size: 1.8rem;
   font-weight: 500;
@@ -604,7 +487,6 @@
   color: #333;
 }
 
-/* Descriptions */
 .card-desc {
   color: #5b6876;
   line-height: 1.5;
@@ -619,7 +501,6 @@
   margin-bottom: 1.25rem;
 }
 
-/* Links */
 .card-link {
   color: #4a90e2;
   text-decoration: none;
@@ -637,13 +518,16 @@
   border-bottom-color: #4a90e2;
 }
 
+.a:hover{
+  border-bottom-color: saddlebrown;
+}
+
 .card-link::after {
   content: "→";
   font-size: 1.2rem;
   line-height: 1;
 }
 
-/* Utility cards */
 .card-utility {
   text-align: center;
   justify-content: center;
@@ -657,7 +541,6 @@
   margin-bottom: 0.3rem;
 }
 
-/* CTA specific */
 .cta-title {
   font-size: 2.2rem;
   font-weight: 300;
@@ -681,23 +564,123 @@
   box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
 }
 
+/* ==========================================================================
+   RESPONSIVE DESIGN (Media Queries)
+   ========================================================================== */
 
-.content-below-hero {
-  padding: 4rem 2rem;
-  background: transparent;
-  /* <-- important */
-  /* delete the block at the bottom that sets background-image */
+@media (max-width: 1024px) {
+  .hero .grid {
+    grid-template-columns: 1fr 1.2fr 1fr;
+  }
+
+  .name {
+    font-size: 1.8rem;
+  }
+
+  .name2 {
+    font-size: 2.5rem;
+  }
+
+  .top-row,
+  .grid-layout {
+    max-width: 95%;
+  }
 }
 
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    min-height: 100vh;
+  }
 
+  .hero .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
 
+  .leftColumn {
+    padding: 4rem 2rem;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 2rem;
+  }
 
+  .imageContainer {
+    height: 400px;
+  }
 
+  /* Reset scale on mobile if desired, or keep it */
+  .image {
+    transform: scale(1.1);
+  }
 
+  .rightSpacer {
+    padding: 3rem 2rem;
+    padding-bottom: 5rem;
+  }
 
+  .top-row {
+    flex-direction: column;
+    height: auto !important;
+  }
 
+  .card-a {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 
+  .grid-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
+  .card-e {
+    grid-row: span 1;
+    height: 400px;
+  }
 
+  .card-c {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 
-/* Responsive */
+  .card-c>div:first-child {
+    justify-self: center;
+  }
+
+  .shape-triangle {
+    width: 150px;
+    height: 150px;
+    top: 1%;
+    right: 1%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-intro h2 {
+    font-size: 1.8rem;
+  }
+
+  .name {
+    font-size: 1.5rem;
+  }
+
+  .name2 {
+    font-size: 2rem;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+  }
+
+  .card-b .card-desc {
+    font-size: 1.3rem;
+  }
+
+  .background-wrapper::before {
+    width: 300px;
+    height: 300px;
+    left: -100px;
+    bottom: -100px;
+  }
+}

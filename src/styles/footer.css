@@ -10,7 +10,7 @@ html, body {
 
 
 .footer {
-  background: whitesmoke;
+  background: rgba(255, 255, 255, 0.829);
   color: black;
   padding: 4rem 2rem 2rem;
   width: 100%;
@@ -136,8 +136,8 @@ html, body {
 }
 
 .social-icon:hover {
-  background: #007acc;
-  color: black;
+  background: saddlebrown;
+  color: white;
   transform: translateY(-3px);
 }
 

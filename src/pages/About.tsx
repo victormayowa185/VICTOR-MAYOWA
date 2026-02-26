@@ -9,18 +9,18 @@ const About: React.FC = () => {
 
         {/* Right column: bio */}
         <div className="about-bio">
-          <h1 className="about-name">Victor Mayowa</h1>
+          <h1 className="about-name">Victor Mayowa </h1>
           <p className="about-title">Creative Web Developer & Designer</p>
           <div className="about-divider"></div>
           <p className="about-text">
             I'm a web developer with a passion for crafting beautiful, functional digital experiences.
-            With over 5 years of experience in front-end and full-stack development, I specialize in
+            With over 2 years of experience in front-end and full-stack development, I specialize in
             React, TypeScript, and modern CSS. I believe in writing clean, maintainable code and designing
             interfaces that users love.
           </p>
           <p className="about-text">
             Based in Nigeria, I focus on building practical projects that simulate real startup and business needs.
-            When I'm not coding, you'll find me hiking, reading, or experimenting with new technologies.
+            When I'm not coding, you'll find me dancing, or experimenting with new technologies.
           </p>
           <div className="about-stats">
             <div className="stat-item">
