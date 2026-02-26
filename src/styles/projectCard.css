@@ -1,6 +1,7 @@
 /* General Body Styles */
 body {
-  background-color: #f9fafb; /* equivalent to bg-gray-50 */
+  background-color: #f9fafb;
+  /* equivalent to bg-gray-50 */
   font-family: sans-serif;
   margin: 0;
 }
@@ -12,25 +13,30 @@ body {
 
 /* Page Header */
 .page-header {
-  background-color: #3b82f6; /* equivalent to bg-blue-500 */
+  background-color: #3b82f6;
+  /* equivalent to bg-blue-500 */
   color: white;
   padding: 3rem 1rem;
 }
 
 .page-header-content {
-  max-width: 80rem; /* equivalent to max-w-7xl */
+  max-width: 80rem;
+  /* equivalent to max-w-7xl */
   margin: 0 auto;
 }
 
 .page-header h1 {
-  font-size: 2.25rem; /* equivalent to text-4xl */
+  font-size: 2.25rem;
+  /* equivalent to text-4xl */
   font-weight: bold;
 }
 
 .page-header p {
   margin-top: 0.5rem;
-  font-size: 1.125rem; /* equivalent to text-lg */
-  color: #dbeafe; /* equivalent to text-blue-100 */
+  font-size: 1.125rem;
+  /* equivalent to text-lg */
+  color: #dbeafe;
+  /* equivalent to text-blue-100 */
 }
 
 /* Main Content */
@@ -39,7 +45,8 @@ body {
 }
 
 .main-content-container {
-  max-width: 80rem; /* equivalent to max-w-7xl */
+  max-width: 80rem;
+  /* equivalent to max-w-7xl */
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -56,28 +63,36 @@ body {
   gap: 0.5rem;
   background-color: white;
   padding: 0.5rem;
-  border-radius: 0.375rem; /* equivalent to rounded-md */
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* equivalent to shadow-sm */
+  border-radius: 0.375rem;
+  /* equivalent to rounded-md */
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  /* equivalent to shadow-sm */
 }
 
 .filter-button {
   padding: 0.5rem 1rem;
-  font-size: 0.875rem; /* equivalent to text-sm */
-  font-weight: 500; /* equivalent to font-medium */
-  border-radius: 0.375rem; /* equivalent to rounded-md */
+  font-size: 0.875rem;
+  /* equivalent to text-sm */
+  font-weight: 500;
+  /* equivalent to font-medium */
+  border-radius: 0.375rem;
+  /* equivalent to rounded-md */
   transition: background-color 0.2s, color 0.2s;
   border: none;
   cursor: pointer;
   background-color: transparent;
-  color: #4b5563; /* equivalent to text-gray-600 */
+  color: #4b5563;
+  /* equivalent to text-gray-600 */
 }
 
 .filter-button:hover {
-    background-color: #f3f4f6; /* equivalent to hover:bg-gray-100 */
+  background-color: #f3f4f6;
+  /* equivalent to hover:bg-gray-100 */
 }
 
 .filter-button.active {
-  background-color: #3b82f6; /* equivalent to bg-blue-500 */
+  background-color: #3b82f6;
+  /* equivalent to bg-blue-500 */
   color: white;
 }
 
@@ -91,8 +106,10 @@ body {
 /* Project Card */
 .project-card {
   background-color: white;
-  border-radius: 0.5rem; /* equivalent to rounded-lg */
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* equivalent to shadow-md */
+  border-radius: 0.5rem;
+  /* equivalent to rounded-lg */
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  /* equivalent to shadow-md */
   overflow: hidden;
 }
 
@@ -102,7 +119,8 @@ body {
 
 .project-card .project-image {
   width: 100%;
-  height: 12rem; /* equivalent to h-48 */
+  height: 12rem;
+  /* equivalent to h-48 */
   object-fit: cover;
 }
 
@@ -116,7 +134,8 @@ body {
 }
 
 .project-card .logo-image {
-  height: 3rem; /* equivalent to h-12 */
+  height: 3rem;
+  /* equivalent to h-12 */
   width: auto;
 }
 
@@ -125,14 +144,18 @@ body {
 }
 
 .project-card .card-content h3 {
-  font-size: 1.25rem; /* equivalent to text-xl */
-  font-weight: 600; /* equivalent to font-semibold */
+  font-size: 1.25rem;
+  /* equivalent to text-xl */
+  font-weight: 600;
+  /* equivalent to font-semibold */
   margin-bottom: 0.5rem;
-  color: #1f2937; /* equivalent to text-gray-800 */
+  color: #1f2937;
+  /* equivalent to text-gray-800 */
 }
 
 .project-card .card-content p {
-  color: #4b5563; /* equivalent to text-gray-600 */
+  color: #4b5563;
+  /* equivalent to text-gray-600 */
   margin-bottom: 1rem;
 }
 
@@ -143,23 +166,98 @@ body {
 }
 
 .project-card .tag {
-  background-color: #e5e7eb; /* equivalent to bg-gray-200 */
-  color: #374151; /* equivalent to text-gray-700 */
-  font-size: 0.75rem; /* equivalent to text-xs */
-  font-weight: 500; /* equivalent to font-medium */
+  background-color: #e5e7eb;
+  /* equivalent to bg-gray-200 */
+  color: #374151;
+  /* equivalent to text-gray-700 */
+  font-size: 0.75rem;
+  /* equivalent to text-xs */
+  font-weight: 500;
+  /* equivalent to font-medium */
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px; /* equivalent to rounded-full */
+  border-radius: 9999px;
+  /* equivalent to rounded-full */
 }
+
+
+
+/* Make the entire card a block link */
+.project-card .card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Image container relative positioning for overlay */
+.project-card .image-container {
+  position: relative;
+  overflow: hidden;
+  /* Ensures blur doesn't spill out */
+}
+
+/* Hover overlay - initially hidden */
+.project-card .hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* dark overlay */
+  backdrop-filter: blur(4px);
+  /* blur effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+/* Show overlay on card hover */
+.project-card:hover .hover-overlay {
+  opacity: 1;
+}
+
+/* Optional: also blur the image slightly on hover */
+.project-card:hover .project-image {
+  filter: blur(2px);
+  transition: filter 0.3s ease;
+}
+
+/* Visit button styling */
+.project-card .visit-button {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.project-card .visit-button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+
+
 
 /* Responsive Grid */
 @media (min-width: 768px) {
   .project-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .page-header {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+
   .main-content-container {
     padding: 0 2rem;
   }

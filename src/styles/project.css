@@ -1,116 +1,116 @@
-/* ProjectsPage.css */
+  /* ProjectsPage.css */
 
-.projects-page {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 3rem 5rem;
-  background-image:
-    radial-gradient(circle at 50% 50%, rgba(78, 205, 196, 0.5) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.5) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 230, 109, 0.5) 0%, transparent 50%);
-  background-color: white;
-  /* Make each layer twice as wide so we can slide them */
-  background-size: 200% 100%, 200% 100%, 200% 100%;
-  /* Initial positions: each layer starts at a different offset */
-  background-position: 0% 50%, 20% 50%, 40% 50%;
-  background-repeat: no-repeat;
-  /* Animate infinitely, alternating direction */
-  animation: moveGradients 2.3s infinite alternate ease-in-out;
-}
+  .projects-page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3rem 5rem;
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(78, 205, 196, 0.5) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.5) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(255, 230, 109, 0.5) 0%, transparent 50%);
+    background-color: white;
+    /* Make each layer twice as wide so we can slide them */
+    background-size: 200% 100%, 200% 100%, 200% 100%;
+    /* Initial positions: each layer starts at a different offset */
+    background-position: 0% 50%, 20% 50%, 40% 50%;
+    background-repeat: no-repeat;
+    /* Animate infinitely, alternating direction */
+    animation: moveGradients 2.3s infinite alternate ease-in-out;
+  }
 
-/* Header */
-.projects-header {
-  margin-bottom: 3rem;
-  text-align: center;
-}
-
-@media (min-width: 640px) {
+  /* Header */
   .projects-header {
-    text-align: left;
+    margin-bottom: 3rem;
+    text-align: center;
   }
-}
 
-.projects-header h1 {
-  font-size: 2.9rem;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 1rem;
-}
+  @media (min-width: 640px) {
+    .projects-header {
+      text-align: left;
+    }
+  }
 
-.projects-header p {
-  font-size: 1.125rem;
-  color: #4B5563;
-  max-width: 42rem;
-  margin-left: auto;
-  margin-right: auto;
-}
+  .projects-header h1 {
+    font-size: 2.9rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1rem;
+  }
 
-@media (min-width: 640px) {
   .projects-header p {
-    margin-left: 0;
-    margin-right: 0;
+    font-size: 1.125rem;
+    color: #4B5563;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
   }
-}
 
-/* Filter Buttons */
-.filter-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 2.5rem;
-}
+  @media (min-width: 640px) {
+    .projects-header p {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 
-@media (min-width: 640px) {
+  /* Filter Buttons */
   .filter-buttons {
-    justify-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
   }
-}
 
-.filter-buttons button {
-  padding: 0.5rem 1.25rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-  background-color: #E5E7EB;
-  color: #374151;
-}
+  @media (min-width: 640px) {
+    .filter-buttons {
+      justify-content: flex-start;
+    }
+  }
 
-.filter-buttons button:hover {
-  background-color: #D1D5DB;
-}
+  .filter-buttons button {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    background-color: #E5E7EB;
+    color: #374151;
+  }
 
-.filter-buttons button.active {
-  background-color: #111827;
-  color: white;
-}
+  .filter-buttons button:hover {
+    background-color: #D1D5DB;
+  }
 
-/* Projects Grid */
-.projects-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
+  .filter-buttons button.active {
+    background-color: #111827;
+    color: white;
+  }
 
-@media (min-width: 768px) {
+  /* Projects Grid */
   .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-}
 
-@media (min-width: 1024px) {
-  .projects-grid {
-    grid-template-columns: repeat(3, 1fr);
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
-}
 
-/* No projects message */
-.no-projects-message {
-  text-align: center;
-  color: #6B7280;
-  margin-top: 3rem;
-  font-size: 1rem;
-}
+  @media (min-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* No projects message */
+  .no-projects-message {
+    text-align: center;
+    color: #6B7280;
+    margin-top: 3rem;
+    font-size: 1rem;
+  }
