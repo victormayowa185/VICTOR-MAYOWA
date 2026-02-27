@@ -126,7 +126,7 @@ const Home: React.FC = () => {
             {/* Card C – Portfolio */}
             <div className="card card-c">
               <div>
-                <img src="key.png" alt="Portfolio project" />
+                <img src="k.png" alt="Portfolio project" />
               </div>
               <div>
                 <h3>My Developer Portfolio</h3>

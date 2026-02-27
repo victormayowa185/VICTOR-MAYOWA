@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import React from 'react';
+import type { FC } from 'react';    // ✅ type-only import for FC
 import '../styles/projectCard.css';
 
 interface ProjectCardProps {
-  logoUrl: string;
+  logoUrl?: string;       // optional if you might use it later; otherwise remove entirely
   title: string;
   description: string;
   tags: string[];
@@ -10,7 +11,14 @@ interface ProjectCardProps {
   projectUrl: string;
 }
 
-const ProjectCard: FC<ProjectCardProps> = ({ logoUrl, title, description, tags, imageUrl, projectUrl }) => {
+const ProjectCard: FC<ProjectCardProps> = ({ 
+  // logoUrl,           // ❌ removed because it's unused
+  title, 
+  description, 
+  tags, 
+  imageUrl, 
+  projectUrl 
+}) => {
   const safeTitle = title || 'untitled';
   const cardId = `project-card-${safeTitle.toLowerCase().replace(/\s/g, '-')}`;
 
@@ -24,7 +32,6 @@ const ProjectCard: FC<ProjectCardProps> = ({ logoUrl, title, description, tags, 
             className="project-image" 
             referrerPolicy="no-referrer" 
           />
-          {/* 👇 Hover overlay with button (logo overlay removed) */}
           <div className="hover-overlay">
             <button className="visit-button">Visit</button>
           </div>
