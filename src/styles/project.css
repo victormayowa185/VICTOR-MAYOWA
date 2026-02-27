@@ -20,6 +20,7 @@
   0% {
     background-position: 0% 50%, 20% 50%, 40% 50%;
   }
+
   100% {
     background-position: 100% 50%, 80% 50%, 60% 50%;
   }
@@ -67,7 +68,8 @@
   background-color: #E5E7EB;
   color: #374151;
   white-space: nowrap;
-  min-width: 70px; /* ensures touch targets are large enough */
+  min-width: 70px;
+  /* ensures touch targets are large enough */
   touch-action: manipulation;
 }
 
@@ -105,6 +107,10 @@
 
 /* Small devices (landscape phones, 640px and up) */
 @media (min-width: 640px) {
+  .projects-page {
+    margin-top: 4rem !important;
+  }
+
   .projects-header {
     text-align: left;
   }
@@ -121,6 +127,8 @@
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+
+
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -133,8 +141,25 @@
   }
 }
 
+
+
+@media (max-width: 600px) {
+  .projects-page {
+    margin-top: 4rem !important;
+  }
+
+
+}
+
+
 /* Extra small devices (phones < 480px) */
 @media (max-width: 479px) {
+
+  .projects-page {
+    margin-top: 4rem !important;
+  }
+
+
   .filter-buttons button {
     padding: 0.4rem 1rem;
     font-size: 0.8rem;
@@ -147,7 +172,8 @@
 
   /* Optionally slow down animation on very small screens for performance */
   .projects-page {
-    animation-duration: 3s; /* slower movement */
+    animation-duration: 3s;
+    /* slower movement */
   }
 }
 

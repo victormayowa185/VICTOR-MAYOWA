@@ -99,6 +99,7 @@ body {
 }
 
 .nav-links li a.active {
+  background: none !important;
   color: saddlebrown;
   font-weight: 600;
 }
@@ -164,8 +165,9 @@ body {
     text-align: center;
     border-radius: 4px;
   }
-
+F
   .nav-links li a:active {
+     background: none !important;
     background-color: #f0f0f0;
   }
 
