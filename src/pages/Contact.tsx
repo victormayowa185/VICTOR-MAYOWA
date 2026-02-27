@@ -3,11 +3,9 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
-    FaEnvelope, FaPhoneAlt, FaLinkedin, FaGithub,
-    FaBriefcase, FaPaperPlane, FaRocket, FaCode,
-    FaPaintBrush, FaMobileAlt, FaCalendarCheck
+    FaEnvelope, FaPhoneAlt, FaPaperPlane, FaCalendarCheck
 } from 'react-icons/fa';
-import '../styles/contact.css';
+import '../styles/contact.css';   // your existing CSS file
 
 // Fix for default marker icons in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -24,6 +22,8 @@ const ContactPage: React.FC = () => {
         projectType: 'webdev',
         message: '',
     });
+    const [loading, setLoading] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -31,30 +31,64 @@ const ContactPage: React.FC = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Basic validation
         if (!formData.name || !formData.email) {
-            alert('Please fill required fields (name and email)');
+            setSubmitStatus('error');
+            setTimeout(() => setSubmitStatus('idle'), 3000);
             return;
         }
-        alert('✨ Message sent (demo). I’ll get back to you soon!');
-        setFormData({ name: '', email: '', projectType: 'webdev', message: '' });
+
+        setLoading(true);
+
+        try {
+            // 🔁 Replace with your actual backend URL
+            const backendUrl = 'http://localhost:5000/api/contact'; // Update for production
+
+            const response = await fetch(backendUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setSubmitStatus('success');
+                setFormData({ name: '', email: '', projectType: 'webdev', message: '' });
+                setTimeout(() => setSubmitStatus('idle'), 4000);
+            } else {
+                console.error('Backend error:', data.error);
+                setSubmitStatus('error');
+                setTimeout(() => setSubmitStatus('idle'), 4000);
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+            setSubmitStatus('error');
+            setTimeout(() => setSubmitStatus('idle'), 4000);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <div className="contact-page">
             {/* Full‑width map at the very top */}
             <div className="map-section">
-                <MapContainer center={[6.5244, 3.3792]} zoom={13} scrollWheelZoom={true}>
+                <MapContainer center={[5.3959, 7.0102]} zoom={15} scrollWheelZoom={true}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={[6.5244, 3.3792]}>
+                    <Marker position={[5.3959, 7.0102]}>
                         <Popup>
-                            <strong>📍 Here’s me! 😎</strong>
+                            <strong>📍 FUTO – My Base</strong>
                             <br />
-                            VM – Portfolio HQ
+                            Federal University of Technology, Owerri
                             <br />
                             <span style={{ fontSize: '0.9rem' }}>Let’s build something amazing.</span>
                         </Popup>
@@ -63,18 +97,24 @@ const ContactPage: React.FC = () => {
             </div>
 
             {/* Hero section */}
-
-            {/* I gave this heroc for to avoid styling conflict since am not using css module */}
             <section className="heroc">
                 <h1>Let's Build Something Amazing Together</h1>
                 <p>Whether it’s a website, app, or UX project, I’m just a message away.</p>
             </section>
 
-            {/* Two‑column: form left, image right */}
+            {/* Two‑column: form left, video right */}
             <div className="contact-grid">
                 <div className="form-card">
                     <h2>👋 Drop a line</h2>
                     <p className="sub">I’ll get back to you within 24h.</p>
+
+                    {/* Status messages */}
+                    {submitStatus === 'error' && (
+                        <div className="form-message error">
+                            ⚠️ {loading ? 'Sending failed. Please try again.' : 'Please fill in your name and email.'}
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label>
@@ -98,7 +138,7 @@ const ContactPage: React.FC = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="hello@yourdomain.com"
+                                placeholder="victormayowa185@gmail.com"
                                 required
                                 pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                             />
@@ -121,49 +161,40 @@ const ContactPage: React.FC = () => {
                                 placeholder="Tell me about your idea..."
                             />
                         </div>
-                        <button type="submit" className="submit-btn">
-                            <span>Send Message</span> <FaPaperPlane />
+
+                        {submitStatus === 'success' && (
+                            <div className="form-message success">
+                                ✨ Message sent! I’ll get back to you soon.
+                            </div>
+                        )}
+
+                        <button type="submit" className="submit-btn" disabled={loading}>
+                            {loading ? 'Sending...' : 'Send Message'} <FaPaperPlane />
                         </button>
                     </form>
                 </div>
 
-
-
-
                 <div className="image-side">
-                    <img
-                        src="/cont.png"  // replace with your actual image path
-                        alt="Contact visual"
-                        className="contact-image"
+                    <video
+                        src="/video.mp4"   // replace with your video file path
+                        className="contact-video"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
                     />
                 </div>
-
-
-
-
             </div>
 
             {/* Direct contact row */}
             <div className="direct-contact">
                 <div className="contact-item">
                     <FaEnvelope />
-                    <a href="mailto:hello@yourdomain.com">hello@yourdomain.com</a>
+                    <a href="mailto:victormayowa185@gmail.com">victormayowa185@gmail.com</a>
                 </div>
                 <div className="contact-item">
                     <FaPhoneAlt />
-                    <a href="tel:+2348001234567">+234 800 123 4567</a>
-                </div>
-                <div className="contact-item">
-                    <FaLinkedin />
-                    <a href="#">LinkedIn</a>
-                </div>
-                <div className="contact-item">
-                    <FaGithub />
-                    <a href="#">GitHub</a>
-                </div>
-                <div className="contact-item">
-                    <FaBriefcase />
-                    <a href="#">Portfolio</a>
+                    <a href="tel:+2348113270110">+234 811 327 0110</a>
                 </div>
             </div>
 

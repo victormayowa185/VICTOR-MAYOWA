@@ -7,7 +7,7 @@ interface ProjectCardProps {
   description: string;
   tags: string[];
   imageUrl: string;
-  projectUrl: string; // 👈 new prop
+  projectUrl: string;
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({ logoUrl, title, description, tags, imageUrl, projectUrl }) => {
@@ -24,14 +24,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ logoUrl, title, description, tags, 
             className="project-image" 
             referrerPolicy="no-referrer" 
           />
-          <div className="image-overlay">
-            <img 
-              src={logoUrl} 
-              alt={`${title || 'project'} logo`} 
-              className="logo-image" 
-            />
-          </div>
-          {/* 👇 Hover overlay with button */}
+          {/* 👇 Hover overlay with button (logo overlay removed) */}
           <div className="hover-overlay">
             <button className="visit-button">Visit</button>
           </div>

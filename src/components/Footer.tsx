@@ -1,86 +1,11 @@
 // src/components/Footer.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { TbHexagonLetterM } from "react-icons/tb";
 import '../styles/footer.css';
 
 const Footer: React.FC = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        
-        {/* Top Section: Logo & Links */}
-        <div className="footer-top">
-          
-          {/* Left Column: Logo & Name */}
-          <div className="footer-left">
-            <div className="footer-logo">
-              <span className="logo-icon">
-                <TbHexagonLetterM />
-              </span>
-              <span className="logo-text">VICTOR MAYOWA</span>
-            </div>
-            <p className="footer-tagline">
-              Professional React development environment built for Google Summer of Code 2026
-            </p>
-          </div>
-          
-          {/* Right Column: Links in rows and columns */}
-          <div className="footer-right">
-              
-            {/* First Row: About & Contact */}
-            <div className="footer-column">
-              <h4 className="footer-column-title">About</h4>
-              <div className="footer-links-group">
-                <Link to="/docs" className="footer-link">About Us</Link>
-                <Link to="/docs" className="footer-link">Features</Link>
-                <a 
-                  href="https://summerofcode.withgoogle.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="footer-link"
-                >
-                  GSoC Project
-                </a>
-              </div>
-            </div>
-            
-            {/* Second Row: Product */}
-            <div className="footer-column">
-              <h4 className="footer-column-title">Product</h4>
-              <div className="footer-links-group">
-                <Link to="/workspace" className="footer-link">Workspace</Link>
-                <Link to="/showcase" className="footer-link">Showcase</Link>
-                <Link to="/docs" className="footer-link">Documentation</Link>
-              </div>
-            </div>
-            
-            {/* Third Row: Contact */}
-            <div className="footer-column">
-              <h4 className="footer-column-title">Contact</h4>
-              <div className="footer-links-group">
-                <a href="mailto:victormayowa185" className="footer-link">Email</a>
-                <a 
-                  href="https://github.com/victormayowa185" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="footer-link"
-                >
-                  GitHub
-                </a>
-                <a 
-                  href="https://twitter.com/victormayowa185" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="footer-link"
-                >
-                  Twitter
-                </a>
-              </div>
-            </div>
-            
-          </div>
-        </div>
         
         {/* Bottom Section: Social Media & Copyright */}
         <div className="footer-bottom">

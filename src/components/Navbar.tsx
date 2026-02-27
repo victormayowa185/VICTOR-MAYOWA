@@ -1,8 +1,15 @@
 import { TbHexagonLetterMFilled } from "react-icons/tb";
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { HiMenu, HiX } from 'react-icons/hi';  // Import icons
+import { useState } from 'react';               // Import useState
 import '../styles/navbar.css';
 
 const Navbar: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false); // State for hamburger menu
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);      // Close after clicking a link
+
   return (
     <nav className="navbar">
       <div className="navbar-brand">
@@ -10,11 +17,17 @@ const Navbar: React.FC = () => {
         <span className="brand-name">VM</span>
       </div>
 
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/projects">Projects</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
+      {/* Hamburger icon - visible only on mobile */}
+      <button className="hamburger" onClick={toggleMenu}>
+        {menuOpen ? <HiX /> : <HiMenu />}
+      </button>
+
+      {/* Navigation links - conditionally shown based on menuOpen on mobile */}
+      <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
+        <li><NavLink to="/" end onClick={closeMenu}>Home</NavLink></li>
+        <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
+        <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
+        <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
       </ul>
     </nav>
   );

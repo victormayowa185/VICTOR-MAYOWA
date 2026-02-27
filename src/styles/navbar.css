@@ -1,7 +1,8 @@
-/* Navbar.css */
+/* Navbar.css - Fully responsive & mobile-first with hardened hamburger */
 
 * {
-  font-family: mulish;
+  font-family: 'Mulish', sans-serif;
+  box-sizing: border-box;
 }
 
 body {
@@ -9,21 +10,23 @@ body {
   padding: 0;
 }
 
+/* ---------- Navbar Base (Desktop-first, but fluid) ---------- */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 96%;
-
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem);
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 1000; /* Higher than overlay */
+  transition: box-shadow 0.2s;
 }
+
+/* Optional: subtle shadow on scroll, but fixed anyway */
 
 .navbar-brand {
   display: flex;
@@ -31,15 +34,10 @@ body {
   gap: 0.5rem;
 }
 
-.logo {
-  height: 40px;
-  width: auto;
-}
-
 .logo-icon {
-  font-family: mulish;
-  font-size: 1.8rem;
+  font-size: clamp(1.8rem, 5vw, 2.2rem);
   animation: spin 7s linear infinite;
+  color: #333;
 }
 
 @keyframes spin {
@@ -47,12 +45,21 @@ body {
   to { transform: rotate(360deg); }
 }
 
-.brand-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
+/* Reduce motion if user prefers */
+@media (prefers-reduced-motion: reduce) {
+  .logo-icon {
+    animation: none;
+  }
 }
 
+.brand-name {
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-weight: 700;
+  color: #333;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Desktop Navigation Links ---------- */
 .nav-links {
   display: flex;
   list-style: none;
@@ -62,9 +69,10 @@ body {
 }
 
 .nav-links li {
-  position: relative; /* add this */
+  position: relative;
 }
 
+/* Separator between items (desktop only) */
 .nav-links li:not(:last-child)::after {
   content: '';
   position: absolute;
@@ -73,90 +81,166 @@ body {
   transform: translateY(-50%);
   height: 20px;
   width: 1px;
-  background-color: #ccc;
+  background-color: #ddd;
 }
 
 .nav-links li a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
-  transition: color 0.3s;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  padding: 0.5rem 0; /* Larger tap area */
+  display: inline-block;
 }
 
 .nav-links li a:hover {
   color: saddlebrown;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .footer-top {
-    gap: 2rem;
-  }
-  
-  .footer-right {
-    gap: 2rem;
-  }
+.nav-links li a.active {
+  color: saddlebrown;
+  font-weight: 600;
 }
 
-/* MOBILE DEVICES (The "Keke Napep" Mode - Stack everything) */
+/* ---------- Hamburger Button (hidden on desktop) ---------- */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #333;
+  z-index: 1100; /* Above menu and overlay */
+  padding: 0.5rem;
+  line-height: 1;
+  transition: color 0.2s;
+  touch-action: manipulation; /* Prevents double-tap zoom */
+}
+
+.hamburger:hover {
+  color: saddlebrown;
+}
+
+/* ---------- Mobile Styles (≤ 768px) ---------- */
 @media (max-width: 768px) {
-  .footer {
-    padding: 3rem 1.5rem 2rem;
-    text-align: center; /* Center text for a cleaner mobile look */
+  .hamburger {
+    display: block;
   }
 
-  .footer-top {
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden off-screen */
+    width: min(80%, 300px); /* Responsive width, capped */
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
     flex-direction: column;
-    align-items: center; /* Center the logo and tagline */
-    gap: 2.5rem;
-  }
-
-  .footer-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    min-width: 100%;
-  }
-
-  .footer-right {
-    width: 100%;
-    justify-content: space-around; /* Put columns side-by-side if they fit */
-    gap: 2rem;
-  }
-
-  .footer-column {
-    min-width: 120px;
-    flex: 1;
-  }
-
-  .footer-logo {
     justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transition: right 0.3s ease-in-out;
+    z-index: 1050; /* Above overlay */
+    padding: 2rem 1rem;
+    margin: 0;
+    list-style: none;
   }
 
-  .footer-tagline {
-    margin: 0 auto;
+  .nav-links.open {
+    right: 0;
+  }
+
+  /* Remove separators on mobile */
+  .nav-links li:not(:last-child)::after {
+    display: none;
+  }
+
+  /* Make links bigger for touch */
+  .nav-links li a {
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
+  }
+
+  .nav-links li a:active {
+    background-color: #f0f0f0;
+  }
+
+  /* Backdrop overlay when menu is open */
+  body.menu-open::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 1040;
+    transition: opacity 0.3s;
+  }
+
+  /* Ensure body doesn't scroll when menu is open */
+  body.menu-open {
+    overflow: hidden;
   }
 }
 
-/* VERY SMALL PHONES (Single Column stack) */
+/* ---------- Small phones (≤ 480px) ---------- */
 @media (max-width: 480px) {
-  .footer-right {
-    flex-direction: column;
-    align-items: center;
+  .navbar {
+    padding: 0.6rem 1rem;
   }
 
-  .footer-column {
-    width: 100%;
-    margin-bottom: 1rem;
+  .logo-icon {
+    font-size: 1.6rem;
   }
 
-  .footer-link:hover {
-    transform: none; /* Disable horizontal shift on touch devices */
-    color: saddlebrown;
+  .brand-name {
+    font-size: 1.1rem;
   }
 
-  .footer-logo {
-    font-size: 1.2rem;
+  .hamburger {
+    font-size: 1.8rem;
+  }
+
+  .nav-links {
+    width: 85%; /* Take a bit more space on very small screens */
+    gap: 1.5rem;
+  }
+
+  .nav-links li a {
+    font-size: 1.1rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* ---------- Landscape orientation on mobile ---------- */
+@media (max-width: 768px) and (orientation: landscape) {
+  .nav-links {
+    justify-content: flex-start;
+    padding: 3rem 1rem;
+    gap: 1rem;
+  }
+
+  .nav-links li a {
+    font-size: 1rem;
+    padding: 0.4rem 1rem;
+  }
+}
+
+/* ---------- Ensure active link stands out on mobile ---------- */
+.nav-links li a.active {
+  background-color: rgba(139, 69, 19, 0.1);
+  border-radius: 4px;
+}
+
+/* ---------- High-resolution screens (optional tweaks) ---------- */
+@media (min-width: 1440px) {
+  .navbar {
+    padding: 1rem calc((100vw - 1400px) / 2); /* Center content on ultra-wide */
   }
 }
