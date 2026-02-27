@@ -1,4 +1,4 @@
-import React from 'react';
+
 import type { FC } from 'react';    // ✅ type-only import for FC
 import '../styles/projectCard.css';
 
