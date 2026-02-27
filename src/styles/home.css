@@ -10,6 +10,29 @@ body {
   padding: 0;
 }
 
+.about-ctaa {
+  display: inline-block;
+  background: #1a1e24;
+  color: white;
+  padding: clamp(0.7rem, 2vw, 0.8rem) clamp(2rem, 5vw, 2.5rem);
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  margin-top: 1rem;
+  border: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.about-ctaa:hover {
+  background-color: #2d81e1;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+
 /* ===== Background wrapper with decorative shapes ===== */
 .background-wrapper {
   position: relative;
@@ -100,6 +123,7 @@ body {
 }
 
 .hero .grid {
+  margin-top: 50px;
   display: grid;
   grid-template-columns: 1fr minmax(300px, 40%) 1fr;
   height: 100%;

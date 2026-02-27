@@ -37,7 +37,7 @@ const Home: React.FC = () => {
           <div className={`leftColumn ${side === 'right' ? 'blur' : ''}`}>
             <h1 className="name">WEB DEVELOPER</h1>
             <p className="title">Creative Developer & Designer</p>
-            <button className="cta">View Work</button>
+            <a href="/projects" className="about-ctaa">View work</a>
           </div>
 
           {/* Center column – image with overlays */}
@@ -103,7 +103,7 @@ const Home: React.FC = () => {
                   From mobile to desktop, I craft fluid, adaptable layouts that
                   ensure a seamless user experience across all screen sizes.
                 </p>
-                <a href="#" className="card-link">
+                <a href="/projects" className="card-link">
                   See my work
                 </a>
               </div>

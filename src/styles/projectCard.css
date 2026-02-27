@@ -244,6 +244,10 @@ body {
   transform: scale(1.05);
 }
 
+.project-card .card-link::after {
+  content: none !important;
+}
+
 
 
 

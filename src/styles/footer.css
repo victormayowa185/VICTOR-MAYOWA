@@ -1,5 +1,6 @@
 /* src/components/Footer.css */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -213,6 +214,11 @@ html, body {
 
 /* ---------- RESPONSIVE (SMALL PHONES) ---------- */
 @media (max-width: 480px) {
+  .footer-copyright {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
   .footer {
     padding: 2.5rem 1rem 1rem;
     /* ← effective padding on all sides */
@@ -233,7 +239,7 @@ html, body {
     max-width: 160px !important;
     padding-right: 3rem !important;
     padding-left: 0 !important;
-   
+
   }
 
   .footer-column-title {
@@ -254,7 +260,7 @@ html, body {
     padding-right: 2.5rem !important;
   }
 
-  .footer-copyright{
-    padding-right: 2rem ;
+  .footer-copyright {
+    padding-right: 2rem;
   }
 }

@@ -1,9 +1,9 @@
 /* ProjectsPage.css - Fully responsive */
 
 .projects-page {
-  max-width: 1280px;
+  width: 100% !important;
   margin: 0 auto;
-  padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 5vw, 5rem);
+  padding: clamp(1rem, 5vw, 1rem) clamp(1rem, 5vw, 5rem);
   background-image:
     radial-gradient(circle at 50% 50%, rgba(78, 205, 196, 0.5) 0%, transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.5) 0%, transparent 50%),
@@ -136,6 +136,10 @@
 
 /* Large devices (desktops, 1024px and up) */
 @media (min-width: 1024px) {
+  .projects-page {
+    width: 100% !important;
+  }
+
   .projects-grid {
     grid-template-columns: repeat(3, 1fr);
   }
