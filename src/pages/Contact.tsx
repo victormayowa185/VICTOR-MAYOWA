@@ -170,7 +170,7 @@ const ContactPage: React.FC = () => {
 
                         {submitStatus === 'error' && (
                             <div className="form-message error">
-                                ⚠️ {loading ? 'Sending failed. Please try again.' : 'Please fill in your name and email.'}
+                                ⚠️ Something went wrong. Check the console.
                             </div>
                         )}
 
