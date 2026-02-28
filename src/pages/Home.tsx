@@ -154,7 +154,7 @@ const Home: React.FC = () => {
             {/* Card E – Tall CTA (spans two rows) */}
             <div className="card card-e">
               <h3 className="cta-title">Let's build something together</h3>
-              <a href="#" className="cta-button">
+              <a href="/contact" className="cta-button">
                 Hire Me / Contact
               </a>
             </div>
@@ -175,7 +175,7 @@ const Home: React.FC = () => {
             <div className="card card-g card-utility">
               <span className="card-emoji">🔗</span>
               <h4>LinkedIn</h4>
-              <a href="#" className="card-link">
+              <a href="https://www.linkedin.com/in/victor-mayowa-%F0%9F%A4%93-131704336/" className="card-link">
                 Connect
               </a>
             </div>

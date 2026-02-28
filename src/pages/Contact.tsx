@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import {
     FaEnvelope, FaPhoneAlt, FaPaperPlane, FaCalendarCheck
 } from 'react-icons/fa';
-import '../styles/contact.css';   // your existing CSS file
+import '../styles/contact.css';
 
 // Fix for default marker icons in react-leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -34,8 +34,16 @@ const ContactPage: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Basic validation
-        if (!formData.name || !formData.email) {
+        // Get fresh values directly from the form (browser autofill included)
+        const form = e.currentTarget as HTMLFormElement;
+        const formDataObj = new FormData(form);
+        const name = (formDataObj.get('name') as string)?.trim() || '';
+        const email = (formDataObj.get('email') as string)?.trim() || '';
+        const projectType = formDataObj.get('projectType') as string || 'webdev';
+        const message = formDataObj.get('message') as string || '';
+
+        // Validate using the actual input values
+        if (!name || !email) {
             setSubmitStatus('error');
             setTimeout(() => setSubmitStatus('idle'), 3000);
             return;
@@ -44,21 +52,23 @@ const ContactPage: React.FC = () => {
         setLoading(true);
 
         try {
-            // 🔁 Replace with your actual backend URL
-            const backendUrl = 'http://localhost:5000/api/contact'; // Update for production
+            // Use relative URL – works on Vercel and with local proxy
+            const backendUrl = '/api/contact';
 
             const response = await fetch(backendUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ name, email, projectType, message }),
             });
 
             const data = await response.json();
 
             if (response.ok) {
                 setSubmitStatus('success');
+                // Clear form (both React state and DOM)
+                form.reset();
                 setFormData({ name: '', email: '', projectType: 'webdev', message: '' });
                 setTimeout(() => setSubmitStatus('idle'), 4000);
             } else {

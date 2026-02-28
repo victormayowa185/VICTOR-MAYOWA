@@ -1,22 +1,20 @@
-/* src/components/Footer.css */
+/* src/styles/footer.css */
+
 html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
   width: 100%;
-  font-family: mulish;
+  font-family: 'Mulish', sans-serif;
 }
 
-
-
 .footer {
-  background: rgba(255, 255, 255, 0.829);
+  background: rgba(255, 255, 255, 0.95);
   color: black;
   padding: 4rem 2rem 2rem;
   width: 100%;
   margin-top: auto;
-  overflow: hidden !important;
+  box-sizing: border-box;
 }
 
 .footer-container {
@@ -32,7 +30,7 @@ body {
   flex-wrap: wrap;
   gap: 3rem;
   padding-bottom: 3rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .footer-left {
@@ -56,13 +54,8 @@ body {
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .footer-tagline {
@@ -121,13 +114,14 @@ body {
   display: flex;
   gap: 1.5rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .social-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,6 +145,9 @@ body {
   color: black;
   font-size: 0.9rem;
   text-align: center;
+  word-break: break-word;
+  max-width: 100%;
+  padding: 0 0.5rem;
 }
 
 /* ---------- RESPONSIVE (TABLET) ---------- */
@@ -173,78 +170,68 @@ body {
   .footer-top {
     flex-direction: column;
     align-items: center;
-    /* ← center everything horizontally */
-    gap: 2.5rem;
-    /* ← increased spacing for breathing room */
     text-align: center;
-    /* ← ensures all text inside is centered */
+    gap: 2.5rem;
   }
 
   .footer-left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* ← center logo & tagline */
     min-width: 100%;
   }
 
   .footer-tagline {
     margin: 0 auto;
-    /* ← center the tagline block */
   }
 
   .footer-right {
     justify-content: center;
     width: 100%;
     gap: 2rem;
-    /* ← consistent spacing between columns */
   }
 
   .footer-column {
     min-width: 140px;
-    /* ← slightly wider for easier tapping */
     text-align: center;
   }
 
   .footer-links-group {
     align-items: center;
-    /* ← center links under each title */
   }
 }
 
-/* ---------- RESPONSIVE (SMALL PHONES) ---------- */
+/* ---------- RESPONSIVE (SMALL PHONES, ≤ 480px) ---------- */
 @media (max-width: 480px) {
-  .footer-copyright {
-    text-align: center;
-    font-size: 0.8rem;
+  .footer {
+    padding: 2.5rem 1rem 1.5rem;
   }
 
-  .footer {
-    padding: 2.5rem 1rem 1rem;
-    /* ← effective padding on all sides */
+  .footer-top {
+    gap: 2rem;
   }
 
   .footer-right {
-    flex-direction: row;
-    /* keep columns side‑by‑side if space allows */
-    flex-wrap: wrap;
-    /* allow wrapping gracefully */
-    justify-content: center;
+    flex-direction: column;        /* stack columns vertically */
+    align-items: center;
     gap: 1.5rem;
-
   }
 
   .footer-column {
-    min-width: 120px !important;
-    max-width: 160px !important;
-    padding-right: 3rem !important;
-    padding-left: 0 !important;
-
+    min-width: auto;
+    width: 100%;
+    max-width: 240px;
+    padding: 0 !important;          /* remove any side padding */
+    text-align: center;
   }
 
   .footer-column-title {
     font-size: 1rem;
-    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .footer-links-group {
+    align-items: center;
   }
 
   .social-icons {
@@ -256,11 +243,29 @@ body {
     height: 36px;
   }
 
-  .footer-tagline {
-    padding-right: 2.5rem !important;
+  .social-icon svg {
+    width: 18px;
+    height: 18px;
   }
 
   .footer-copyright {
-    padding-right: 2rem;
+    font-size: 0.8rem;
+    padding: 0 0.25rem;
+  }
+}
+
+/* ---------- EXTRA TINY SCREENS (≤ 360px) ---------- */
+@media (max-width: 360px) {
+  .footer {
+    padding: 2rem 0.75rem 1rem;
+  }
+
+  .social-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .footer-copyright {
+    font-size: 0.75rem;
   }
 }
