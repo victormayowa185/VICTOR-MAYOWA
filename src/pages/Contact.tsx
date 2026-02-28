@@ -24,6 +24,7 @@ const ContactPage: React.FC = () => {
     });
     const [loading, setLoading] = useState(false);
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [shakeForm, setShakeForm] = useState(false);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -34,7 +35,6 @@ const ContactPage: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Get fresh values directly from the form (browser autofill included)
         const form = e.currentTarget as HTMLFormElement;
         const formDataObj = new FormData(form);
         const name = (formDataObj.get('name') as string)?.trim() || '';
@@ -42,7 +42,6 @@ const ContactPage: React.FC = () => {
         const projectType = formDataObj.get('projectType') as string || 'webdev';
         const message = formDataObj.get('message') as string || '';
 
-        // Validate using the actual input values
         if (!name || !email) {
             setSubmitStatus('error');
             setTimeout(() => setSubmitStatus('idle'), 3000);
@@ -52,7 +51,6 @@ const ContactPage: React.FC = () => {
         setLoading(true);
 
         try {
-            // Use relative URL – works on Vercel and with local proxy
             const backendUrl = '/api/contact';
 
             const response = await fetch(backendUrl, {
@@ -67,7 +65,6 @@ const ContactPage: React.FC = () => {
 
             if (response.ok) {
                 setSubmitStatus('success');
-                // Clear form (both React state and DOM)
                 form.reset();
                 setFormData({ name: '', email: '', projectType: 'webdev', message: '' });
                 setTimeout(() => setSubmitStatus('idle'), 4000);
@@ -85,9 +82,19 @@ const ContactPage: React.FC = () => {
         }
     };
 
+    // 👇 Updated handler: scroll to form + shake
+    const handleScheduleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        const formCard = document.querySelector('.form-card');
+        if (formCard) {
+            formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        setShakeForm(true);
+        setTimeout(() => setShakeForm(false), 500);
+    };
+
     return (
         <div className="contact-page">
-            {/* Full‑width map at the very top */}
             <div className="map-section">
                 <MapContainer center={[5.3959, 7.0102]} zoom={15} scrollWheelZoom={true}>
                     <TileLayer
@@ -106,20 +113,15 @@ const ContactPage: React.FC = () => {
                 </MapContainer>
             </div>
 
-            {/* Hero section */}
             <section className="heroc">
                 <h1>Let's Build Something Amazing Together</h1>
                 <p>Whether it’s a website, app, or UX project, I’m just a message away.</p>
             </section>
 
-            {/* Two‑column: form left, video right */}
             <div className="contact-grid">
-                <div className="form-card">
+                <div className={`form-card ${shakeForm ? 'shake' : ''}`}>
                     <h2>👋 Drop a line</h2>
                     <p className="sub">I’ll get back to you within 24h.</p>
-
-                    {/* Status messages */}
-
 
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
@@ -188,7 +190,7 @@ const ContactPage: React.FC = () => {
 
                 <div className="image-side">
                     <video
-                        src="/video.mp4"   // replace with your video file path
+                        src="/video.mp4"
                         className="contact-video"
                         autoPlay
                         loop
@@ -198,7 +200,6 @@ const ContactPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Direct contact row */}
             <div className="direct-contact">
                 <div className="contact-item">
                     <FaEnvelope />
@@ -210,10 +211,9 @@ const ContactPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* CTA Footer */}
             <footer className="cta-footer">
                 <h2>Got a project? Don’t wait. Let’s make it happen.</h2>
-                <a href="#" className="cta-button">
+                <a href="#" className="cta-button" onClick={handleScheduleClick}>
                     Schedule a call <FaCalendarCheck />
                 </a>
                 <p className="footnote">— remote & worldwide —</p>
