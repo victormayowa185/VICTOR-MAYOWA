@@ -4,7 +4,6 @@ const cors = require('cors');
 const { sendEmail } = require('./services/emailService');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors()); // Allows your React frontend to call this API
@@ -48,6 +47,13 @@ ${message || 'No message'}
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Export the app for Vercel (DO NOT use app.listen() here)
+module.exports = app;
+
+// For local development – only runs when you execute this file directly
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
