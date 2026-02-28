@@ -119,11 +119,7 @@ const ContactPage: React.FC = () => {
                     <p className="sub">I’ll get back to you within 24h.</p>
 
                     {/* Status messages */}
-                    {submitStatus === 'error' && (
-                        <div className="form-message error">
-                            ⚠️ {loading ? 'Sending failed. Please try again.' : 'Please fill in your name and email.'}
-                        </div>
-                    )}
+
 
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
@@ -171,6 +167,12 @@ const ContactPage: React.FC = () => {
                                 placeholder="Tell me about your idea..."
                             />
                         </div>
+
+                        {submitStatus === 'error' && (
+                            <div className="form-message error">
+                                ⚠️ {loading ? 'Sending failed. Please try again.' : 'Please fill in your name and email.'}
+                            </div>
+                        )}
 
                         {submitStatus === 'success' && (
                             <div className="form-message success">
