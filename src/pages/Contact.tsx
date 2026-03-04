@@ -51,9 +51,8 @@ const ContactPage: React.FC = () => {
         setLoading(true);
 
         try {
-            const backendUrl = '/api/contact';
-
-            const response = await fetch(backendUrl, {
+            // 👇 Your Formspree endpoint
+            const response = await fetch('https://formspree.io/f/mqedrynl', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,7 +68,7 @@ const ContactPage: React.FC = () => {
                 setFormData({ name: '', email: '', projectType: 'webdev', message: '' });
                 setTimeout(() => setSubmitStatus('idle'), 4000);
             } else {
-                console.error('Backend error:', data.error);
+                console.error('Formspree error:', data.error);
                 setSubmitStatus('error');
                 setTimeout(() => setSubmitStatus('idle'), 4000);
             }
@@ -82,7 +81,7 @@ const ContactPage: React.FC = () => {
         }
     };
 
-    // 👇 Updated handler: scroll to form + shake
+    // Handler to scroll to form + shake
     const handleScheduleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         const formCard = document.querySelector('.form-card');
