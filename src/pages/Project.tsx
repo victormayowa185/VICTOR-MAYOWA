@@ -87,7 +87,7 @@ const ProjectsPage = () => {
             ))}
           </div>
           {filteredProjects.length === 0 && (
-            <p className="no-projects-message">No projects in this category yet.</p>
+            <p className="no-projects-message">Project in this category is yet to be deployed.</p>
           )}
         </>
       )}

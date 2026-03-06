@@ -171,7 +171,7 @@ const ContactPage: React.FC = () => {
 
                         {submitStatus === 'error' && (
                             <div className="form-message error">
-                                ⚠️ Something went wrong. Check the console.
+                                ⚠️ Something went wrong. Check your internet connection and try again.
                             </div>
                         )}
 
