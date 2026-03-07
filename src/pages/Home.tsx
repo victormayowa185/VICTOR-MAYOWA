@@ -1,4 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
+import { FaLaptopCode } from "react-icons/fa6";
+import { GiLinkedRings } from "react-icons/gi";
 import '../styles/home.css';
 
 const Home: React.FC = () => {
@@ -161,7 +163,7 @@ const Home: React.FC = () => {
 
             {/* Card F – GitHub */}
             <div className="card card-f card-utility">
-              <span className="card-emoji">💻</span>
+              <FaLaptopCode className='card-emoji' />
               <h4>MAYO CodeSpace</h4>
               <p style={{ fontSize: '0.8rem', margin: '0.3rem 0' }}>
                 Browser‑based coding environment
@@ -173,7 +175,7 @@ const Home: React.FC = () => {
 
             {/* Card G – LinkedIn */}
             <div className="card card-g card-utility">
-              <span className="card-emoji">🔗</span>
+              <GiLinkedRings className='card-emoji'/>
               <h4>LinkedIn</h4>
               <a href="https://www.linkedin.com/in/victor-mayowa-%F0%9F%A4%93-131704336/" className="card-link">
                 Connect

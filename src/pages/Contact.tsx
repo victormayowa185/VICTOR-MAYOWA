@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import {
     FaEnvelope, FaPhoneAlt, FaPaperPlane, FaCalendarCheck
 } from 'react-icons/fa';
+import { HiMiniChatBubbleLeftRight } from "react-icons/hi2";
 import '../styles/contact.css';
 
 // Fix for default marker icons in react-leaflet
@@ -119,7 +120,9 @@ const ContactPage: React.FC = () => {
 
             <div className="contact-grid">
                 <div className={`form-card ${shakeForm ? 'shake' : ''}`}>
-                    <h2>👋 Drop a line</h2>
+
+
+                    <h2 className='cen'> <HiMiniChatBubbleLeftRight /> Drop a Line</h2>
                     <p className="sub">I’ll get back to you within 24h.</p>
 
                     <form onSubmit={handleSubmit}>
@@ -145,7 +148,7 @@ const ContactPage: React.FC = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="victormayowa185@gmail.com"
+                                placeholder="xy...@gmail.com"
                                 required
                                 pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                             />

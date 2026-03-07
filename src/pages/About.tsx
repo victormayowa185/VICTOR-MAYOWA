@@ -1,4 +1,8 @@
 import React from 'react';
+import { MdOutlineLaptopMac } from "react-icons/md";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoColorPalette } from "react-icons/io5";
+import { LuTabletSmartphone } from "react-icons/lu";
 import '../styles/about.css';
 
 const About: React.FC = () => {
@@ -42,22 +46,22 @@ const About: React.FC = () => {
         <h2 className="skills-title">What I Do</h2>
         <div className="skills-grid">
           <div className="skill-card">
-            <div className="skill-icon">💻</div>
+            <MdOutlineLaptopMac className='skill-icon' />
             <h3>Frontend Development</h3>
             <p>React, Vue, TypeScript, responsive design, and interactive interfaces.</p>
           </div>
           <div className="skill-card">
-            <div className="skill-icon">⚙️</div>
+            <IoSettingsOutline className='skill-icon' />
             <h3>Backend & APIs</h3>
             <p>Node.js, Express, RESTful APIs, and database integration.</p>
           </div>
           <div className="skill-card">
-            <div className="skill-icon">🎨</div>
+            <IoColorPalette className='skill-icon' />
             <h3>UI/UX Design</h3>
             <p>From wireframes to high-fidelity prototypes, focusing on user experience.</p>
           </div>
           <div className="skill-card">
-            <div className="skill-icon">📱</div>
+            <LuTabletSmartphone className='skill-icon' />
             <h3>Mobile-First</h3>
             <p>Building apps that work seamlessly across all devices.</p>
           </div>
