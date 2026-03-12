@@ -28,6 +28,7 @@ const Navbar: React.FC = () => {
         <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
         <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
         <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
+        <li><NavLink to="/blog" onClick={closeMenu}>Blog</NavLink></li>
       </ul>
     </nav>
   );
