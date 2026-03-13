@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { client } from '../sanity/client';
 import PostCard from './PostCard';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import '../styles/blog.css';
 
 interface Post {
@@ -9,7 +10,7 @@ interface Post {
   excerpt: string;
   slug: { current: string };
   categories?: { title: string }[];
-  mainImage?: any;
+  mainImage?: SanityImageSource;
   liveDemoUrl?: string;
   publishedAt: string;
 }
@@ -55,6 +56,7 @@ const BlogFeed = () => {
   const filteredPosts = posts.filter(post => {
     const matchesCategory = filter === 'all' || (post.categories && post.categories.includes(filter));
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
+    console.log({ title: post.title, searchTerm, matchesSearch });
     return matchesCategory && matchesSearch;
   });
 

@@ -26,6 +26,7 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
       timeout = setTimeout(() => setIsDeleting(true), pauseDuration);
     } else if (isDeleting && text === '') {
       // Finished deleting – move to next word
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsDeleting(false);
       setWordIndex((prev) => (prev + 1) % words.length);
     } else {

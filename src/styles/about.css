@@ -53,26 +53,6 @@
   z-index: 1;
 }
 
-/* If you add an image later, uncomment this */
-/*
-.about-image {
-  flex: 1;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.2);
-}
-
-.about-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.about-image img:hover {
-  transform: scale(1.02);
-}
-*/
 
 .about-bio {
   flex: 1;
