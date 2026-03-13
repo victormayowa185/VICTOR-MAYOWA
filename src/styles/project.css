@@ -13,6 +13,7 @@
   background-position: 0% 50%, 20% 50%, 40% 50%;
   background-repeat: no-repeat;
   animation: moveGradients 2.3s infinite alternate ease-in-out;
+  animation: fadeInUp 0.8s ease forwards;
 }
 
 /* Smooth gradient movement */

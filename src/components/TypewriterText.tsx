@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 interface TypewriterTextProps {
-  words: string[];          
-  typingSpeed?: number;      
-  deletingSpeed?: number;   
-  pauseDuration?: number;    
+  words: string[];
+  typingSpeed?: number;
+  deletingSpeed?: number;
+  pauseDuration?: number;
 }
 
 const TypewriterText: React.FC<TypewriterTextProps> = ({

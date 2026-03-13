@@ -1,4 +1,3 @@
-import { TbHexagonLetterMFilled } from "react-icons/tb";
 import { NavLink } from 'react-router-dom';
 import { HiMenu, HiX } from 'react-icons/hi';  // Import icons
 import { useState } from 'react';               // Import useState
@@ -13,8 +12,8 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <TbHexagonLetterMFilled className='logo-icon' />
-        <span className="brand-name">VM</span>
+
+        <img className="logo-icon" src="mayo.png" alt="" />
       </div>
 
       {/* Hamburger icon - visible only on mobile */}
