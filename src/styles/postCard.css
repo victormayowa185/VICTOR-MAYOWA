@@ -1,0 +1,224 @@
+
+.post-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Header row – love button */
+.post-card-header {
+  padding: 0.75rem 1rem 0 1rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.love-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.love-button:hover {
+  background-color: black;
+  color: black;
+}
+
+.love-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Main row – image + text */
+.post-card-main {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0 1rem 1rem 1rem;
+}
+
+/* Image wrapper */
+.post-card-main .post-image-wrapper {
+  flex: 0 0 40% !important;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+}
+
+.post-card-main .post-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image animation – apply with .animate-image class */
+.post-image.animate-image {
+  animation: slideUpPauseRightReset 5s ease-in-out infinite;
+}
+
+@keyframes slideUpPauseRightReset {
+  0% {
+    transform: translateY(100%) translateX(0);
+  }
+  25% {
+    transform: translateY(0) translateX(0);
+  }
+  75% {
+    transform: translateY(0) translateX(0);
+  }
+  87.5% {
+    transform: translateY(0) translateX(100%);
+  }
+  93.75% {
+    transform: translateY(100%) translateX(100%);
+  }
+  100% {
+    transform: translateY(100%) translateX(0);
+  }
+}
+
+/* Floating hearts (from double‑tap) */
+.heart {
+  position: absolute;
+  font-size: 2rem;
+  pointer-events: none;
+  animation: floatHeart 1s ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes floatHeart {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -150%) scale(1.5);
+  }
+}
+
+/* Content side */
+.post-card-main .post-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.post-card-main .post-content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  color: #1a1e24;
+}
+
+.post-card-main .excerpt {
+  color: #5b6876;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Footer */
+.post-card-main .post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.post-card-main .action-buttons {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.post-card-main .external-link-btn {
+  background-color: #1a1e24;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.post-card-main .external-link-btn:hover {
+  background-color: saddlebrown;
+}
+
+.post-card-main .share-btn {
+  background-color: transparent;
+  border: 1px solid #1a1e24;
+  color: #1a1e24;
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.post-card-main .share-btn:hover {
+  background-color: #1a1e24;
+  color: white;
+}
+
+.post-card-main .timestamp {
+  color: #95a5a6;
+  font-size: 0.85rem;
+}
+
+/* Image position variants */
+.post-card-main.image-right .post-image-wrapper {
+  order: 1;
+}
+
+.post-card-main.image-left .post-image-wrapper {
+  order: 2;
+}
+
+.post-card-main.image-left .post-content {
+  margin-left: 1rem;
+}
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+  .post-card-main {
+    flex-direction: column;
+  }
+  .post-card-main .post-image-wrapper {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 200px;
+  }
+  .post-card-main.image-left .post-content {
+    margin-left: 0;
+  }
+  .post-card-main .post-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

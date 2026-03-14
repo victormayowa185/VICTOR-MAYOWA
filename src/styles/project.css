@@ -1,5 +1,27 @@
 /* ProjectsPage.css - Fully responsive */
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+@keyframes moveGradients {
+  0% {
+    background-position: 0% 50%, 20% 50%, 40% 50%;
+  }
+  100% {
+    background-position: 20% 50%, 40% 50%, 60% 50%;
+  }
+}
+
 .projects-page {
   width: 100% !important;
   margin: 0 auto;
@@ -12,19 +34,7 @@
   background-size: 200% 100%, 200% 100%, 200% 100%;
   background-position: 0% 50%, 20% 50%, 40% 50%;
   background-repeat: no-repeat;
-  animation: moveGradients 2.3s infinite alternate ease-in-out;
   animation: fadeInUp 0.8s ease forwards;
-}
-
-/* Smooth gradient movement */
-@keyframes moveGradients {
-  0% {
-    background-position: 0% 50%, 20% 50%, 40% 50%;
-  }
-
-  100% {
-    background-position: 100% 50%, 80% 50%, 60% 50%;
-  }
 }
 
 /* ---------- Header ---------- */
@@ -70,7 +80,6 @@
   color: #374151;
   white-space: nowrap;
   min-width: 70px;
-  /* ensures touch targets are large enough */
   touch-action: manipulation;
 }
 
@@ -83,7 +92,6 @@
   color: white;
 }
 
-/* Active tap feedback for mobile */
 .filter-buttons button:active {
   transform: scale(0.96);
 }
@@ -93,6 +101,18 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+}
+
+/* ---------- Project Card Image Entrance Animation ---------- */
+.project-card {
+  overflow: hidden;
+}
+
+.project-card .project-image {
+  animation: slideUpFromBottom 0.6s ease forwards;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ---------- Loading & Empty States ---------- */
@@ -128,8 +148,6 @@
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-
-
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -146,24 +164,17 @@
   }
 }
 
-
-
 @media (max-width: 600px) {
   .projects-page {
     margin-top: 4rem !important;
   }
-
-
 }
-
 
 /* Extra small devices (phones < 480px) */
 @media (max-width: 479px) {
-
   .projects-page {
     margin-top: 4rem !important;
   }
-
 
   .filter-buttons button {
     padding: 0.4rem 1rem;
@@ -178,13 +189,13 @@
   /* Optionally slow down animation on very small screens for performance */
   .projects-page {
     animation-duration: 3s;
-    /* slower movement */
   }
 }
 
 /* Optional: reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
-  .projects-page {
+  .projects-page,
+  .project-card .project-image {
     animation: none;
   }
 }

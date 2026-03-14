@@ -4,7 +4,7 @@ import { urlFor } from '../sanity/client';
 import { timeAgo } from '../components/dateFormatter';
 import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
-import '../styles/blog.css';
+import '../styles/postCard.css';
 
 interface PostCardProps {
   post: {
@@ -13,7 +13,7 @@ interface PostCardProps {
     excerpt: string;
     slug: { current: string };
     categories?: { title: string }[];
-    mainImage?: any;
+    mainImage?: SanityImageSource;
     liveDemoUrl?: string;
     publishedAt: string;
   };
@@ -23,7 +23,6 @@ interface PostCardProps {
 
 const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefaultImage }) => {
   const navigate = useNavigate();
-  const [expanded, setExpanded] = useState(false);
   const [hearts, setHearts] = useState<{ id: number; x: number; y: number }[]>([]);
   const [loved, setLoved] = useState(false);
 
@@ -48,11 +47,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
     navigate(`/post/${post.slug.current}`);
   };
 
-  const toggleExcerpt = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setExpanded(prev => !prev);
-  };
-
   const handleShare = (e: React.MouseEvent) => {
     e.stopPropagation();
     const url = `${window.location.origin}/post/${post.slug.current}`;
@@ -75,21 +69,22 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
       {/* Header row with love button */}
       <div className="post-card-header">
         <button className="love-button" onClick={handleLoveClick}>
-          {loved ? <FaHeart color="red" /> : <FiHeart color="white" />}
+          {loved ? <FaHeart color="black" /> : <FiHeart color="white" />}
         </button>
       </div>
 
       {/* Main content row (image + text) */}
       <div className={`post-card-main ${imagePositionClass}`}>
         <div className="post-image-wrapper" onDoubleClick={handleImageDoubleClick}>
-          <img src={imageSrc} alt={post.title} className="post-image" />
+          <img src={imageSrc} alt={post.title} className="post-image animate-image" />
+          {hearts.map(heart => (
+            <span key={heart.id} className="heart" style={{ left: heart.x, top: heart.y }}>❤️</span>
+          ))}
         </div>
 
         <div className="post-content">
           <h3>{post.title}</h3>
-          <p className={`excerpt ${expanded ? 'expanded' : ''}`} onClick={toggleExcerpt}>
-            {post.excerpt}
-          </p>
+          <p className="excerpt">{post.excerpt}</p>
           <div className="post-footer">
             <div className="action-buttons">
               {post.liveDemoUrl && (

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { client } from '../sanity/client';
 import PostCard from './PostCard';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import '../styles/blog.css';
+import '../styles/blogFeed.css';
 
 interface Post {
   _id: string;
@@ -54,9 +54,9 @@ const BlogFeed = () => {
   }, []);
 
   const filteredPosts = posts.filter(post => {
-    const matchesCategory = filter === 'all' || (post.categories && post.categories.includes(filter));
+    const matchesCategory = filter === 'all' ||
+      (post.categories && post.categories.some(cat => cat.toUpperCase() === filter.toUpperCase()));
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
-    console.log({ title: post.title, searchTerm, matchesSearch });
     return matchesCategory && matchesSearch;
   });
 

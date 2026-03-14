@@ -1,5 +1,4 @@
-
-import type { FC } from 'react';    // ✅ type-only import for FC
+import type { FC } from 'react'; 
 import '../styles/projectCard.css';
 
 interface ProjectCardProps {
@@ -12,7 +11,6 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({ 
-  // logoUrl,           // ❌ removed because it's unused
   title, 
   description, 
   tags, 
@@ -29,7 +27,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
           <img 
             src={imageUrl} 
             alt={title || 'project image'} 
-            className="project-image" 
+            className="post-image animate-image" 
             referrerPolicy="no-referrer" 
           />
           <div className="hover-overlay">

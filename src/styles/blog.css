@@ -290,7 +290,7 @@ body {
 
 /* Artistic name container */
 .hero-name-art {
-  width: 100%;
+  width: 90%;
   margin-bottom: 1.5rem;
 }
 
@@ -572,6 +572,34 @@ body {
 }
 
 
+
+
+@keyframes slideUpPauseRightReset {
+  0% {
+    transform: translateY(100%) translateX(0);
+  }
+  25% {
+    transform: translateY(0) translateX(0);
+  }
+  75% {
+    transform: translateY(0) translateX(0);
+  }
+  87.5% {
+    transform: translateY(0) translateX(100%);
+  }
+  93.75% {
+    transform: translateY(100%) translateX(100%);
+  }
+  100% {
+    transform: translateY(100%) translateX(0);
+  }
+}
+
+.post-image.animate-image {
+  animation: slideUpPauseRightReset 5s ease-in-out infinite;
+}
+
+
 /* Content side inside feed */
 .blog-feed .post-content {
   flex: 1;
@@ -669,22 +697,36 @@ body {
   margin-left: 1rem;
 }
 
-/* Responsive for feed */
 @media (max-width: 600px) {
   .blog-feed {
     padding: 2rem 1.5rem;
   }
+
   .blog-feed .post-card {
-    flex-direction: column;
+    flex-direction: column !important;
   }
+
   .blog-feed .post-image-wrapper {
     flex: 0 0 auto;
     width: 100%;
     height: 200px;
   }
-  .blog-feed .image-left .post-content {
-    margin-left: 0;
+
+  /* Force image wrapper to come first, content second */
+  .post-card-main {
+    flex-direction: column !important;
   }
+
+  .post-card-main .post-image-wrapper,
+  .post-card-main .post-content {
+    order: 0 !important;   /* reset to source order (image first) */
+  }
+
+  /* Remove any left margin that might misalign text */
+  .blog-feed .image-left .post-content {
+    margin-left: 0 !important;
+  }
+
   .blog-feed .post-footer {
     flex-direction: column;
     align-items: flex-start;
@@ -698,121 +740,4 @@ body {
   text-align: center;
   padding: 2rem;
   color: #5b6876;
-}
-/* Post card container */
-.post-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-
-.post-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-}
-
-/* Header row – love button sits here */
-.post-card-header {
-  padding: 0.75rem 1rem 0 1rem;  /* top, right, bottom, left */
-  display: flex;
-  justify-content: flex-start;
-}
-
-.love-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.love-button:hover {
-  background-color: black;
-  -webkit-text-fill-color: black !important;
-  color: black;
-}
-
-.love-button svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* Main row – contains image and text */
-.post-card-main {
-  display: flex;
-  gap: 1.5rem;
-  padding: 0 1rem 1rem 1rem;  /* no top padding because header already has it */
-}
-
-/* Image wrapper */
-.post-card-main .post-image-wrapper {
-  flex: 0 0 40%;
-  height: 250px;  /* adjust as needed */
-  overflow: hidden;
-  border-radius: 8px;
-  position: relative;
-}
-
-.post-card-main .post-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Content side */
-.post-card-main .post-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.post-card-main .post-content h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.3rem;
-  color: #1a1e24;
-}
-
-/* Image position variants */
-.post-card-main.image-right .post-image-wrapper {
-  order: 1;
-}
-
-.post-card-main.image-left .post-image-wrapper {
-  order: 2;
-}
-
-.post-card-main.image-left .post-content {
-  margin-left: 1rem;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .post-card-main {
-    flex-direction: column;
-  }
-  .post-card-main .post-image-wrapper {
-    flex: 0 0 auto;
-    width: 100%;
-    height: 200px;
-  }
-  .post-card-main.image-left .post-content {
-    margin-left: 0;
-  }
-  .post-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
 }

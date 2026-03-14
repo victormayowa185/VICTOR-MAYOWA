@@ -86,9 +86,6 @@ const Hero: React.FC = () => {
             <BlogFeed />
 
 
-
-
-
         </div>
 
 
