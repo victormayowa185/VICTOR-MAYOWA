@@ -3,13 +3,14 @@ import { useParams } from 'react-router-dom';
 import { client, urlFor } from '../sanity/client';
 import { timeAgo } from '../components/dateFormatter';
 import { PortableText } from '@portabletext/react';
+import type { PortableTextBlock } from '@sanity/types';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import '../styles/postDetail.css'; 
 
 interface Post {
   title: string;
   excerpt: string;
-  body: any; 
+  body: PortableTextBlock[]; 
   mainImage?: SanityImageSource;
   publishedAt: string;
 }

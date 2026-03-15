@@ -19,7 +19,7 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
 
   useEffect(() => {
     const currentWord = words[wordIndex];
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
     if (!isDeleting && text === currentWord) {
       // Finished typing – pause before deleting

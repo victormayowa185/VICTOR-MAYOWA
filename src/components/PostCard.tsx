@@ -4,6 +4,7 @@ import { urlFor } from '../sanity/client';
 import { timeAgo } from '../components/dateFormatter';
 import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import '../styles/postCard.css';
 
 interface PostCardProps {
@@ -29,7 +30,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
   const hasUploadedImage = !!post.mainImage;
   const imageSrc = hasUploadedImage
     ? urlFor(post.mainImage).width(400).height(250).url()
-    : (post.categories && post.categories[0] && defaultImageMap[post.categories[0]]) || fallbackDefaultImage;
+    : (post.categories && post.categories[0] && defaultImageMap[post.categories[0].title]) || fallbackDefaultImage;
 
   const handleImageDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();

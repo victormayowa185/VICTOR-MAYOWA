@@ -55,7 +55,7 @@ const BlogFeed = () => {
 
   const filteredPosts = posts.filter(post => {
     const matchesCategory = filter === 'all' ||
-      (post.categories && post.categories.some(cat => cat.toUpperCase() === filter.toUpperCase()));
+      (post.categories && post.categories.some(cat => cat.title.toUpperCase() === filter.toUpperCase()));
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
