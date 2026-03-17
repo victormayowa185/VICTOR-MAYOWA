@@ -32,6 +32,7 @@ export const postSchema = defineType({
       title: 'Main image',
       type: 'image',
       options: { hotspot: true },
+      description: 'Upload an image (optional). If a video link is provided, the image may not be shown.',
     }),
     defineField({
       name: 'categories',
@@ -43,6 +44,7 @@ export const postSchema = defineType({
       name: 'liveDemoUrl',
       title: 'Live Demo URL',
       type: 'url',
+      description: 'Paste a YouTube/Vimeo link to embed a video, or any other URL for the "Visit Site" button.',
     }),
     defineField({
       name: 'body',

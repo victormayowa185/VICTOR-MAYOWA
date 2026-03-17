@@ -1,7 +1,7 @@
 /* Post detail page */
 .post-detail {
   max-width: 800px;
-  margin: 2rem auto;
+  margin: 5rem auto;
   padding: 0 1.5rem;
 }
 
@@ -67,4 +67,23 @@
   text-align: center;
   padding: 2rem;
   color: #5b6876;
+}
+
+
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useTour } from '../components/TourContext'; // 👈 new import
 import { FaLaptopCode } from "react-icons/fa6";
 import { FiMousePointer } from "react-icons/fi";
 import { IoGitMergeOutline } from "react-icons/io5";
@@ -8,10 +9,10 @@ import { TbLocationStar } from "react-icons/tb";
 import BlogFeed from '../components/BlogFeed';
 import '../styles/blog.css';
 
-
 const Hero: React.FC = () => {
     const heroRef = useRef<HTMLDivElement>(null);
     const [side, setSide] = useState<'left' | 'right' | null>(null);
+    const { startTour } = useTour(); // 👈 get startTour
 
     useEffect(() => {
         const hero = heroRef.current;
@@ -41,7 +42,6 @@ const Hero: React.FC = () => {
 
     return (
         <div>
-
             <div ref={heroRef} className="hero">
                 <div className="hero-grid">
                     {/* Left column – artistic name */}
@@ -49,7 +49,10 @@ const Hero: React.FC = () => {
                         <div className='hero-name-art'>
                             <img src="VIC.png" alt="" />
                         </div>
-                        <button className="hero-button">View work</button>
+                        <div className="button-group"> {/* 👈 wrapper for buttons */}
+                            <button className="hero-button">View work</button>
+                            <button className="hero-button" onClick={startTour}>Get Started</button>
+                        </div>
                     </div>
 
                     {/* Right column – unchanged */}
@@ -72,25 +75,12 @@ const Hero: React.FC = () => {
                                 <IoGitMergeOutline className="icon-circle" />
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
-
             </div>
 
-
-
-
             <BlogFeed />
-
-
         </div>
-
-
-
-
     );
 };
 

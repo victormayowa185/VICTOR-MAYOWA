@@ -21,7 +21,7 @@ const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc){
   excerpt,
   slug,
   "categories": categories[]->title,
-  mainImage,
+  mainImage,  
   liveDemoUrl,
   publishedAt
 }`;
