@@ -23,7 +23,23 @@
   background-size: 200% 100%, 200% 100%, 200% 100%;
   background-position: 0% 50%, 20% 50%, 40% 50%;
   background-repeat: no-repeat;
-  animation: moveGradients 1.3s infinite alternate ease-in-out;
+  animation: moveGradients 1.9s infinite alternate ease-in-out;
+}
+
+/* ===== Base & Wrapper with animated gradients ===== */
+.con {
+  position: relative;
+  overflow: hidden;
+
+}
+
+@keyframes moveGradients {
+  0% {
+    background-position: -20% 50%, 0% 50%, 20% 50%;
+  }
+  100% {
+    background-position: 120% 50%, 140% 50%, 160% 50%;
+  }
 }
 
 /* Slower animation on mobile for performance */

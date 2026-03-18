@@ -9,7 +9,7 @@ interface Post {
   title: string;
   excerpt: string;
   slug: { current: string };
-  categories?: { title: string }[];
+  categories?: string[];          // 👈 Now an array of strings (category titles)
   mainImage?: SanityImageSource;
   liveDemoUrl?: string;
   publishedAt: string;
@@ -20,7 +20,7 @@ const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc){
   title,
   excerpt,
   slug,
-  "categories": categories[]->title,
+  "categories": categories[]->title,   // 👈 Returns array of strings
   mainImage,  
   liveDemoUrl,
   publishedAt
@@ -55,7 +55,7 @@ const BlogFeed = () => {
 
   const filteredPosts = posts.filter(post => {
     const matchesCategory = filter === 'all' ||
-      (post.categories && post.categories.some(cat => cat.title.toUpperCase() === filter.toUpperCase()));
+      (post.categories && post.categories.some(cat => cat.toUpperCase() === filter.toUpperCase()));
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });

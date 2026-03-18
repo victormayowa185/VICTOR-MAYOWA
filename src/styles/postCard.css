@@ -22,7 +22,8 @@
 }
 
 .love-button {
-  background: transparent;
+  background-color: black;
+background: transparent;
   border: none;
   cursor: pointer;
   font-size: 1.5rem;

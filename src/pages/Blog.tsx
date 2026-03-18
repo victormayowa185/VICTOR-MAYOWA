@@ -12,7 +12,7 @@ import '../styles/blog.css';
 const Hero: React.FC = () => {
     const heroRef = useRef<HTMLDivElement>(null);
     const [side, setSide] = useState<'left' | 'right' | null>(null);
-    const { startTour } = useTour(); // 👈 get startTour
+    const { startTour } = useTour(); 
 
     useEffect(() => {
         const hero = heroRef.current;
@@ -49,8 +49,7 @@ const Hero: React.FC = () => {
                         <div className='hero-name-art'>
                             <img src="VIC.png" alt="" />
                         </div>
-                        <div className="button-group"> {/* 👈 wrapper for buttons */}
-                            <button className="hero-button">View work</button>
+                        <div className="button-group">
                             <button className="hero-button" onClick={startTour}>Get Started</button>
                         </div>
                     </div>

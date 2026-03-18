@@ -34,7 +34,7 @@
   background-size: 200% 100%, 200% 100%, 200% 100%;
   background-position: 0% 50%, 20% 50%, 40% 50%;
   background-repeat: no-repeat;
-  animation: fadeInUp 0.8s ease forwards;
+  animation: fadeInUp 1.8s ease forwards, moveGradients 2.2s infinite alternate ease-in-out;
 }
 
 /* ---------- Header ---------- */
