@@ -27,7 +27,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
           <img 
             src={imageUrl} 
             alt={title || 'project image'} 
-            className="post-image animate-image" 
+            className="post-image" 
             referrerPolicy="no-referrer" 
           />
           <div className="hover-overlay">
