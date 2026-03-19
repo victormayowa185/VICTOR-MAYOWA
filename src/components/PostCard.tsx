@@ -4,7 +4,7 @@ import { urlFor } from '../sanity/client';
 import { timeAgo } from '../components/dateFormatter';
 import { FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from '@sanity/image-url';
 import '../styles/postCard.css';
 
 interface PostCardProps {
@@ -13,7 +13,7 @@ interface PostCardProps {
     title: string;
     excerpt: string;
     slug: { current: string };
-    categories?: { title: string }[];
+    categories?: string[];
     mainImage?: SanityImageSource;
     liveDemoUrl?: string;
     publishedAt: string;
@@ -29,8 +29,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
 
   const hasUploadedImage = !!post.mainImage;
   const imageSrc = hasUploadedImage
-    ? urlFor(post.mainImage).width(400).height(250).url()
-    : (post.categories && post.categories[0] && defaultImageMap[post.categories[0].title]) || fallbackDefaultImage;
+    ? urlFor(post.mainImage!).width(400).height(250).url() // 👈 non‑null assertion
+    : (post.categories && post.categories[0] && defaultImageMap[post.categories[0]]) || fallbackDefaultImage;
 
   const handleImageDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -43,7 +43,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
       setHearts(prev => prev.filter(h => h.id !== newHeart.id));
     }, 1000);
     
-    // 👇 Toggle love state when image is double‑clicked
     setLoved(prev => !prev);
   };
 
@@ -70,14 +69,12 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
 
   return (
     <div className="post-card" onDoubleClick={handleCardDoubleClick}>
-      {/* Header row with love button */}
       <div className="post-card-header">
         <button className="love-button" onClick={handleLoveClick}>
           {loved ? <FaHeart color="black" /> : <FiHeart color="black" />}
         </button>
       </div>
 
-      {/* Main content row (image + text) */}
       <div className={`post-card-main ${imagePositionClass}`}>
         <div className="post-image-wrapper" onDoubleClick={handleImageDoubleClick}>
           <img src={imageSrc} alt={post.title} className="post-image animate-image" />

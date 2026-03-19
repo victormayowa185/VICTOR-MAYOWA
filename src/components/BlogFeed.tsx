@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { client } from '../sanity/client';
 import PostCard from './PostCard';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from '@sanity/image-url'; // ✅ simplified import
 import '../styles/blogFeed.css';
 
 interface Post {
@@ -9,7 +9,7 @@ interface Post {
   title: string;
   excerpt: string;
   slug: { current: string };
-  categories?: string[];          // 👈 Now an array of strings (category titles)
+  categories?: string[];          // array of strings (category titles)
   mainImage?: SanityImageSource;
   liveDemoUrl?: string;
   publishedAt: string;
@@ -20,7 +20,7 @@ const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc){
   title,
   excerpt,
   slug,
-  "categories": categories[]->title,   // 👈 Returns array of strings
+  "categories": categories[]->title,   // returns array of strings
   mainImage,  
   liveDemoUrl,
   publishedAt

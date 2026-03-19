@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'; // 👈 type import for ReactNode
 import { client } from '../sanity/client';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from '@sanity/image-url'; // 👈 simplified import
 import { loadTourIndex, saveTourIndex, clearTourIndex } from '../utils/tourStorage';
 import { TOUR_QUERY } from '../components/tourQueries';
 
@@ -60,7 +60,7 @@ export const TourProvider: React.FC<TourProviderProps> = ({ children }) => {
       }
     };
     fetchTourPosts();
-  }, []); // 👈 TOUR_QUERY removed – it's static and won't change
+  }, []);
 
   const startTour = () => setIsTourActive(true);
   const endTour = () => {

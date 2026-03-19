@@ -4,7 +4,7 @@ import { client, urlFor } from '../sanity/client';
 import { timeAgo } from '../components/dateFormatter';
 import { PortableText } from '@portabletext/react';
 import type { PortableTextBlock } from '@sanity/types';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from '@sanity/image-url';
 import '../styles/postDetail.css';
 
 interface Post {
