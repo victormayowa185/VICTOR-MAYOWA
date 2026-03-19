@@ -2,9 +2,13 @@ import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
-// Use environment variables with fallbacks for TypeScript
-const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || process.env.REACT_APP_SANITY_PROJECT_ID || '';
-const dataset = import.meta.env.VITE_SANITY_DATASET || process.env.REACT_APP_SANITY_DATASET || 'production';
+// Vite exposes env variables via import.meta.env
+const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
+const dataset = import.meta.env.VITE_SANITY_DATASET || 'production';
+
+if (!projectId) {
+  throw new Error('Missing VITE_SANITY_PROJECT_ID environment variable');
+}
 
 export const client = createClient({
   projectId,

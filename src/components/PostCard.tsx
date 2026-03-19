@@ -42,6 +42,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
     setTimeout(() => {
       setHearts(prev => prev.filter(h => h.id !== newHeart.id));
     }, 1000);
+    
+    // 👇 Toggle love state when image is double‑clicked
+    setLoved(prev => !prev);
   };
 
   const handleCardDoubleClick = () => {
@@ -70,7 +73,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
       {/* Header row with love button */}
       <div className="post-card-header">
         <button className="love-button" onClick={handleLoveClick}>
-          {loved ? <FaHeart color="black" /> : <FiHeart color="white" />}
+          {loved ? <FaHeart color="black" /> : <FiHeart color="black" />}
         </button>
       </div>
 

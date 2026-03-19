@@ -10,7 +10,7 @@ interface Project {
   tags: string[];
   imageUrl: string;
   category: 'website' | 'app' | 'ui' | 'other';
-  projectUrl: string; // 👈 new field
+  projectUrl: string
 }
 
 const PROJECTS_QUERY = `*[_type == "project"]{
@@ -20,7 +20,7 @@ const PROJECTS_QUERY = `*[_type == "project"]{
   category,
   "logoUrl": logo.asset->url,
   "imageUrl": image.asset->url,
-  projectUrl               // 👈 include in query
+  projectUrl            
 }`;
 
 const categories = ['All', 'Website', 'App', 'UI'];
