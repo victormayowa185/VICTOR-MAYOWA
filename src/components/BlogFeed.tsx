@@ -54,9 +54,33 @@ const BlogFeed = () => {
   }, []);
 
   const filteredPosts = posts.filter(post => {
+    // Category filter (unchanged)
     const matchesCategory = filter === 'all' ||
       (post.categories && post.categories.some(cat => cat.toUpperCase() === filter.toUpperCase()));
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+    // Search logic
+    let matchesSearch = true;
+    if (searchTerm.trim() !== '') {
+      // Define stop words (common words you want to ignore)
+      const stopWords = new Set(['a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by', 'for', 'in', 'is', 'it', 'of', 'on', 'or', 'the', 'to', 'was', 'what', 'how', 'why', 'when', 'where', 'which', 'who', 'whom', 'this', 'that', 'these', 'those']);
+
+      // Split into words, convert to lowercase, filter out stop words
+      const keywords = searchTerm.toLowerCase().split(/\s+/)
+        .filter(word => word.length > 1 && !stopWords.has(word));
+
+      // If no meaningful keywords, show all posts (or you could still fall back to full match)
+      if (keywords.length === 0) {
+        // Fallback: use the whole search term as one keyword
+        keywords.push(searchTerm.toLowerCase());
+      }
+
+      // Prepare text to search (title + excerpt + categories)
+      const textToSearch = `${post.title.toLowerCase()} ${post.excerpt?.toLowerCase() || ''} ${post.categories?.join(' ') || ''}`;
+
+      // Check if any meaningful keyword exists in the text
+      matchesSearch = keywords.some(keyword => textToSearch.includes(keyword));
+    }
+
     return matchesCategory && matchesSearch;
   });
 
@@ -74,7 +98,7 @@ const BlogFeed = () => {
             className="search-input"
           />
           <div className="filter-buttons">
-            {['all', 'React', 'CSS', 'News', 'JavaScript', 'Fun'].map(cat => (
+            {['all', 'React', 'CSS', 'News', 'JavaScript'].map(cat => (
               <button
                 key={cat}
                 className={filter === cat ? 'active' : ''}
