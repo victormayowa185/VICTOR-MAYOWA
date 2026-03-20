@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
     rel="stylesheet">
+  <meta name="google-adsense-account" content="ca-pub-1638893405317554">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mayowa Portfolio</title>
 
@@ -14,11 +14,98 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- ===== LOADER STYLES ===== -->
+  <style>
+    /* Full‑screen white background */
+    .loading-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    /* Circular container for the images */
+    .loader {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Image animation: pop in, then shrink away */
+    .loader img {
+      width: 80%;
+      height: auto;
+      object-fit: contain;
+      animation: popInShrink 0.5s cubic-bezier(0.4, 1.5, 0.6, 1) forwards;
+    }
+
+    @keyframes popInShrink {
+      0% {
+        transform: scale(0.2);
+        opacity: 0;
+      }
+
+      50% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div id="root"></div>
+  <!-- React will mount here; the loader will be replaced once React renders -->
+  <div id="root">
+    <div class="loading-container" id="loading-container">
+      <div class="loader">
+        <img id="loader-image" src="/logo1.png" alt="Loading...">
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Small script to cycle through images while loading -->
+  <script>
+    // Replace these with the paths to your actual images (put them in the public folder)
+    const images = [
+      '/logo1.png',
+      '/logo2.png',
+      '/logo3.png'
+    ];
+    let index = 0;
+    const imgElement = document.getElementById('loader-image');
+
+    function nextImage() {
+      index = (index + 1) % images.length;
+      imgElement.src = images[index];
+      // Re‑trigger the animation
+      imgElement.style.animation = 'none';
+      imgElement.offsetHeight; // force reflow
+      imgElement.style.animation = 'popInShrink 0.5s cubic-bezier(0.4, 1.5, 0.6, 1) forwards';
+    }
+
+    // Cycle every 1.5 seconds (adjust to your liking)
+    setInterval(nextImage, 1500);
+  </script>
 </body>
 
 </html>
