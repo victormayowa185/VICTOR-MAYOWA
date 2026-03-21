@@ -35,7 +35,7 @@ export const useCachedPosts = () => {
     if (cachedPosts) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setPosts(cachedPosts);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setLoading(false);
       return;
     }
@@ -49,9 +49,9 @@ export const useCachedPosts = () => {
     }
 
     fetchPromise.then(data => {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setPosts(data);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setLoading(false);
     });
   }, []);

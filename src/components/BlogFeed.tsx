@@ -1,5 +1,5 @@
 import { useState } from 'react'; // useEffect no longer needed
-import { useCachedPosts, type Post } from '../utils/useCachedPosts';
+import { useCachedPosts } from '../utils/useCachedPosts';
 import PostCard from './PostCard';
 import '../styles/blogFeed.css';
 
@@ -13,7 +13,7 @@ const defaultImageMap: Record<string, string> = {
 const fallbackDefaultImage = '/defaults/default.png';
 
 const BlogFeed = () => {
-  const { posts, loading } = useCachedPosts(); // 👈 use the cache
+  const { posts, loading } = useCachedPosts(); 
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('all');
 
