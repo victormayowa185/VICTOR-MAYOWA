@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useTour } from '../components/TourContext'; // 👈 new import
+import { useTour } from '../components/TourContext';
 import { FaLaptopCode } from "react-icons/fa6";
 import { FiMousePointer } from "react-icons/fi";
 import { IoGitMergeOutline } from "react-icons/io5";
@@ -42,15 +42,20 @@ const Hero: React.FC = () => {
 
     return (
         <div>
-            <div ref={heroRef} className="hero">
+            {/* Visually hidden heading for SEO (screen readers still see it) */}
+            <h1 className="visually-hidden">Victor Mayowa – Web Developer & Designer Blog</h1>
+
+            <div ref={heroRef} className="hero" aria-label="Interactive hero section with mouse‑sensitive blur effect">
                 <div className="hero-grid">
                     {/* Left column – artistic name */}
                     <div className={`left-column ${side === 'right' ? 'blur' : ''}`}>
                         <div className='hero-name-art'>
-                            <img src="VIC.png" alt="" />
+                            <img src="VIC.png" alt="Artistic logo of Victor Mayowa's name" />
                         </div>
                         <div className="button-group">
-                            <button className="hero-button" onClick={startTour}>Get Started</button>
+                            <button className="hero-button" onClick={startTour} aria-label="Start guided tour of the blog">
+                                Get Started
+                            </button>
                         </div>
                     </div>
 
@@ -59,19 +64,19 @@ const Hero: React.FC = () => {
                         <div className="right-content">
                             <div className="image-wrapper">
                                 <div className="image-circle">
-                                    <img src="/pic2.png" alt="Profile" className="profile-image" />
+                                    <img src="/pic2.png" alt="Profile portrait of Victor Mayowa" className="profile-image" />
                                 </div>
                                 <div className="rect rect-top-right">
-                                    <TbLocationStar /> <TypewriterText words={topWords} />
+                                    <TbLocationStar aria-hidden="true" /> <TypewriterText words={topWords} />
                                 </div>
                                 <div className="rect rect-bottom-left">
-                                    <TbNetwork /> <TypewriterText words={bottomWords} />
+                                    <TbNetwork aria-hidden="true" /> <TypewriterText words={bottomWords} />
                                 </div>
                             </div>
                             <div className="icon-circles-vertical">
-                                <FiMousePointer className="icon-circle" />
-                                <FaLaptopCode className="icon-circle" />
-                                <IoGitMergeOutline className="icon-circle" />
+                                <FiMousePointer className="icon-circle" aria-label="Mouse pointer icon" />
+                                <FaLaptopCode className="icon-circle" aria-label="Laptop code icon" />
+                                <IoGitMergeOutline className="icon-circle" aria-label="Git merge icon" />
                             </div>
                         </div>
                     </div>
