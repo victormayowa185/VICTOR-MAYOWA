@@ -42,7 +42,6 @@ const Hero: React.FC = () => {
 
     return (
         <div>
-            {/* Visually hidden heading for SEO (screen readers still see it) */}
             <h1 className="visually-hidden">Victor Mayowa – Web Developer & Designer Blog</h1>
 
             <div ref={heroRef} className="hero" aria-label="Interactive hero section with mouse‑sensitive blur effect">
