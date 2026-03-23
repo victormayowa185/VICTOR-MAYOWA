@@ -26,7 +26,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
   const navigate = useNavigate();
   const [hearts, setHearts] = useState<{ id: number; x: number; y: number }[]>([]);
   const [loved, setLoved] = useState(false);
-  const navigateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const navigateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); // ✅ fixed
 
   const hasUploadedImage = !!post.mainImage;
   const imageSrc = hasUploadedImage
@@ -34,7 +34,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
     : (post.categories && post.categories[0] && defaultImageMap[post.categories[0]]) || fallbackDefaultImage;
 
   const handleCardClick = () => {
-    if (navigateTimeoutRef.current) return; // already waiting
+    if (navigateTimeoutRef.current) return;
     navigateTimeoutRef.current = setTimeout(() => {
       navigate(`/post/${post.slug.current}`);
       navigateTimeoutRef.current = null;
@@ -42,17 +42,14 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
   };
 
   const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation(); // prevent card click from firing immediately
+    e.stopPropagation();
 
     if (navigateTimeoutRef.current) {
-      // This is a double-click (second click within timeout)
       clearTimeout(navigateTimeoutRef.current);
       navigateTimeoutRef.current = null;
 
-      // Toggle love
       setLoved(prev => !prev);
 
-      // Show floating heart animation
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -62,7 +59,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
         setHearts(prev => prev.filter(h => h.id !== newHeart.id));
       }, 1000);
     } else {
-      // First click: start timer for potential double-click
       navigateTimeoutRef.current = setTimeout(() => {
         navigate(`/post/${post.slug.current}`);
         navigateTimeoutRef.current = null;
