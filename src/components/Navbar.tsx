@@ -12,8 +12,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-
-        <img className="logo-icon" src="mayo.png" alt="" />
+        <span className="logo-text">MAYO.</span>
       </div>
 
       {/* Hamburger icon - visible only on mobile */}

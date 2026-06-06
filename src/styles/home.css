@@ -39,26 +39,52 @@ body {
 }
 
 /* ===== Background wrapper with decorative shapes ===== */
+
+
+/* Remove or comment out the old ::before entirely */
 .background-wrapper {
   position: relative;
-  overflow: hidden;
+  overflow: visible !important;
+  /* was hidden – prevents clipping */
   background-attachment: fixed;
   background-color: #ffffff;
   padding-bottom: clamp(3rem, 8vw, 5rem);
 }
 
-.background-wrapper::before {
-  content: "";
+.animated-arc {
   position: absolute;
   bottom: -150px;
   left: -150px;
   width: min(500px, 80vw);
   height: min(500px, 80vw);
-  border-radius: 50%;
-  border: 80px solid rgba(78, 205, 196, 0.4);
   z-index: 0;
   pointer-events: none;
+  overflow: visible;
+  /* let stroke go outside */
 }
+
+.animated-arc svg {
+  width: calc(100% + 80px);
+  /* extra room for the stroke */
+  height: calc(100% + 80px);
+  display: block;
+  margin: -40px;
+  /* recenter */
+}
+
+.animated-arc circle {
+  fill: none;
+  stroke: rgba(78, 205, 196, 0.4);
+  stroke-width: 80;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  /* start at top (12 o'clock) */
+  transform-origin: center;
+  /* no CSS animation here – GSAP will handle strokeDashoffset */
+}
+
+
+
 
 .background-wrapper::after {
   content: "";
@@ -539,6 +565,22 @@ body {
 
 .card-link:hover {
   border-bottom-color: #4a90e2;
+}
+
+
+.card-c .card-linkC {
+  color: black !important;
+  text-decoration: none;
+}
+
+.card-c .card-linkC:hover {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.397);
+}
+
+.card-linkC::after {
+  content: " →";
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
 .card-link::after {
