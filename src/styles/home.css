@@ -38,7 +38,6 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-
 /* ===== Background wrapper with decorative shapes ===== */
 .background-wrapper {
   position: relative;
@@ -48,7 +47,6 @@ body {
   padding-bottom: clamp(3rem, 8vw, 5rem);
 }
 
-/* Bottom-left circle */
 .background-wrapper::before {
   content: "";
   position: absolute;
@@ -62,7 +60,6 @@ body {
   pointer-events: none;
 }
 
-/* Bottom-right half-moon */
 .background-wrapper::after {
   content: "";
   position: absolute;
@@ -90,7 +87,6 @@ body {
   filter: blur(5px);
 }
 
-/* Ensure content stays above shapes */
 .section-intro,
 .content-below-hero {
   position: relative;
@@ -121,7 +117,7 @@ body {
 .hero {
   height: 100vh;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
   background-color: white;
   color: black;
   border-bottom: 1px solid #eaeef2;
@@ -148,7 +144,8 @@ body {
 }
 
 .leftColumn.blur {
-  filter: blur(4px);
+  filter: blur(2px);
+  opacity: 0.9;
 }
 
 .name {
@@ -185,45 +182,76 @@ body {
   color: #0a0a0a;
 }
 
-/* Center image */
+/* ===== CENTER IMAGE — Asymmetric Polygon ===== */
 .imageContainer {
   position: relative;
   height: 100%;
   width: 100%;
-  overflow: hidden;
-  background-color: #2a2a2a;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
 }
 
 .image {
+  /* Fill the column fully so the polygon takes up real space */
   width: 100%;
-  height: 100%;
+  height: 95%;
   object-fit: cover;
+  object-position: center top;
   display: block;
-  transform: scale(1.25);
-  transform-origin: center;
+
+  /* 
+    Asymmetrical polygon — 16 points, all sides jagged:
+    Top:    dips left, juts right, no clean arc
+    Right:  steps inward twice
+    Bottom: uneven notches
+    Left:   jags outward then back
+  */
+  clip-path: polygon(12% 4%,
+      33% 0%,
+      54% 6%,
+      72% 1%,
+      91% 8%,
+      98% 22%,
+      94% 41%,
+      100% 58%,
+      93% 74%,
+      97% 88%,
+      82% 98%,
+      60% 94%,
+      42% 100%,
+      20% 96%,
+      4% 85%,
+      0% 68%,
+      6% 50%,
+      2% 32%,
+      8% 15%);
+
+  transition: clip-path 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.imageOverlay {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.301);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.leftOverlay {
-  left: 0;
-}
-
-.rightOverlay {
-  left: 50%;
-}
-
-.imageOverlay.active {
-  opacity: 1;
+.image:hover {
+  clip-path: polygon(15% 2%,
+      36% 7%,
+      57% 1%,
+      75% 5%,
+      94% 10%,
+      100% 26%,
+      96% 44%,
+      98% 61%,
+      90% 77%,
+      95% 91%,
+      78% 100%,
+      56% 95%,
+      38% 99%,
+      16% 93%,
+      2% 82%,
+      5% 64%,
+      1% 47%,
+      6% 28%,
+      10% 12%);
 }
 
 /* Right spacer */
@@ -232,7 +260,11 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0 1.5rem 30vh 1.5rem;
-  transition: filter 0.3s ease;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.rightSpacer.blur {
+  filter: blur(2px);
 }
 
 .name2 {
@@ -269,11 +301,11 @@ body {
 }
 
 .spacer-skills li {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.07);
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
   font-size: 0.8rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .spacer-note {
@@ -286,11 +318,6 @@ body {
   margin-left: auto;
   margin-right: auto;
   opacity: 0.8;
-}
-
-.rightSpacer.blur .spacer-content {
-  filter: blur(2px);
-  opacity: 0.9;
 }
 
 /* ===== CONTENT BELOW HERO (Cards) ===== */
@@ -320,7 +347,7 @@ body {
   gap: 1.5rem;
 }
 
-/* Card base styles */
+/* Card base */
 .card {
   background: #ffffff;
   padding: clamp(1.2rem, 3vw, 1.8rem) clamp(1rem, 2.5vw, 1.5rem);
@@ -329,7 +356,6 @@ body {
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  /* subtle rounding */
   height: 100%;
 }
 
@@ -338,7 +364,6 @@ body {
   border-color: #d0d9e0;
 }
 
-/* Card A – Responsive Design */
 .card-a {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -361,7 +386,6 @@ body {
   object-fit: contain;
 }
 
-/* Card B – Developer intro */
 .card-b {
   background-color: #98a2ac;
   display: flex;
@@ -379,7 +403,6 @@ body {
   margin: 0;
 }
 
-/* Card C – Portfolio */
 .card-c {
   background-color: #ffaa00e5;
   display: grid;
@@ -412,7 +435,6 @@ body {
   align-self: center;
 }
 
-/* Card D – UI Experiments */
 .card-d {
   display: flex;
   flex-direction: column;
@@ -438,7 +460,6 @@ body {
   margin-right: auto;
 }
 
-/* Card E – Tall CTA */
 .card-e {
   grid-row: span 2;
   background-color: rgba(128, 0, 128, 0.877) !important;
@@ -475,7 +496,6 @@ body {
   box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
 }
 
-/* Utility cards (F & G) */
 .card-utility {
   text-align: center;
   justify-content: center;
@@ -565,7 +585,6 @@ body {
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */
 
-/* Large tablets (≤ 1024px) */
 @media (max-width: 1024px) {
   .hero .grid {
     grid-template-columns: 1fr 1.2fr 1fr;
@@ -582,7 +601,6 @@ body {
   }
 }
 
-/* Tablets and below (≤ 900px) */
 @media (max-width: 900px) {
   .hero .grid {
     grid-template-columns: 1fr;
@@ -608,11 +626,13 @@ body {
   }
 
   .imageContainer {
-    height: 700px;
+    height: 600px;
+    padding: 2rem 3rem;
   }
 
   .image {
-    transform: scale(1.5);
+    width: 100%;
+    height: 100%;
   }
 
   .rightSpacer {
@@ -656,7 +676,6 @@ body {
   }
 }
 
-/* Small phones (≤ 600px) */
 @media (max-width: 600px) {
   .leftColumn {
     padding: 3rem 1.5rem 1.5rem;
@@ -670,13 +689,9 @@ body {
     font-size: 1.2rem;
   }
 
-  .cta {
-    padding: 0.6rem 1.8rem;
-    font-size: 0.9rem;
-  }
-
   .imageContainer {
-    height: 700px;
+    height: 500px;
+    padding: 1.5rem 2rem;
   }
 
   .rightSpacer {
@@ -707,18 +722,9 @@ body {
   .card-d {
     padding: 1.5rem;
   }
-
-  .image {
-    transform: scale(1.4);
-  }
 }
 
-/* Very small phones (≤ 400px) */
 @media (max-width: 400px) {
-  .image {
-    transform: scale(1.5);
-  }
-
   .leftColumn {
     padding: 2rem 1rem 1rem;
   }
@@ -732,7 +738,8 @@ body {
   }
 
   .imageContainer {
-    height: 450px;
+    height: 420px;
+    padding: 1rem 1.5rem;
   }
 
   .rightSpacer {
@@ -755,22 +762,15 @@ body {
   .background-wrapper::before {
     border-width: 40px;
   }
-
-  .card-c {
-    padding: 1rem;
-    /* adjust this value to your liking */
-  }
-
 }
 
-/* Landscape orientation on mobile */
 @media (max-width: 900px) and (orientation: landscape) {
   .hero .grid {
     grid-template-rows: auto auto;
   }
 
   .imageContainer {
-    height: 250px;
+    height: 300px;
   }
 
   .leftColumn {
@@ -782,13 +782,12 @@ body {
   }
 }
 
-/* Reduce motion if requested */
 @media (prefers-reduced-motion: reduce) {
 
   .hero .grid,
   .card,
   .cta-button,
-  .imageOverlay {
+  .image {
     transition: none;
   }
 }

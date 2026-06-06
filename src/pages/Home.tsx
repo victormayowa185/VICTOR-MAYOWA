@@ -32,9 +32,10 @@ const Home: React.FC = () => {
 
   return (
     <>
-      {/* Hero Section – only the grid, no extra content inside */}
+      {/* Hero Section */}
       <div ref={heroRef} className="hero">
         <div className="grid">
+
           {/* Left column – text */}
           <div className={`leftColumn ${side === 'right' ? 'blur' : ''}`}>
             <h1 className="name">WEB DEVELOPER</h1>
@@ -42,22 +43,16 @@ const Home: React.FC = () => {
             <a href="/projects" className="about-ctaa">View work</a>
           </div>
 
-          {/* Center column – image with overlays */}
+          {/* Center column – image with asymmetric polygon */}
           <div className="imageContainer">
             <img
               src="/see.png"
               alt="Professional web designer"
               className="image"
             />
-            <div
-              className={`imageOverlay leftOverlay ${side === 'left' ? 'active' : ''}`}
-            />
-            <div
-              className={`imageOverlay rightOverlay ${side === 'right' ? 'active' : ''}`}
-            />
           </div>
 
-          {/* Right spacer – always visible, blurs when left side is hovered */}
+          {/* Right spacer */}
           <div className={`rightSpacer ${side === 'left' ? 'blur' : ''}`}>
             <div className="spacer-content">
               <h1 className="name2">&lt;CODER&gt;</h1>
@@ -80,10 +75,8 @@ const Home: React.FC = () => {
 
       {/* WRAPPER for continuous background across intro and content */}
       <div className="background-wrapper">
-        {/* 🔺 TRIANGLE SHAPE – decorative element */}
         <div className="shape-triangle"></div>
 
-        {/* Section Intro */}
         <div className="section-intro">
           <h2>Selected Work & Skills</h2>
           <p>
@@ -92,11 +85,8 @@ const Home: React.FC = () => {
           </p>
         </div>
 
-        {/* Content Below Hero – Two separate sections */}
         <div className="content-below-hero">
-          {/* Row 1: Two cards filling the full width (flex) */}
           <div className="top-row">
-            {/* Card A – Featured */}
             <div className="card card-a">
               <div>
                 <h3>Responsive Design</h3>
@@ -123,9 +113,7 @@ const Home: React.FC = () => {
             </article>
           </div>
 
-          {/* Rows 2 & 3: 3‑column grid with tall card */}
           <div className="grid-layout">
-            {/* Card C – Portfolio */}
             <div className="card card-c">
               <div>
                 <img src="k.png" alt="Portfolio project" />
@@ -137,13 +125,12 @@ const Home: React.FC = () => {
                   projects, skills, and experience.
                 </p>
                 <div className="card-tech">React · CSS · TypeScript</div>
-                <a href="#" className="card-link">
+                <a href="https://victormayowa.vercel.app" className="card-link">
                   View Live
                 </a>
               </div>
             </div>
 
-            {/* Card D – UI Experiments */}
             <div className="card card-d">
               <span className="card-badge">PROJECT</span>
               <h3 className="card-title">Tailoring Website</h3>
@@ -153,7 +140,6 @@ const Home: React.FC = () => {
               </p>
             </div>
 
-            {/* Card E – Tall CTA (spans two rows) */}
             <div className="card card-e">
               <h3 className="cta-title">Let's build something together</h3>
               <a href="/contact" className="cta-button">
@@ -161,29 +147,24 @@ const Home: React.FC = () => {
               </a>
             </div>
 
-            {/* Card F – GitHub */}
             <div className="card card-f card-utility">
               <FaLaptopCode className='card-emoji' />
               <h4>MAYO CodeSpace</h4>
               <p style={{ fontSize: '0.8rem', margin: '0.3rem 0' }}>
                 Browser‑based coding environment
               </p>
-              <a href="www.mayocode.vercel.app" className="card-link a">
+              <a href="https://www.mayocode.vercel.app" className="card-link a">
                 Try IDE
               </a>
             </div>
 
-            {/* Card G – LinkedIn */}
             <div className="card card-g card-utility">
-              <GiLinkedRings className='card-emoji'/>
+              <GiLinkedRings className='card-emoji' />
               <h4>LinkedIn</h4>
               <a href="https://www.linkedin.com/in/victor-mayowa-%F0%9F%A4%93-131704336/" className="card-link">
                 Connect
               </a>
             </div>
-
-
-
           </div>
         </div>
       </div>
