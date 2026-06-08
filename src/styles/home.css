@@ -25,6 +25,12 @@ body {
   touch-action: manipulation;
 }
 
+.about-ctaa:hover {
+  background-color: #2d81e1;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
 .button-group {
   display: flex;
   gap: 1rem;
@@ -32,44 +38,31 @@ body {
   flex-wrap: wrap;
 }
 
-.about-ctaa:hover {
-  background-color: #2d81e1;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* ===== Background wrapper with decorative shapes ===== */
-
-
-/* Remove or comment out the old ::before entirely */
+/* ===== BACKGROUND WRAPPER ===== */
 .background-wrapper {
   position: relative;
-  overflow: visible !important;
-  /* was hidden – prevents clipping */
-  background-attachment: fixed;
+  overflow: hidden;
   background-color: #ffffff;
-  padding-bottom: clamp(3rem, 8vw, 5rem);
+  padding-bottom: clamp(16rem, 30vw, 22rem);
 }
 
+/* ===== ANIMATED ARC — top left ===== */
 .animated-arc {
   position: absolute;
-  bottom: -150px;
-  left: -150px;
+  top: -10px;
+  left: -120px;
   width: min(500px, 80vw);
   height: min(500px, 80vw);
   z-index: 0;
   pointer-events: none;
   overflow: visible;
-  /* let stroke go outside */
 }
 
 .animated-arc svg {
-  width: calc(100% + 80px);
-  /* extra room for the stroke */
-  height: calc(100% + 80px);
+  width: 100%;
+  height: 100%;
   display: block;
-  margin: -40px;
-  /* recenter */
+  overflow: visible;
 }
 
 .animated-arc circle {
@@ -77,29 +70,9 @@ body {
   stroke: rgba(78, 205, 196, 0.4);
   stroke-width: 80;
   stroke-linecap: round;
-  transform: rotate(-90deg);
-  /* start at top (12 o'clock) */
-  transform-origin: center;
-  /* no CSS animation here – GSAP will handle strokeDashoffset */
 }
 
-
-
-
-.background-wrapper::after {
-  content: "";
-  position: absolute;
-  bottom: 10%;
-  right: -100px;
-  width: min(350px, 60vw);
-  height: min(350px, 60vw);
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.5), transparent);
-  border-radius: 50%;
-  z-index: 0;
-  pointer-events: none;
-  clip-path: ellipse(50% 50% at 50% 50%);
-}
-
+/* ===== TRIANGLE — top right ===== */
 .shape-triangle {
   position: absolute;
   top: 2%;
@@ -111,6 +84,36 @@ body {
   z-index: 0;
   pointer-events: none;
   filter: blur(5px);
+}
+
+/* ===== FLOAT CIRCLE — bottom right (replaces ::after) ===== */
+.float-circle {
+  position: absolute;
+  bottom: 8%;
+  right: -100px;
+  width: min(350px, 60vw);
+  height: min(350px, 60vw);
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.5), transparent);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== FLOWER — bottom left ===== */
+.flower-shape {
+  position: absolute;
+  top: 55%;
+  left: -19%;
+  width: min(650px, 70vw);
+  height: min(450px, 50vw);
+  z-index: 0;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+.flower-shape svg {
+  width: 100%;
+  height: 100%;
 }
 
 .section-intro,
@@ -139,7 +142,7 @@ body {
   line-height: 1.6;
 }
 
-/* ===== HERO SECTION ===== */
+/* ===== HERO ===== */
 .hero {
   height: 100vh;
   width: 100%;
@@ -179,7 +182,6 @@ body {
   font-weight: 800;
   margin: 0 0 1rem 0;
   line-height: 1.2;
-  text-align: left;
 }
 
 .title {
@@ -187,97 +189,40 @@ body {
   opacity: 0.8;
   margin: 0 0 2rem 0;
   font-weight: 300;
-  text-align: left;
 }
 
-.cta {
-  background: white !important;
-  padding: 0.75rem clamp(1.5rem, 4vw, 2rem);
-  color: black;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-  cursor: pointer;
-  border-radius: 30px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: background 0.3s, color 0.2s;
-  font-weight: 500;
-  touch-action: manipulation;
-}
-
-.cta:hover {
-  background: rgba(128, 128, 128, 0.336) !important;
-  color: #0a0a0a;
-}
-
-/* ===== CENTER IMAGE — Asymmetric Polygon ===== */
+/* Center image */
 .imageContainer {
   position: relative;
   height: 100%;
   width: 100%;
   background-color: transparent;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* was center → now top */
   justify-content: center;
   overflow: visible;
+  padding-top: 7vh; /* add space from top instead of centering */
+  padding-bottom: 0; /* remove bottom padding we added before */
 }
 
 .image {
-  /* Fill the column fully so the polygon takes up real space */
   width: 100%;
-  height: 95%;
+  height: 75%;
   object-fit: cover;
   object-position: center top;
   display: block;
-
-  /* 
-    Asymmetrical polygon — 16 points, all sides jagged:
-    Top:    dips left, juts right, no clean arc
-    Right:  steps inward twice
-    Bottom: uneven notches
-    Left:   jags outward then back
-  */
-  clip-path: polygon(12% 4%,
-      33% 0%,
-      54% 6%,
-      72% 1%,
-      91% 8%,
-      98% 22%,
-      94% 41%,
-      100% 58%,
-      93% 74%,
-      97% 88%,
-      82% 98%,
-      60% 94%,
-      42% 100%,
-      20% 96%,
-      4% 85%,
-      0% 68%,
-      6% 50%,
-      2% 32%,
-      8% 15%);
-
+  clip-path: polygon(12% 4%, 33% 0%, 54% 6%, 72% 1%, 91% 8%,
+      98% 22%, 94% 41%, 100% 58%, 93% 74%, 97% 88%,
+      82% 98%, 60% 94%, 42% 100%, 20% 96%, 4% 85%,
+      0% 68%, 6% 50%, 2% 32%, 8% 15%);
   transition: clip-path 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .image:hover {
-  clip-path: polygon(15% 2%,
-      36% 7%,
-      57% 1%,
-      75% 5%,
-      94% 10%,
-      100% 26%,
-      96% 44%,
-      98% 61%,
-      90% 77%,
-      95% 91%,
-      78% 100%,
-      56% 95%,
-      38% 99%,
-      16% 93%,
-      2% 82%,
-      5% 64%,
-      1% 47%,
-      6% 28%,
-      10% 12%);
+  clip-path: polygon(15% 2%, 36% 7%, 57% 1%, 75% 5%, 94% 10%,
+      100% 26%, 96% 44%, 98% 61%, 90% 77%, 95% 91%,
+      78% 100%, 56% 95%, 38% 99%, 16% 93%, 2% 82%,
+      5% 64%, 1% 47%, 6% 28%, 10% 12%);
 }
 
 /* Right spacer */
@@ -346,7 +291,7 @@ body {
   opacity: 0.8;
 }
 
-/* ===== CONTENT BELOW HERO (Cards) ===== */
+/* ===== CARDS ===== */
 .content-below-hero {
   padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
   background: transparent;
@@ -373,23 +318,24 @@ body {
   gap: 1.5rem;
 }
 
-/* Card base */
+/* Card base — NO opacity/transform here, GSAP sets that */
 .card {
   background: #ffffff;
   padding: clamp(1.2rem, 3vw, 1.8rem) clamp(1rem, 2.5vw, 1.5rem);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-  transition: box-shadow 0.2s ease, border-color 0.2s;
+  transition: box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
   border-radius: 8px;
   height: 100%;
+  will-change: transform, opacity;
 }
 
 .card:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
-  border-color: #d0d9e0;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
 }
 
+/* ── Card A ── */
 .card-a {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -412,55 +358,230 @@ body {
   object-fit: contain;
 }
 
+/* ── Card B — underline animation ── */
 .card-b {
   background-color: #98a2ac;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  justify-items: center;
+  align-items: center;
   text-align: center;
-  border: 2px solid white;
+  min-height: 220px;
+  gap: 0.5rem;
+  padding: 1.5rem;
 }
 
 .card-b .card-desc {
   color: white;
-  font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+  font-size: 1.1rem;
   line-height: 1.5;
   margin: 0;
 }
 
+.card-role {
+  margin: 0 0 0.8rem 0;
+}
+
+.underline-wrap {
+  position: relative;
+  display: inline-block;
+  color: white;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.underline-draw {
+  display: block;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: center center;
+}
+
+/* ── Card C — bigger image version ── */
 .card-c {
   background-color: #ffaa00e5;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: 0.5fr 0.8fr;
+  gap: 0.8rem;
   align-items: center;
+  overflow: hidden;
+  max-height: 280px;
+  /* controls height */
+  padding: 0.8rem !important;
+  /* tighter padding */
 }
 
-.card-c .card-desc,
-.card-c .card-tech {
+.card-c-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.simple-card-img {
+  width: 100%;
+  height: 200px;
+  /* fixed height so it fills space nicely */
+  object-fit: cover;
+  /* crops to fill — image looks big, card stays small */
+  object-position: top;
+  /* shows top of image */
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* keep the text area the same */
+.card-c-text {
+  width: 100%;
+  padding: 0 0.5rem 0.5rem;
+}
+
+/* responsive: on mobile, stack and allow larger image */
+@media (max-width: 900px) {
+  .card-c {
+    grid-template-columns: 1fr;
+    /* stack */
+    text-align: center;
+  }
+
+  .simple-card-img {
+    max-width: 220px;
+    /* still large but fits mobile */
+  }
+}
+
+/* Typing text for Card E */
+.typed-text {
+  display: inline-block;
+  min-width: 140px;
+  text-align: center;
+}
+
+.typed-cursor {
+  display: inline-block;
+  width: 2px;
+  margin-left: 2px;
+  animation: blinkCursor 0.8s step-end infinite;
+}
+
+@keyframes blinkCursor {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.cta-title {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 2px;
+}
+
+
+
+.typing-svg {
+  width: 80%;
+  max-width: 200px;
+  height: auto;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+}
+
+/* Blinking cursor on card-c */
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Head nod on card-c (subtle) */
+.head-nod {
+  animation: headNod 3s ease-in-out infinite;
+  transform-origin: 100px 50px;
+}
+
+@keyframes headNod {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  30% {
+    transform: rotate(-4deg);
+  }
+
+  60% {
+    transform: rotate(3deg);
+  }
+}
+
+.card-c-text {
+  width: 100%;
+  padding: 0 0.5rem 0.5rem;
+}
+
+.card-c-text h3 {
   color: white;
+  margin: 0 0 0.4rem;
 }
 
-.card-c .card-link {
-  color: saddlebrown;
+.card-c-text .card-desc {
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.card-c>div:first-child img {
-  width: auto;
-  height: 100%;
-  max-width: 100%;
-  object-fit: contain;
+.card-c-text .card-tech {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.82rem;
+  margin-bottom: 0.8rem;
 }
 
-.card-c>div:first-child {
-  align-self: start;
+.card-linkC {
+  color: #3d1f00;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.95rem;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
-.card-c>div:last-child {
-  align-self: center;
+.card-linkC::after {
+  content: "→";
+  font-size: 1.1rem;
 }
 
+.card-linkC:hover {
+  border-bottom-color: #3d1f00;
+}
+
+/* ── Card D ── */
 .card-d {
   display: flex;
   flex-direction: column;
@@ -486,6 +607,7 @@ body {
   margin-right: auto;
 }
 
+/* ── Card E — typing scene ── */
 .card-e {
   grid-row: span 2;
   background-color: rgba(128, 0, 128, 0.877) !important;
@@ -501,8 +623,106 @@ body {
 .cta-title {
   font-size: clamp(1.8rem, 5vw, 2.2rem);
   font-weight: 300;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: white;
+}
+
+.typing-scene {
+  margin: 0.5rem 0 1.2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.typing-loop-svg {
+  width: 120px;
+  height: auto;
+}
+
+/* Looping typing animations on card-e */
+.head-bob-e {
+  animation: headBobE 1.6s ease-in-out infinite;
+  transform-origin: 70px 24px;
+}
+
+@keyframes headBobE {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-3px) rotate(-3deg);
+  }
+
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  75% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+}
+
+.arm-l {
+  animation: armTypeLft 0.4s ease-in-out infinite alternate;
+  transform-origin: 46px 57px;
+}
+
+.arm-r {
+  animation: armTypeRgt 0.4s ease-in-out infinite alternate;
+  transform-origin: 94px 57px;
+}
+
+@keyframes armTypeLft {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes armTypeRgt {
+  from {
+    transform: translateY(-5px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Typing lines grow/shrink loop */
+.tl1 {
+  animation: typeGrow 1.8s ease-in-out infinite;
+}
+
+.tl2 {
+  animation: typeGrow 1.8s ease-in-out infinite 0.3s;
+}
+
+.tl3 {
+  animation: typeGrow 1.8s ease-in-out infinite 0.6s;
+}
+
+@keyframes typeGrow {
+  0% {
+    width: 0;
+  }
+
+  40% {
+    width: 52px;
+  }
+
+  70% {
+    width: 52px;
+  }
+
+  100% {
+    width: 0;
+  }
 }
 
 .cta-button {
@@ -522,6 +742,7 @@ body {
   box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
 }
 
+/* ── Utility cards F & G ── */
 .card-utility {
   text-align: center;
   justify-content: center;
@@ -549,6 +770,7 @@ body {
   color: #333;
 }
 
+/* Shared link styles */
 .card-link {
   color: #4a90e2;
   text-decoration: none;
@@ -565,22 +787,6 @@ body {
 
 .card-link:hover {
   border-bottom-color: #4a90e2;
-}
-
-
-.card-c .card-linkC {
-  color: black !important;
-  text-decoration: none;
-}
-
-.card-c .card-linkC:hover {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.397);
-}
-
-.card-linkC::after {
-  content: " →";
-  font-size: 1.2rem;
-  line-height: 1;
 }
 
 .card-link::after {
@@ -625,8 +831,7 @@ body {
   margin-bottom: 1.25rem;
 }
 
-/* ===== RESPONSIVE BREAKPOINTS ===== */
-
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .hero .grid {
     grid-template-columns: 1fr 1.2fr 1fr;
@@ -699,12 +904,7 @@ body {
   }
 
   .card-c {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .card-c>div:first-child {
-    justify-self: center;
+    flex-direction: column;
   }
 
   .card-e {
@@ -715,6 +915,11 @@ body {
   .shape-triangle {
     width: 150px;
     height: 150px;
+  }
+
+  .flower-shape {
+    width: 100px;
+    height: 100px;
   }
 }
 
@@ -764,6 +969,10 @@ body {
   .card-d {
     padding: 1.5rem;
   }
+
+  .typing-svg {
+    width: 65%;
+  }
 }
 
 @media (max-width: 400px) {
@@ -801,8 +1010,9 @@ body {
     font-size: 0.85rem;
   }
 
-  .background-wrapper::before {
-    border-width: 40px;
+  .flower-shape {
+    width: 80px;
+    height: 80px;
   }
 }
 
@@ -829,7 +1039,17 @@ body {
   .hero .grid,
   .card,
   .cta-button,
-  .image {
+  .image,
+  .cursor-blink,
+  .head-nod,
+  .head-bob-e,
+  .arm-l,
+  .arm-r,
+  .tl1,
+  .tl2,
+  .tl3,
+  .flower-shape {
     transition: none;
+    animation: none !important;
   }
 }
