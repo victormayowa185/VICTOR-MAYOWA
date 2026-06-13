@@ -43,7 +43,7 @@ body {
   position: relative;
   overflow: hidden;
   background-color: #ffffff;
-  padding-bottom: clamp(16rem, 30vw, 22rem);
+  padding-bottom: 5rem;
 }
 
 /* ===== ANIMATED ARC — top left ===== */
@@ -102,7 +102,7 @@ body {
 /* ===== FLOWER — bottom left ===== */
 .flower-shape {
   position: absolute;
-  top: 55%;
+  top: 65%;
   left: -19%;
   width: min(650px, 70vw);
   height: min(450px, 50vw);
@@ -150,7 +150,6 @@ body {
   background-color: white;
   color: black;
   border-bottom: 1px solid #eaeef2;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 .hero .grid {
@@ -198,11 +197,14 @@ body {
   width: 100%;
   background-color: transparent;
   display: flex;
-  align-items: flex-start; /* was center → now top */
+  align-items: flex-start;
+  /* was center → now top */
   justify-content: center;
   overflow: visible;
-  padding-top: 7vh; /* add space from top instead of centering */
-  padding-bottom: 0; /* remove bottom padding we added before */
+  padding-top: 7vh;
+  /* add space from top instead of centering */
+  padding-bottom: 0;
+  /* remove bottom padding we added before */
 }
 
 .image {
@@ -405,59 +407,108 @@ body {
   transform-origin: center center;
 }
 
+
 /* ── Card C — bigger image version ── */
+
+/* --- Optimized Card C (3D Model Card) --- */
 .card-c {
   background-color: #ffaa00e5;
-  display: grid;
-  grid-template-columns: 0.5fr 0.8fr;
-  gap: 0.8rem;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;   
+  border-radius: 12px;
   overflow: hidden;
-  max-height: 280px;
-  /* controls height */
-  padding: 0.8rem !important;
-  /* tighter padding */
+  min-height: 480px; /* Slightly taller for better presence */
+  border: none;
+  position: relative;
 }
 
 .card-c-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem;
+  width: 100%;
+  height: 300px; /* Container height */
+  position: relative;
+  overflow: hidden; /* This crops the edges of the oversized iframe */
 }
 
-.simple-card-img {
-  width: 100%;
-  height: 200px;
-  /* fixed height so it fills space nicely */
-  object-fit: cover;
-  /* crops to fill — image looks big, card stays small */
-  object-position: top;
-  /* shows top of image */
+.card-c-image iframe {
+  position: absolute;
+  /* Make the iframe larger than the container to ensure the model isn't cut off */
+  width: 160%; 
+  height: 160%;
+  
+  /* Center the iframe inside the container */
+  top: 50%;
+  left: 50%;
+  
+  /* 
+     The -55% Y-value is the "Magic Number". 
+     -50% is perfect center. 
+     -55% or -60% pulls the model UP.
+     Adjust this number if the dice is still too low!
+  */
+  transform: translate(-50%, -55%); 
+  
+  border: none;
   display: block;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  pointer-events: auto; /* Allows you to click/drag the model */
 }
 
-
-/* keep the text area the same */
-.card-c-text {
-  width: 100%;
-  padding: 0 0.5rem 0.5rem;
-}
-
-/* responsive: on mobile, stack and allow larger image */
-@media (max-width: 900px) {
+/* On mobile, the dice often needs to be pulled up even more */
+@media (max-width: 600px) {
+  .card-c-image iframe {
+    width: 180%;
+    height: 180%;
+    transform: translate(-50%, -58%); 
+  }
+  
   .card-c {
-    grid-template-columns: 1fr;
-    /* stack */
-    text-align: center;
-  }
-
-  .simple-card-img {
-    max-width: 220px;
-    /* still large but fits mobile */
+    min-height: 450px;
   }
 }
+
+.card-c-text {
+  padding: 1.5rem;
+  z-index: 2; /* Ensures text stays above the iframe edges */
+  flex: 1;
+}
+
+.card-c-text h3 {
+  color: white;
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+}
+
+.card-c-text .card-desc {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+}
+
+.card-linkC {
+  color: #3d1f00;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Typing text for Card E */
 .typed-text {

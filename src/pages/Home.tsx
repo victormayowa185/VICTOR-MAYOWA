@@ -259,6 +259,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     ScrollTrigger.refresh();
   }, []);
+  useEffect(() => {
+    setTimeout(() => window.dispatchEvent(new Event('resize')), 1000)
+  }, [])
 
   return (
     <>
@@ -365,20 +368,32 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid-layout">
+
             {/* Card C */}
+
             <div className="card card-c">
               <div className="card-c-image">
-                <img
-                  src="/card.png"
-                  alt="Developer portfolio preview"
-                  className="simple-card-img"
+                <iframe
+                  src="https://my.spline.design/pixeltextsetcopycopy-E7YTanEkEBFIt2V5YdGzIzoN-S8V/"
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allow="fullscreen; accelerometer; gyroscope; magnetometer; xr-spatial-tracking;"
+                  allowFullScreen
+                  title="3D Pixel Text"
+                  loading="eager" // Changed from lazy for better entrance
                 />
               </div>
               <div className="card-c-text">
                 <h3>My Developer Portfolio</h3>
-                <p className="card-desc">A modern, responsive portfolio built with React – showcases my projects, skills, and experience.</p>
+                <p className="card-desc">
+                  A modern, responsive portfolio built with React – showcases my projects,
+                  skills, and experience.
+                </p>
                 <div className="card-tech">React · CSS · TypeScript</div>
-                <a href="https://victormayowa.vercel.app" className="card-linkC">View Live</a>
+                <a href="https://victormayowa.vercel.app" className="card-linkC">
+                  View Live
+                </a>
               </div>
             </div>
 
