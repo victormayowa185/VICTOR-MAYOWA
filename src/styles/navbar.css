@@ -1,7 +1,7 @@
 /* Navbar.css - Fully responsive & mobile-first with hardened hamburger */
 
 * {
-  font-family: 'Mulish', sans-serif;
+ font-family: 'Google Sans', sans-serif;
   box-sizing: border-box;
 }
 
@@ -19,7 +19,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem);
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
   z-index: 1000;
@@ -36,7 +35,7 @@ body {
 }
 
 .logo-text {
-  font-size: 1.8rem;
+  font-size: 1.5rem !important;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: black;
@@ -104,12 +103,12 @@ body {
 }
 
 .nav-links li a:hover {
-  color: saddlebrown;
+  color:  #7C3EFF;
 }
 
 .nav-links li a.active {
   background: none !important;
-  color: saddlebrown;
+  color:  #7C3EFF;
   font-weight: 600;
 }
 
@@ -131,7 +130,7 @@ body {
 }
 
 .hamburger:hover {
-  color: saddlebrown;
+  color:  #7C3EFF;
 }
 
 /* ---------- Mobile Styles (≤ 768px) ---------- */
@@ -260,5 +259,63 @@ body {
   .navbar {
     padding: 1rem calc((100vw - 1400px) / 2);
     /* Center content on ultra-wide */
+  }
+}
+
+
+/* Logo + text wrapper */
+.brand-logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;          /* space between image and text */
+}
+
+.brand-logo-img {
+  height: 32px;          /* adjust as needed */
+  width: auto;
+  display: block;
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: black;
+}
+
+/* ========== SIDEBAR (rotated -90°) ========== */
+.sidebar-rotate {
+  position: fixed;          /* stay in place while scrolling */
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center center;
+  display: flex;
+  flex-direction: row;      /* horizontal inside – becomes vertical after rotation */
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+  z-index: 10;
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #1a1e24;
+}
+
+.sidebar-text {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.sidebar-divider {
+  width: 1px;
+  height: 60px;            /* adjust height as needed */
+  background: #ccc;
+}
+
+/* Hide sidebar on smaller screens if it overlaps */
+@media (max-width: 768px) {
+  .sidebar-rotate {
+    display: none;
   }
 }

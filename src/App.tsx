@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import { TourProvider } from './components/TourContext';
 import TourOverlay from './components/TourOverlay';
 import Navbar from './components/Navbar';
@@ -13,11 +14,14 @@ import PostDetail from './pages/PostDetail';
 
 // Layout component that wraps every page
 function RootLayout() {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
   return (
     <>
       <Navbar />
       <Outlet />
-      <Footer />
+      {!isHome && <Footer />}
       <TourOverlay />
     </>
   );
