@@ -1,7 +1,7 @@
 /* Navbar.css - Fully responsive & mobile-first with hardened hamburger */
 
 * {
- font-family: 'Google Sans', sans-serif;
+  font-family: 'Google Sans', sans-serif;
   box-sizing: border-box;
 }
 
@@ -11,6 +11,7 @@ body {
 }
 
 /* ---------- Navbar Base (Desktop-first, but fluid) ---------- */
+/* ---------- Navbar Base with Glossy Effect ---------- */
 .navbar {
   position: fixed;
   top: 0;
@@ -19,10 +20,21 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+    gap: 1.5rem;  
+  padding: 0.75rem 2rem;
+  /* added base padding */
+
+  /* 🔥 Glossy glass effect */
+  background-color: rgba(255, 255, 255, 0.5);
+  /* more transparent */
+  backdrop-filter: blur(2px);
+  /* stronger blur */
+  -webkit-backdrop-filter: blur(2px);
+  /* Safari support */
+
+  /* Glass rim / shine */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   z-index: 1000;
-  /* Higher than overlay */
   transition: box-shadow 0.2s;
 }
 
@@ -73,6 +85,7 @@ body {
   gap: 2rem;
   margin: 0;
   padding: 0;
+  margin-left: auto;   /* ← this pushes everything to the right */
 }
 
 .nav-links li {
@@ -103,12 +116,12 @@ body {
 }
 
 .nav-links li a:hover {
-  color:  #7C3EFF;
+  color: #7C3EFF;
 }
 
 .nav-links li a.active {
   background: none !important;
-  color:  #7C3EFF;
+  color: #7C3EFF;
   font-weight: 600;
 }
 
@@ -130,7 +143,7 @@ body {
 }
 
 .hamburger:hover {
-  color:  #7C3EFF;
+  color: #7C3EFF;
 }
 
 /* ---------- Mobile Styles (≤ 768px) ---------- */
@@ -267,11 +280,13 @@ body {
 .brand-logo-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.6rem;          /* space between image and text */
+  gap: 0.6rem;
+  /* space between image and text */
 }
 
 .brand-logo-img {
-  height: 32px;          /* adjust as needed */
+  height: 32px;
+  /* adjust as needed */
   width: auto;
   display: block;
 }
@@ -284,13 +299,15 @@ body {
 
 /* ========== SIDEBAR (rotated -90°) ========== */
 .sidebar-rotate {
-  position: fixed;          /* stay in place while scrolling */
+  position: fixed;
+  /* stay in place while scrolling */
   left: 24px;
   top: 50%;
   transform: translateY(-50%) rotate(-90deg);
   transform-origin: center center;
   display: flex;
-  flex-direction: row;      /* horizontal inside – becomes vertical after rotation */
+  flex-direction: row;
+  /* horizontal inside – becomes vertical after rotation */
   align-items: center;
   gap: 20px;
   white-space: nowrap;
@@ -309,7 +326,8 @@ body {
 
 .sidebar-divider {
   width: 1px;
-  height: 60px;            /* adjust height as needed */
+  height: 60px;
+  /* adjust height as needed */
   background: #ccc;
 }
 
@@ -318,4 +336,42 @@ body {
   .sidebar-rotate {
     display: none;
   }
+}
+
+/* ========== BLOG NAV BUTTON (purple pill) ========== */
+.blog-nav-wrapper {
+  background-color: #270e5c;
+  border-radius: 40px;
+  /* pill shape */
+  padding: 0.1rem 0.2rem;
+  /* minimal padding to wrap the link */
+  transition: background-color 0.2s, transform 0.2s;
+
+}
+
+.blog-nav-wrapper:hover {
+  background-color: #6a2fd9;
+  /* slightly darker on hover */
+  transform: scale(1.05);
+}
+
+.blog-nav-wrapper a {
+  display: block;
+  /* make the link fill the wrapper */
+  padding: 0.5rem 1rem;
+  color: white !important;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.blog-nav-wrapper a:hover {
+  color: white !important;
+  /* keep white on hover */
+}
+
+.blog-nav-wrapper a.active {
+  color: white !important;
+  /* keep white when active */
+  background: none !important;
+  /* remove default active background */
 }

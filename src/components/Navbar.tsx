@@ -13,10 +13,8 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        {/* 👇 Replace this span with logo + text */}
         <div className="brand-logo-wrapper">
           <img src="/logo.png" alt="MAYO X Logo" className="brand-logo-img" />
-       
         </div>
       </div>
 
@@ -29,8 +27,11 @@ const Navbar: React.FC = () => {
         <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
         <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
         <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
-        <li><NavLink to="/blog" onClick={closeMenu}>Blog</NavLink></li>
       </ul>
+
+      <div className="blog-nav-wrapper">
+        <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+      </div>
     </nav>
   );
 };

@@ -2959,10 +2959,8 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        {/* 👇 Replace this span with logo + text */}
         <div className="brand-logo-wrapper">
           <img src="/logo.png" alt="MAYO X Logo" className="brand-logo-img" />
-       
         </div>
       </div>
 
@@ -2975,8 +2973,11 @@ const Navbar: React.FC = () => {
         <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
         <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
         <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
-        <li><NavLink to="/blog" onClick={closeMenu}>Blog</NavLink></li>
       </ul>
+
+      <div className="blog-nav-wrapper">
+        <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+      </div>
     </nav>
   );
 };
@@ -5010,7 +5011,7 @@ body {
 /* Navbar.css - Fully responsive & mobile-first with hardened hamburger */
 
 * {
- font-family: 'Google Sans', sans-serif;
+  font-family: 'Google Sans', sans-serif;
   box-sizing: border-box;
 }
 
@@ -5020,6 +5021,7 @@ body {
 }
 
 /* ---------- Navbar Base (Desktop-first, but fluid) ---------- */
+/* ---------- Navbar Base with Glossy Effect ---------- */
 .navbar {
   position: fixed;
   top: 0;
@@ -5028,10 +5030,21 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
+    gap: 1.5rem;  
+  padding: 0.75rem 2rem;
+  /* added base padding */
+
+  /* 🔥 Glossy glass effect */
+  background-color: rgba(255, 255, 255, 0.5);
+  /* more transparent */
+  backdrop-filter: blur(2px);
+  /* stronger blur */
+  -webkit-backdrop-filter: blur(2px);
+  /* Safari support */
+
+  /* Glass rim / shine */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   z-index: 1000;
-  /* Higher than overlay */
   transition: box-shadow 0.2s;
 }
 
@@ -5082,6 +5095,7 @@ body {
   gap: 2rem;
   margin: 0;
   padding: 0;
+  margin-left: auto;   /* ← this pushes everything to the right */
 }
 
 .nav-links li {
@@ -5112,12 +5126,12 @@ body {
 }
 
 .nav-links li a:hover {
-  color:  #7C3EFF;
+  color: #7C3EFF;
 }
 
 .nav-links li a.active {
   background: none !important;
-  color:  #7C3EFF;
+  color: #7C3EFF;
   font-weight: 600;
 }
 
@@ -5139,7 +5153,7 @@ body {
 }
 
 .hamburger:hover {
-  color:  #7C3EFF;
+  color: #7C3EFF;
 }
 
 /* ---------- Mobile Styles (≤ 768px) ---------- */
@@ -5276,11 +5290,13 @@ body {
 .brand-logo-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.6rem;          /* space between image and text */
+  gap: 0.6rem;
+  /* space between image and text */
 }
 
 .brand-logo-img {
-  height: 32px;          /* adjust as needed */
+  height: 32px;
+  /* adjust as needed */
   width: auto;
   display: block;
 }
@@ -5293,13 +5309,15 @@ body {
 
 /* ========== SIDEBAR (rotated -90°) ========== */
 .sidebar-rotate {
-  position: fixed;          /* stay in place while scrolling */
+  position: fixed;
+  /* stay in place while scrolling */
   left: 24px;
   top: 50%;
   transform: translateY(-50%) rotate(-90deg);
   transform-origin: center center;
   display: flex;
-  flex-direction: row;      /* horizontal inside – becomes vertical after rotation */
+  flex-direction: row;
+  /* horizontal inside – becomes vertical after rotation */
   align-items: center;
   gap: 20px;
   white-space: nowrap;
@@ -5318,7 +5336,8 @@ body {
 
 .sidebar-divider {
   width: 1px;
-  height: 60px;            /* adjust height as needed */
+  height: 60px;
+  /* adjust height as needed */
   background: #ccc;
 }
 
@@ -5327,6 +5346,44 @@ body {
   .sidebar-rotate {
     display: none;
   }
+}
+
+/* ========== BLOG NAV BUTTON (purple pill) ========== */
+.blog-nav-wrapper {
+  background-color: #270e5c;
+  border-radius: 40px;
+  /* pill shape */
+  padding: 0.1rem 0.2rem;
+  /* minimal padding to wrap the link */
+  transition: background-color 0.2s, transform 0.2s;
+
+}
+
+.blog-nav-wrapper:hover {
+  background-color: #6a2fd9;
+  /* slightly darker on hover */
+  transform: scale(1.05);
+}
+
+.blog-nav-wrapper a {
+  display: block;
+  /* make the link fill the wrapper */
+  padding: 0.5rem 1rem;
+  color: white !important;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.blog-nav-wrapper a:hover {
+  color: white !important;
+  /* keep white on hover */
+}
+
+.blog-nav-wrapper a.active {
+  color: white !important;
+  /* keep white when active */
+  background: none !important;
+  /* remove default active background */
 }
 </file>
 
@@ -5857,8 +5914,10 @@ import {
   FaJsSquare,
   FaCss3Alt,
   FaGitAlt,
+  FaGithub,          // 👈 new
 } from 'react-icons/fa';
-import { SiTypescript } from 'react-icons/si';
+import { SiTypescript, SiPython, SiNodedotjs } from 'react-icons/si'; // 👈 new
+import TypewriterText from '../components/TypewriterText';
 import '../styles/home.css';
 
 const Home: React.FC = () => {
@@ -5881,24 +5940,95 @@ const Home: React.FC = () => {
   }, []);
 
   const boxes = [
-    { id: 1, icon: <FaReact size={98} />, label: 'React', color: '#61dafb', offset: 0.3 },
-    { id: 2, icon: <FaJsSquare size={48} />, label: 'JavaScript', color: '#f7df1e', offset: 0.5 },
-    { id: 3, icon: <SiTypescript size={98} />, label: 'TypeScript', color: '#3178c6', offset: 0.4 },
-    { id: 4, icon: <FaGitAlt size={28} />, label: '20+ repos', color: '#f34f29', offset: 0.6 },
-    { id: 5, icon: <FaCss3Alt size={48} />, label: 'CSS3', color: '#2965f1', offset: 0.2 },
+    {
+      id: 1,
+      icon: <FaReact size={120} />,
+      label: 'React',
+      color: '#61dafb',
+      offset: 0.3,
+      // static position (top/left/right/bottom) – one set per box
+      top: '-3%',
+      left: '6%',
+    },
+    {
+      id: 2,
+      icon: <FaJsSquare size={48} />,
+      label: 'JavaScript',
+      color: '#f7df1e',
+      offset: 0.5,
+      top: '1%',
+      right: '1%',
+    },
+    {
+      id: 3,
+      icon: <SiTypescript size={78} />,
+      label: 'TypeScript',
+      color: '#3178c6',
+      offset: 0.4,
+      bottom: '25%',
+      left: '-6%',
+    },
+    {
+      id: 4,
+      icon: <FaGitAlt size={28} />,
+      label: '20+ repos',
+      color: '#f34f29',
+      offset: 0.6,
+      bottom: '1%',
+      right: '-3%',
+    },
+    {
+      id: 5,
+      icon: <FaCss3Alt size={98} />,
+      label: 'CSS3',
+      color: '#2965f1',
+      offset: 0.2,
+      top: '60%',
+      left: '35%',
+    },
+    // ─── new boxes ──────────────────────────────
+    {
+      id: 6,
+      icon: <FaGithub size={38} />,
+      label: 'GitHub',
+      color: '#181717',
+      offset: 0.35,
+      top: '20%',
+      left: '45%',
+    },
+    {
+      id: 7,
+      icon: <SiPython size={48} />,
+      label: 'Python',
+      color: '#3776AB',
+      offset: 0.45,
+      bottom: '25%',
+      right: '17%',
+    },
+    {
+      id: 8,
+      icon: <SiNodedotjs size={48} />,
+      label: 'Node.js',
+      color: '#339933',
+      offset: 0.5,
+      top: '30%',
+      right: '-6%',
+    },
   ];
+
+  const badgeWords = ['Creative', 'Innovative', 'Passionate', 'Detail-Oriented'];
 
   return (
     <div ref={heroRef} className="hero-new">
       <div className="homepage-container">
-        {/* Sidebar – using writing-mode */}
+        {/* Sidebar */}
         <div className="sidebar-rotate">
           <span className="sidebar-text">2026</span>
           <div className="sidebar-divider"></div>
-          <span className="sidebar-text">Founder of MAYO X  </span>
+          <span className="sidebar-text">Founder of MAYO X</span>
         </div>
 
-        {/* Left column – text */}
+        {/* Left column */}
         <div className="main-content">
           <h1 className="hero-name">
             Code. Design.<br /> Build. Innovate.
@@ -5918,14 +6048,23 @@ const Home: React.FC = () => {
         <div className="hero-right">
           <div className="boxes-container">
             {boxes.map((box) => {
+              // Mouse‑driven movement
               const translateX = mousePos.x * 30 * box.offset;
               const translateY = mousePos.y * 30 * box.offset;
+
+              // Build the static position CSS (top, left, right, bottom)
+              const positionStyles: React.CSSProperties = {};
+              if (box.top !== undefined) positionStyles.top = box.top;
+              if (box.left !== undefined) positionStyles.left = box.left;
+              if (box.right !== undefined) positionStyles.right = box.right;
+              if (box.bottom !== undefined) positionStyles.bottom = box.bottom;
 
               return (
                 <div
                   key={box.id}
                   className="scatter-box"
                   style={{
+                    ...positionStyles,
                     transform: `translate(${translateX}px, ${translateY}px)`,
                     borderColor: box.color,
                   }}
@@ -5937,6 +6076,11 @@ const Home: React.FC = () => {
                 </div>
               );
             })}
+
+            {/* Central badge */}
+            <div className="central-badge">
+              <TypewriterText words={badgeWords} />
+            </div>
           </div>
         </div>
       </div>
@@ -5960,8 +6104,7 @@ body {
   overflow-x: hidden;
 }
 
-
-/* ========== HERO SECTION - NO SCROLL, ALIGNED TO TOP ========== */
+/* ========== HERO SECTION ========== */
 .hero-new {
   height: 100vh;
   width: 100%;
@@ -5969,13 +6112,11 @@ body {
   display: flex;
   align-items: flex-start;
   padding: 5rem 1rem 1rem 1rem;
-  /* ← set left padding to 0 */
   position: relative;
   overflow: visible;
-  /* ← allow sidebar to go outside without being cut */
 }
 
-/* ========== FLEX CONTAINER – sidebar and content side by side ========== */
+/* ========== FLEX CONTAINER ========== */
 .homepage-container {
   display: flex;
   align-items: flex-start;
@@ -5987,6 +6128,7 @@ body {
   height: 100%;
 }
 
+/* ========== SIDEBAR ========== */
 .sidebar-rotate {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -6017,12 +6159,11 @@ body {
 .sidebar-divider {
   width: 1px;
   height: 300px;
-  /* ← unchanged – stays at 180px as you requested */
   background: #ccc;
   flex-shrink: 0;
 }
 
-/* ========== MAIN CONTENT (text) ========== */
+/* ========== MAIN CONTENT ========== */
 .main-content {
   flex: 1;
   min-width: 280px;
@@ -6035,7 +6176,6 @@ body {
   font-size: 4rem !important;
   font-weight: 500 !important;
   margin-top: 0;
-  /* ← removes default h1 margin */
   margin-bottom: 1rem;
   color: black;
   line-height: 1.2;
@@ -6058,7 +6198,7 @@ body {
 
 .hero-cta {
   display: inline-block;
- border: 1px solid black;
+  border: 1px solid black;
   color: black;
   padding: 0.8rem 2rem;
   border-radius: 40px;
@@ -6067,9 +6207,7 @@ body {
   transition: 0.2s;
 }
 
-
-
-/* ========== RIGHT COLUMN (boxes) ========== */
+/* ========== RIGHT COLUMN ========== */
 .hero-right {
   flex: 1;
   min-width: 300px;
@@ -6111,33 +6249,6 @@ body {
   transform: scale(1.05) !important;
 }
 
-/* Position each box – scattered randomly */
-.scatter-box:nth-child(1) {
-  top: 5%;
-  left: 5%;
-}
-
-.scatter-box:nth-child(2) {
-  top: 10%;
-  right: 8%;
-}
-
-.scatter-box:nth-child(3) {
-  bottom: 25%;
-  left: 0%;
-}
-
-.scatter-box:nth-child(4) {
-  bottom: 5%;
-  right: 15%;
-}
-
-.scatter-box:nth-child(5) {
-  top: 50%;
-  left: 35%;
-  transform: translateY(-50%);
-}
-
 .box-icon {
   font-size: 2rem;
   line-height: 1;
@@ -6151,12 +6262,28 @@ body {
   margin-top: 0.15rem;
 }
 
+/* ========== CENTRAL BADGE ========== */
+.central-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 0.75rem 2.5rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #1a1e24;
+  z-index: 5;
+  white-space: nowrap;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1024px) {
   .hero-new {
     padding: 5rem 2rem 2rem;
   }
-
   .homepage-container {
     gap: 2rem;
   }
@@ -6169,9 +6296,7 @@ body {
     overflow-y: auto;
     padding: 1.5rem;
     align-items: center;
-    /* ← center content on mobile */
   }
-
   .homepage-container {
     flex-direction: column;
     text-align: center;
@@ -6180,69 +6305,36 @@ body {
     height: auto;
     overflow: visible;
   }
-
   .main-content {
     text-align: center;
     max-width: 100%;
     height: auto;
   }
-
   .hero-bio {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
-
   .hero-right {
     width: 100%;
     min-height: 350px;
     height: auto;
   }
-
   .boxes-container {
     aspect-ratio: 4 / 3;
     max-width: 100%;
   }
-
   .scatter-box {
     min-width: 70px;
     min-height: 70px;
     padding: 0.7rem 0.9rem;
   }
-
-  .scatter-box:nth-child(1) {
-    top: 2%;
-    left: 5%;
-  }
-
-  .scatter-box:nth-child(2) {
-    top: 5%;
-    right: 5%;
-  }
-
-  .scatter-box:nth-child(3) {
-    bottom: 20%;
-    left: 3%;
-  }
-
-  .scatter-box:nth-child(4) {
-    bottom: 2%;
-    right: 8%;
-  }
-
-  .scatter-box:nth-child(5) {
-    top: 45%;
-    left: 30%;
-  }
-
   .box-icon {
     font-size: 1.5rem;
   }
-
   .box-label {
     font-size: 0.65rem;
   }
-
   /* Hide sidebar on mobile */
   .sidebar-rotate {
     display: none;
@@ -6253,22 +6345,18 @@ body {
   .hero-new {
     padding: 1rem;
   }
-
   .hero-right {
     min-height: 300px;
   }
-
   .scatter-box {
     min-width: 60px;
     min-height: 60px;
     padding: 0.5rem 0.7rem;
     border-radius: 12px;
   }
-
   .box-icon {
     font-size: 1.2rem;
   }
-
   .box-label {
     font-size: 0.55rem;
   }
@@ -6276,37 +6364,30 @@ body {
 
 @media (max-width: 400px) {
   .hero-name {
-    font-size: 2rem;
+    font-size: 2rem !important;
   }
-
   .hero-tagline {
     font-size: 1rem;
   }
-
   .hero-bio {
     font-size: 0.9rem;
   }
-
   .hero-cta {
     padding: 0.6rem 1.5rem;
     font-size: 0.9rem;
   }
-
   .hero-right {
     min-height: 250px;
   }
-
   .scatter-box {
     min-width: 50px;
     min-height: 50px;
     padding: 0.4rem 0.5rem;
     border-radius: 10px;
   }
-
   .box-icon {
     font-size: 1rem;
   }
-
   .box-label {
     font-size: 0.5rem;
   }

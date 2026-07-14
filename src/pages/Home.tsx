@@ -4,8 +4,10 @@ import {
   FaJsSquare,
   FaCss3Alt,
   FaGitAlt,
+  FaGithub,          // 👈 new
 } from 'react-icons/fa';
-import { SiTypescript } from 'react-icons/si';
+import { SiTypescript, SiPython, SiNodedotjs } from 'react-icons/si'; // 👈 new
+import TypewriterText from '../components/TypewriterText';
 import '../styles/home.css';
 
 const Home: React.FC = () => {
@@ -28,24 +30,95 @@ const Home: React.FC = () => {
   }, []);
 
   const boxes = [
-    { id: 1, icon: <FaReact size={98} />, label: 'React', color: '#61dafb', offset: 0.3 },
-    { id: 2, icon: <FaJsSquare size={48} />, label: 'JavaScript', color: '#f7df1e', offset: 0.5 },
-    { id: 3, icon: <SiTypescript size={98} />, label: 'TypeScript', color: '#3178c6', offset: 0.4 },
-    { id: 4, icon: <FaGitAlt size={28} />, label: '20+ repos', color: '#f34f29', offset: 0.6 },
-    { id: 5, icon: <FaCss3Alt size={48} />, label: 'CSS3', color: '#2965f1', offset: 0.2 },
+    {
+      id: 1,
+      icon: <FaReact size={120} />,
+      label: 'React',
+      color: '#61dafb',
+      offset: 0.3,
+      // static position (top/left/right/bottom) – one set per box
+      top: '-3%',
+      left: '6%',
+    },
+    {
+      id: 2,
+      icon: <FaJsSquare size={48} />,
+      label: 'JavaScript',
+      color: '#f7df1e',
+      offset: 0.5,
+      top: '1%',
+      right: '1%',
+    },
+    {
+      id: 3,
+      icon: <SiTypescript size={78} />,
+      label: 'TypeScript',
+      color: '#3178c6',
+      offset: 0.4,
+      bottom: '25%',
+      left: '-6%',
+    },
+    {
+      id: 4,
+      icon: <FaGitAlt size={28} />,
+      label: '20+ repos',
+      color: '#f34f29',
+      offset: 0.6,
+      bottom: '1%',
+      right: '-3%',
+    },
+    {
+      id: 5,
+      icon: <FaCss3Alt size={98} />,
+      label: 'CSS3',
+      color: '#2965f1',
+      offset: 0.2,
+      top: '60%',
+      left: '35%',
+    },
+    // ─── new boxes ──────────────────────────────
+    {
+      id: 6,
+      icon: <FaGithub size={38} />,
+      label: 'GitHub',
+      color: '#181717',
+      offset: 0.35,
+      top: '20%',
+      left: '45%',
+    },
+    {
+      id: 7,
+      icon: <SiPython size={48} />,
+      label: 'Python',
+      color: '#3776AB',
+      offset: 0.45,
+      bottom: '25%',
+      right: '17%',
+    },
+    {
+      id: 8,
+      icon: <SiNodedotjs size={48} />,
+      label: 'Node.js',
+      color: '#339933',
+      offset: 0.5,
+      top: '30%',
+      right: '-6%',
+    },
   ];
+
+  const badgeWords = ['Creative', 'Innovative', 'Passionate', 'Detail-Oriented'];
 
   return (
     <div ref={heroRef} className="hero-new">
       <div className="homepage-container">
-        {/* Sidebar – using writing-mode */}
+        {/* Sidebar */}
         <div className="sidebar-rotate">
           <span className="sidebar-text">2026</span>
           <div className="sidebar-divider"></div>
-          <span className="sidebar-text">Founder of MAYO X  </span>
+          <span className="sidebar-text">Founder of MAYO X</span>
         </div>
 
-        {/* Left column – text */}
+        {/* Left column */}
         <div className="main-content">
           <h1 className="hero-name">
             Code. Design.<br /> Build. Innovate.
@@ -65,14 +138,23 @@ const Home: React.FC = () => {
         <div className="hero-right">
           <div className="boxes-container">
             {boxes.map((box) => {
+              // Mouse‑driven movement
               const translateX = mousePos.x * 30 * box.offset;
               const translateY = mousePos.y * 30 * box.offset;
+
+              // Build the static position CSS (top, left, right, bottom)
+              const positionStyles: React.CSSProperties = {};
+              if (box.top !== undefined) positionStyles.top = box.top;
+              if (box.left !== undefined) positionStyles.left = box.left;
+              if (box.right !== undefined) positionStyles.right = box.right;
+              if (box.bottom !== undefined) positionStyles.bottom = box.bottom;
 
               return (
                 <div
                   key={box.id}
                   className="scatter-box"
                   style={{
+                    ...positionStyles,
                     transform: `translate(${translateX}px, ${translateY}px)`,
                     borderColor: box.color,
                   }}
@@ -84,6 +166,11 @@ const Home: React.FC = () => {
                 </div>
               );
             })}
+
+            {/* Central badge */}
+            <div className="central-badge">
+              <TypewriterText words={badgeWords} />
+            </div>
           </div>
         </div>
       </div>
