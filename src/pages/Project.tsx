@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ProjectCard from './ProjectCard';
 import { client } from '../sanity/client';
+import { FiX } from 'react-icons/fi';
 import '../styles/project.css';
 
 interface Project {
@@ -10,7 +11,7 @@ interface Project {
   tags: string[];
   imageUrl: string;
   category: 'website' | 'app' | 'ui' | 'other';
-  projectUrl: string
+  projectUrl: string;
 }
 
 const PROJECTS_QUERY = `*[_type == "project"]{
@@ -29,6 +30,7 @@ const ProjectsPage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
     client.fetch(PROJECTS_QUERY)
@@ -47,10 +49,17 @@ const ProjectsPage = () => {
     return project.category === activeFilter.toLowerCase();
   });
 
+  // Close modal when clicking overlay
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      setSelectedProject(null);
+    }
+  };
+
   return (
     <div className="projects-page">
       <div className="projects-header">
-        <h1>Projects</h1>
+        <h1>View my Works</h1>
         <p>
           A selection of my recent work across web, mobile, and user interfaces.
           Each project reflects a unique challenge and solution.
@@ -77,12 +86,9 @@ const ProjectsPage = () => {
             {filteredProjects.map((project) => (
               <ProjectCard
                 key={project.title}
-                logoUrl={project.logoUrl}
                 title={project.title}
-                description={project.description}
-                tags={project.tags}
                 imageUrl={project.imageUrl}
-                projectUrl={project.projectUrl} // 👈 pass new prop
+                onClick={() => setSelectedProject(project)}
               />
             ))}
           </div>
@@ -90,6 +96,41 @@ const ProjectsPage = () => {
             <p className="no-projects-message">Project in this category is yet to be deployed.</p>
           )}
         </>
+      )}
+
+      {/* ===== PROJECT DETAIL MODAL ===== */}
+      {selectedProject && (
+        <div className="project-modal-overlay" onClick={handleOverlayClick}>
+          <div className="project-modal">
+            <div className="project-modal-header">
+              <h2>{selectedProject.title}</h2>
+              <button 
+                className="project-modal-close"
+                onClick={() => setSelectedProject(null)}
+              >
+                <FiX />
+              </button>
+            </div>
+            <div className="project-modal-body">
+              <p className="project-modal-description">{selectedProject.description}</p>
+              {selectedProject.tags && selectedProject.tags.length > 0 && (
+                <div className="project-modal-tags">
+                  {selectedProject.tags.map((tag) => (
+                    <span key={tag} className="project-modal-tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+              <a 
+                href={selectedProject.projectUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="project-modal-link"
+              >
+                Visit Site →
+              </a>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

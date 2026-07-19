@@ -340,32 +340,28 @@ body {
 
 /* ========== BLOG NAV BUTTON (purple pill) ========== */
 .blog-nav-wrapper {
-  background-color: #270e5c;
-  border-radius: 40px;
+  color: black !important;
+  border-radius: 20px;
   /* pill shape */
-  padding: 0.1rem 0.2rem;
+  padding: 0.1rem 1.2rem;
+  border: 1px solid #7C3EFF;
   /* minimal padding to wrap the link */
   transition: background-color 0.2s, transform 0.2s;
 
 }
 
 .blog-nav-wrapper:hover {
-  background-color: #6a2fd9;
-  /* slightly darker on hover */
+  color: black !important;
   transform: scale(1.05);
 }
 
 .blog-nav-wrapper a {
-  display: block;
-  /* make the link fill the wrapper */
-  padding: 0.5rem 1rem;
-  color: white !important;
   text-decoration: none;
-  font-weight: 600;
+ 
 }
 
 .blog-nav-wrapper a:hover {
-  color: white !important;
+  color: black !important;
   /* keep white on hover */
 }
 
