@@ -1,4 +1,4 @@
-/* ContactPage.css - Fully responsive & mobile-first */
+/* ContactPage.css – Fully responsive & mobile-first */
 
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800&display=swap');
 
@@ -7,151 +7,90 @@
   box-sizing: border-box;
 }
 
-.cen {
-  display: flex;
-  gap: 2%;
-  align-items: center;
-}
-
-/* ---------- Page Background with Moving Gradients ---------- */
+/* ---------- Page Background ---------- */
 .contact-page {
   background-color: #ffffff;
-  background-image:
-    radial-gradient(circle at 50% 50%, rgba(78, 205, 196, 0.5) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.5) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 230, 109, 0.5) 0%, transparent 50%);
-  background-size: 200% 100%, 200% 100%, 200% 100%;
-  background-position: 0% 50%, 20% 50%, 40% 50%;
-  background-repeat: no-repeat;
-  animation: moveGradients 1.9s infinite alternate ease-in-out;
-}
-
-/* ===== Base & Wrapper with animated gradients ===== */
-.con {
-  position: relative;
-  overflow: hidden;
-
-}
-
-@keyframes moveGradients {
-  0% {
-    background-position: -20% 50%, 0% 50%, 20% 50%;
-  }
-
-  100% {
-    background-position: 120% 50%, 140% 50%, 160% 50%;
-  }
-}
-
-/* Slower animation on mobile for performance */
-@media (max-width: 768px) {
-  .contact-page {
-    animation-duration: 2s;
-  }
-}
-
-/* Respect user motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  .contact-page {
-    animation: none;
-  }
-}
-
-@keyframes moveGradients {
-  0% {
-    background-position: 0% 50%, 20% 50%, 40% 50%;
-  }
-
-  100% {
-    background-position: 100% 50%, 80% 50%, 60% 50%;
-  }
 }
 
 /* ---------- Map Section ---------- */
+.map-section-wrapper {
+  max-width: 1400px;
+  margin: 2rem auto 0;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
 .map-section {
   width: 100%;
   height: clamp(280px, 40vh, 380px);
-  /* Fluid height */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  border-bottom: 4px solid white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(124, 62, 255, 0.15);
+  border: 1px solid rgba(124, 62, 255, 0.15);
   animation: fadeInUp 0.9s ease;
 }
 
 .map-section .leaflet-container {
   width: 100%;
   height: 100%;
-  border-radius: 0 0 20px 20px;
   z-index: 5;
+  filter: saturate(1.05);
 }
 
-/* ---------- Hero Section ---------- */
-.heroc {
-  max-width: 800px;
-  margin: clamp(2rem, 6vw, 3rem) auto clamp(1.5rem, 4vw, 2rem);
-  text-align: center;
-  padding: 0 1.5rem;
-  animation: fadeInUp 0.8s 0.1s forwards;
-  opacity: 0;
+/* Custom purple marker */
+.custom-marker {
+  position: relative;
 }
 
-.heroc h1 {
-  font-size: clamp(2rem, 6vw, 3.2rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  background: linear-gradient(145deg, #0f2b3d, #1e4a6f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: black;
-  /* fallback for older browsers */
-  background-clip: text;
-  margin-bottom: 0.6rem;
-  line-height: 1.2;
+.marker-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background: #7C3EFF;
+  border: 3px solid white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 3px 8px rgba(124, 62, 255, 0.5);
 }
 
-.heroc p {
-  font-size: clamp(1rem, 3vw, 1.3rem);
-  color: #475569;
-  font-weight: 400;
+.marker-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  background: rgba(124, 62, 255, 0.35);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: markerPulse 1.8s ease-out infinite;
 }
 
-/* ---------- Contact Grid (Form + Video) ---------- */
-/* ---------- Contact Grid (Form + Video) ---------- */
-.contact-grid {
-  max-width: 1400px;
-  margin: 3rem auto;
-  padding: 0 clamp(1rem, 4vw, 2rem);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-  align-items: start;
-  animation: fadeInUp 0.8s 0.2s forwards;
-  opacity: 0;
+@keyframes markerPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+  }
 }
 
-/* Form Card */
-.form-card {
+.leaflet-popup-content-wrapper {
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(124, 62, 255, 0.25);
+}
+
+.leaflet-popup-tip {
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 20px 35px -8px rgba(0, 34, 64, 0.1);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(2px);
-  width: 100%;
 }
 
-.form-card h2 {
-  font-size: clamp(1.5rem, 4vw, 1.8rem);
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  color: #0b253a;
+.map-popup strong {
+  color: #7C3EFF;
 }
 
-.form-card .sub {
-  margin-bottom: clamp(1.5rem, 3vw, 2.2rem);
-  color: #475569;
-  font-size: 1rem;
-}
-
-/* Form Groups */
+/* ---------- Form elements (reused in modal) ---------- */
 .form-group {
   margin-bottom: clamp(1.2rem, 2.5vw, 1.8rem);
 }
@@ -179,19 +118,15 @@
   transition: all 0.2s;
   outline: none;
   -webkit-appearance: none;
-  /* removes default iOS styling */
   appearance: none;
 }
 
-/* Larger touch target for selects on mobile */
 @media (max-width: 600px) {
-
   .form-group input,
   .form-group select,
   .form-group textarea {
     padding: 0.9rem 1rem;
     font-size: 16px;
-    /* prevents zoom on focus in iOS */
   }
 }
 
@@ -263,153 +198,7 @@
   transform: translateX(5px);
 }
 
-/* Image/Video Side */
-.image-side {
-  background: linear-gradient(145deg, #d4e2f0, #bdd3e8);
-  border-radius: 10px;
-  box-shadow: 0 25px 40px -12px #1f3a5f40;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(2px);
-  max-height: 500px;
-  /* aspect-ratio: 16 / 9; */
-  /* ensures consistent ratio */
-  width: 100%;
-}
-
-.contact-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.contact-image {
-  width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
-  display: block;
-  border-radius: 20px;
-}
-
-/* ---------- Direct Contact Row ---------- */
-/* ---------- Direct Contact Row ---------- */
-.direct-contact {
-  max-width: 1400px;
-  margin: 1rem auto 3rem;
-  padding: 0 2rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: clamp(1rem, 4vw, 2.5rem);
-  backdrop-filter: blur(8px);
-  border-radius: 80px;
-  padding: clamp(1rem, 3vw, 1.4rem) clamp(1.5rem, 4vw, 2.5rem);
-  box-shadow: 0 8px 22px #e2e8f0;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-  font-weight: 500;
-  color: #1e293b;
-  transition: transform 0.2s;
-}
-
-.contact-item svg {
-  font-size: clamp(1.3rem, 4vw, 1.6rem);
-  color: #1e4a6f;
-  transition: color 0.2s, transform 0.2s;
-}
-
-.contact-item:hover svg {
-  color: #3b82f6;
-  transform: scale(1.1);
-}
-
-.contact-item a {
-  text-decoration: none;
-  color: #1e293b;
-  border-bottom: 1px dotted transparent;
-  transition: border-color 0.2s;
-  word-break: break-word;
-  /* prevent long email overflow */
-}
-
-.contact-item a:hover {
-  border-bottom: 1px dotted #3b82f6;
-}
-
-/* ---------- CTA Footer ---------- */
-.cta-footer {
-  background: #0a1a2b;
-  color: white;
-  border-radius: 60px 60px 0 0;
-  padding: clamp(2rem, 6vw, 3.5rem) clamp(1rem, 4vw, 2rem);
-  text-align: center;
-  margin-top: 2rem;
-  animation: fadeInUp 0.8s 0.4s forwards;
-  opacity: 0;
-}
-
-.cta-footer h2 {
-  font-size: clamp(1.6rem, 5vw, 2.4rem);
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #ffffff, #e0f2fe);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.cta-footer .cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: white;
-  color: #0f2b3d;
-  padding: clamp(0.8rem, 2.5vw, 1.1rem) clamp(1.5rem, 4vw, 3rem);
-  border-radius: 60px;
-  font-weight: 700;
-  font-size: clamp(1rem, 3vw, 1.3rem);
-  text-decoration: none;
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.25);
-  transition: all 0.3s;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  touch-action: manipulation;
-}
-
-.cta-footer .cta-button:hover {
-  background: #eef7ff;
-  transform: scale(1.05);
-  box-shadow: 0 25px 35px rgba(0, 0, 0, 0.35);
-}
-
-.cta-footer .cta-button:active {
-  transform: scale(0.98);
-}
-
-.cta-footer .cta-button svg {
-  transition: transform 0.2s;
-}
-
-.cta-footer .cta-button:hover svg {
-  transform: translateX(7px);
-}
-
-.cta-footer .footnote {
-  margin-top: 2rem;
-  color: #a5b8cf;
-  font-size: 0.9rem;
-}
-
-/* ---------- Form Status Messages ---------- */
+/* Form status messages */
 .form-message {
   padding: 1rem;
   border-radius: 16px;
@@ -431,36 +220,219 @@
   border: 1px solid #fecaca;
 }
 
+/* ---------- ACTION BOXES – 2x2 GRID ---------- */
+.action-boxes-wrapper {
+  max-width: 1000px;
+  margin: 3rem auto 4rem;
+  padding: 0 2rem;
+}
 
-/* Shake animation */
-@keyframes shake {
-  0% {
-    transform: translateX(0);
+.action-boxes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.action-box {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 32px;
+  text-decoration: none;
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-box:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.action-box .box-icon-wrapper {
+  margin-bottom: 1rem;
+}
+
+.action-box .box-icon {
+  font-size: 4.5rem;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.action-box:hover .box-icon {
+  transform: scale(1.1) rotate(-4deg);
+}
+
+.action-box .box-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+}
+
+/* ---- Individual box colours ---- */
+.action-box.box-github {
+  background: linear-gradient(145deg, #7C3EFF, #A78BFA);
+}
+
+.action-box.box-hire {
+  background: linear-gradient(145deg, #2563EB, #60A5FA);
+}
+
+.action-box.box-collab {
+  background: linear-gradient(145deg, #059669, #34D399);
+}
+
+.action-box.box-quick {
+  background: linear-gradient(145deg, #D97706, #FBBF24);
+}
+
+/* ---- Coming soon boxes ---- */
+.action-box.coming-soon {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
+
+.action-box.coming-soon:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.coming-soon-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  padding: 0.25rem 1rem;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- MODAL (overlay & content) ---------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInOverlay 0.3s ease;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
   }
-
-  20% {
-    transform: translateX(-8px);
-  }
-
-  40% {
-    transform: translateX(10px);
-  }
-
-  60% {
-    transform: translateX(-4px);
-  }
-
-  80% {
-    transform: translateX(6px);
-  }
-
-  100% {
-    transform: translateX(0);
+  to {
+    opacity: 1;
   }
 }
 
-.shake {
-  animation: shake 0.5s ease-in-out;
+.modal-content {
+  background: white;
+  border-radius: 28px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2rem 2rem 2.5rem;
+  animation: slideUpPopup 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes slideUpPopup {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a1e24;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #5b6876;
+  cursor: pointer;
+  padding: 0.3rem;
+  transition: color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.modal-close-btn:hover {
+  color: #1a1e24;
+  transform: rotate(90deg);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.modal-sub {
+  font-size: 1rem;
+  color: #475569;
+  margin-bottom: 1.5rem;
+}
+
+/* Modal scrollbar */
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-content::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background: #7C3EFF;
+  border-radius: 10px;
+}
+.modal-content {
+  scrollbar-width: thin;
+  scrollbar-color: #7C3EFF #f0f0f0;
 }
 
 /* ---------- Animations ---------- */
@@ -469,7 +441,6 @@
     opacity: 0;
     transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -478,162 +449,77 @@
 
 /* Reduce motion if requested */
 @media (prefers-reduced-motion: reduce) {
-
   .map-section,
-  .heroc,
-  .contact-grid,
-  .direct-contact,
-  .cta-footer,
+  .modal-overlay,
+  .modal-content,
+  .action-box,
   .form-message {
     animation: none;
-    opacity: 1;
+    transition: none;
   }
 }
 
-/* ---------- Responsive Breakpoints ---------- */
+/* ---------- Responsive ---------- */
 
-/* Tablets and below (≤ 900px) */
-@media (max-width: 900px) {
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+/* Tablets */
+@media (max-width: 768px) {
+  .action-boxes-wrapper {
+    max-width: 100%;
+    padding: 0 1.5rem;
   }
-
-  .image-side {
-    max-height: 400px;
-    order: -1;
-    /* video on top for mobile if desired */
+  .action-boxes-grid {
+    gap: 1.5rem;
   }
-
-  .direct-contact {
-    border-radius: 40px;
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
+  .action-box .box-icon {
+    font-size: 3.5rem;
   }
-
-  .contact-item {
-    justify-content: center;
+  .action-box .box-title {
+    font-size: 1.2rem;
   }
 }
 
-/* Small tablets and large phones (≤ 600px) */
+/* Mobile (stack boxes) */
 @media (max-width: 600px) {
   .map-section {
     height: 250px;
   }
-
-  .heroc h1 {
-    font-size: 2rem;
-  }
-
-  .heroc p {
-    font-size: 1.1rem;
-  }
-
-  .form-card {
-    padding: 1.5rem;
-  }
-
-  .image-side {
-    max-height: 300px;
-  }
-
-  .direct-contact {
-    padding: 1rem 1.5rem;
+  .action-boxes-grid {
+    grid-template-columns: 1fr;
     gap: 1.2rem;
   }
-
-  .contact-item {
-    font-size: 0.95rem;
+  .action-box {
+    aspect-ratio: auto;
+    min-height: 200px;
+    padding: 1.8rem 1.5rem;
+    border-radius: 28px;
   }
-
-  .cta-footer h2 {
-    font-size: 1.6rem;
+  .action-box .box-icon {
+    font-size: 3rem;
   }
-
-  .cta-footer .cta-button {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+  .action-box .box-title {
+    font-size: 1.1rem;
+  }
+  .modal-content {
+    padding: 1.5rem;
+  }
+  .modal-header h2 {
+    font-size: 1.4rem;
   }
 }
 
-/* Very small phones (≤ 400px) */
+/* Very small phones */
 @media (max-width: 400px) {
   .map-section {
     height: 200px;
   }
-
-  .heroc h1 {
-    font-size: 1.6rem;
+  .action-box {
+    min-height: 170px;
+    padding: 1.2rem 1rem;
   }
-
-  .heroc p {
-    font-size: 0.95rem;
+  .action-box .box-icon {
+    font-size: 2.5rem;
   }
-
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    padding: 0.8rem 0.9rem;
-    font-size: 0.95rem;
-  }
-
-  .submit-btn {
-    padding: 0.8rem 1.2rem;
+  .action-box .box-title {
     font-size: 1rem;
-  }
-
-  .direct-contact {
-    padding: 0.8rem 1rem;
-    gap: 0.8rem;
-  }
-
-  .contact-item svg {
-    font-size: 1.3rem;
-  }
-
-  .cta-footer {
-    padding: 1.5rem 1rem;
-  }
-
-  .cta-footer h2 {
-    font-size: 1.4rem;
-  }
-
-  .cta-footer .cta-button {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
-  }
-}
-
-/* Landscape orientation on mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-  .map-section {
-    height: 200px;
-  }
-
-  .contact-grid {
-    gap: 1.5rem;
-  }
-
-  .image-side {
-    max-height: 250px;
-  }
-
-  .direct-contact {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-}
-
-/* High-resolution screens (optional) */
-@media (min-width: 1440px) {
-
-  .contact-grid,
-  .direct-contact {
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
   }
 }
