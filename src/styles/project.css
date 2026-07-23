@@ -21,7 +21,8 @@
 }
 
 .projects-page {
-  width: 100% !important;
+  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
   padding: clamp(1rem, 5vw, 1rem) clamp(1rem, 5vw, 5rem);
  
@@ -182,11 +183,8 @@
 }
 
 /* Large devices (desktops, 1024px and up) */
+/* Large devices (desktops, 1024px and up) */
 @media (min-width: 1024px) {
-  .projects-page {
-    width: 100% !important;
-  }
-
   .projects-grid {
     grid-template-columns: repeat(3, 1fr);
   }

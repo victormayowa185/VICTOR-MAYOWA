@@ -139,9 +139,9 @@ const About: React.FC = () => {
             <div className="about-row about-row-top">
               <div className="about-col about-col-left">
                 <div className="profile-image-wrapper">
-                  <img 
-                    src="/pic2.png" 
-                    alt="Victor Mayowa – Web Developer" 
+                  <img
+                    src="/pic2.png"
+                    alt="Victor Mayowa – Web Developer"
                     className="profile-image"
                   />
                 </div>
@@ -203,8 +203,8 @@ const About: React.FC = () => {
                     <div className="stat-item stat-item-extra">
                       <SiFramework className="stat-extra-icon" />
                       <span className="stat-number">
-                        <TypewriterText 
-                          words={['5+', '8+', '10+', '12+', '15+']} 
+                        <TypewriterText
+                          words={['5+', '8+', '10+', '12+', '15+']}
                           typingSpeed={80}
                           deletingSpeed={40}
                           pauseDuration={2000}
@@ -215,7 +215,7 @@ const About: React.FC = () => {
                     <div className="stat-item stat-item-extra">
                       <FaGithub className="stat-extra-icon" />
                       <span className="stat-number">
-                        <TypewriterText 
+                        <TypewriterText
                           words={['20+', '25+', '30+', '35+', '40+']}
                           typingSpeed={80}
                           deletingSpeed={40}
@@ -227,7 +227,7 @@ const About: React.FC = () => {
                     <div className="stat-item stat-item-extra">
                       <FaRocket className="stat-extra-icon" />
                       <span className="stat-number">
-                        <TypewriterText 
+                        <TypewriterText
                           words={['3+', '5+', '7+', '10+', '12+']}
                           typingSpeed={80}
                           deletingSpeed={40}
@@ -239,7 +239,7 @@ const About: React.FC = () => {
                     <div className="stat-item stat-item-extra">
                       <FaUsers className="stat-extra-icon" />
                       <span className="stat-number">
-                        <TypewriterText 
+                        <TypewriterText
                           words={['50+', '60+', '75+', '100+', '120+']}
                           typingSpeed={80}
                           deletingSpeed={40}
@@ -264,9 +264,9 @@ const About: React.FC = () => {
                     <div key={`${item.id}-${index}`} className="achievement-card">
                       <div className="achievement-image-wrapper">
                         {item.type === 'badge' && item.badgeImage ? (
-                          <img 
-                            src={item.badgeImage} 
-                            alt={item.title} 
+                          <img
+                            src={item.badgeImage}
+                            alt={item.title}
                             className="achievement-badge"
                           />
                         ) : (
@@ -284,11 +284,11 @@ const About: React.FC = () => {
 
               {/* View Timeline Button */}
               <div className="timeline-button-wrapper">
-                <button 
-                  className="view-timeline-btn" 
+                <button
+                  className="view-timeline-btn"
                   onClick={toggleTimeline}
                 >
-                  {showTimeline ? 'Hide Timeline ▲' : 'View Timeline ▼'}
+                  {showTimeline ? 'Hide Timeline' : 'View Timeline'}
                 </button>
               </div>
 
@@ -296,54 +296,57 @@ const About: React.FC = () => {
               {showTimeline && (
                 <div className="timeline-overlay">
                   <div className="timeline-popup">
-                    <div className="timeline-popup-header">
-                      <h3>Certificates &amp; Achievements</h3>
-                      <button className="timeline-close-btn" onClick={toggleTimeline}>
-                        <FiX />
-                      </button>
-                    </div>
-                    <div className="timeline-popup-content">
-                      {achievements.map((item, index) => (
-                        <div key={item.id} className="timeline-item">
-                          <div className="timeline-item-left">
-                            <span className="timeline-year">{item.date}</span>
-                            {index < achievements.length - 1 && (
-                              <div className="timeline-connector"></div>
-                            )}
+                    <div className="timeline-popup-scroll">
+                      <div className="timeline-popup-header">
+                        <h3>Certificates &amp; Achievements</h3>
+                        <button className="timeline-close-btn" onClick={toggleTimeline}>
+                          <FiX />
+                        </button>
+                      </div>
+                      <div className="timeline-popup-content">
+                        {achievements.map((item, index) => (
+                          <div key={item.id} className="timeline-item">
+                            <div className="timeline-item-left">
+                              <span className="timeline-year">{item.date}</span>
+                              {index < achievements.length - 1 && (
+                                <div className="timeline-connector"></div>
+                              )}
+                            </div>
+                            <div className="timeline-item-right">
+                              <h3>{item.title}</h3>
+                              <p>{item.description}</p>
+                              {item.type === 'badge' && item.badgeImage && (
+                                <img
+                                  src={item.badgeImage}
+                                  alt={item.title}
+                                  className="timeline-badge-img"
+                                />
+                              )}
+                              {item.type === 'project' && (
+                                <div className="timeline-project-icon">
+                                  {item.icon}
+                                </div>
+                              )}
+                              {/* 👇 NEW: Verify link - only shows for badges with verifyLink */}
+                              {item.verifyLink && (
+                                <a
+                                  href={item.verifyLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="timeline-verify-link"
+                                >
+                                  🔗 Verify on Google →
+                                </a>
+                              )}
+                            </div>
                           </div>
-                          <div className="timeline-item-right">
-                            <h3>{item.title}</h3>
-                            <p>{item.description}</p>
-                            {item.type === 'badge' && item.badgeImage && (
-                              <img 
-                                src={item.badgeImage} 
-                                alt={item.title} 
-                                className="timeline-badge-img"
-                              />
-                            )}
-                            {item.type === 'project' && (
-                              <div className="timeline-project-icon">
-                                {item.icon}
-                              </div>
-                            )}
-                            {/* 👇 NEW: Verify link - only shows for badges with verifyLink */}
-                            {item.verifyLink && (
-                              <a 
-                                href={item.verifyLink} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="timeline-verify-link"
-                              >
-                                🔗 Verify on Google →
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
+
             </div>
           </div>
         </div>

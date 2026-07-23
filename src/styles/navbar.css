@@ -344,18 +344,20 @@ body {
   border-radius: 20px;
   /* pill shape */
   padding: 0.1rem 1.2rem;
-  border: 1px solid #7C3EFF;
+  border: 1px solid black;
   /* minimal padding to wrap the link */
   transition: background-color 0.2s, transform 0.2s;
 
 }
 
 .blog-nav-wrapper:hover {
+  border-radius: 10px;
   color: black !important;
   transform: scale(1.05);
 }
 
 .blog-nav-wrapper a {
+  color: black;
   text-decoration: none;
  
 }
