@@ -32,12 +32,14 @@ const Navbar: React.FC = () => {
           <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
           <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
           <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
-          <li className="blog-nav-item"><NavLink to="/blog" onClick={closeMenu}>Blog</NavLink></li>
+          <li className="blog-nav-item">
+            <NavLink to="/blog" className="blog-link" onClick={closeMenu}>Blog</NavLink>
+          </li>
         </ul>
 
         {/* Desktop Blog link (outside the mobile menu) */}
         <div className="blog-nav-wrapper">
-          <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+          <NavLink to="/blog" className="blog-link" onClick={closeMenu}>Blog</NavLink>
         </div>
       </div>
     </nav>

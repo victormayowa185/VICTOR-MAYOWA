@@ -404,11 +404,13 @@
 .timeline-item {
   display: flex;
   gap: 2rem;
-  background: #f8f9fc;
-  padding: 1.5rem 2rem;
-  border-radius: 16px;
-  border: 1px solid #f0f0f0;
-  transition: transform 0.2s;
+  padding: 1.5rem 1.5rem 1.5rem 2rem;   /* increased vertical padding → taller */
+  border-left: 4px solid #7C3EFF;         /* ← left border like skill cards */
+  border-bottom: none;                    /* remove bottom border for cleaner look */
+  background: rgba(124, 62, 255, 0.03);   /* subtle background (optional) */
+  border-radius: 0 8px 8px 0;            /* slight rounding on the right */
+  transition: background 0.3s, transform 0.2s;
+  min-height: 8rem;                      /* ensures minimum height, adjust as needed */
 }
 
 .timeline-item:hover {
@@ -427,7 +429,7 @@
   padding: 0.3rem 1rem;
   border-radius: 10px;
   display: inline-block;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   white-space: nowrap;
 }
 
@@ -1054,7 +1056,7 @@ border-radius: 10px;
   -webkit-backdrop-filter: blur(8px);
   z-index: 999;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   animation: fadeInOverlay 0.4s ease;
 }
@@ -1071,7 +1073,7 @@ border-radius: 10px;
 /* ===== TIMELINE POPUP ===== */
 .timeline-popup {
   background: white;
-  border-radius: 24px 24px 0 0;
+  border-radius: 24px;
   max-width: 900px;
   width: 100%;
   max-height: 80vh;
@@ -1176,7 +1178,7 @@ border-radius: 10px;
 
 .timeline-item-right h3 {
   margin: 0 0 0.3rem 0;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #1a1e24;
   font-weight: 600;
 }
@@ -1185,7 +1187,7 @@ border-radius: 10px;
   margin: 0 0 0.8rem 0;
   color: #5b6876;
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: 0.9  rem;
 }
 
 .timeline-badge-img {

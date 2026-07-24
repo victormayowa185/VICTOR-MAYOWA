@@ -315,19 +315,12 @@ const About: React.FC = () => {
                             <div className="timeline-item-right">
                               <h3>{item.title}</h3>
                               <p>{item.description}</p>
-                              {item.type === 'badge' && item.badgeImage && (
-                                <img
-                                  src={item.badgeImage}
-                                  alt={item.title}
-                                  className="timeline-badge-img"
-                                />
-                              )}
+                              {/* badge image removed */}
                               {item.type === 'project' && (
                                 <div className="timeline-project-icon">
                                   {item.icon}
                                 </div>
                               )}
-                              {/* 👇 NEW: Verify link - only shows for badges with verifyLink */}
                               {item.verifyLink && (
                                 <a
                                   href={item.verifyLink}
