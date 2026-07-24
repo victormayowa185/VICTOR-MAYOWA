@@ -1,9 +1,10 @@
 /* ===== BLOG FEED STYLES ===== */
 
 /* Main feed container */
+/* Main feed container */
 .blog-feed {
   background-color: #ffffff;
-  padding: 2rem 1rem;
+  padding: 2rem 2rem;
 }
 
 /* Sticky search bar */

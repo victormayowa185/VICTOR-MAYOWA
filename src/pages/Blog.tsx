@@ -1,84 +1,89 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useTour } from '../components/TourContext';
-import { FaLaptopCode } from "react-icons/fa6";
-import { FiMousePointer } from "react-icons/fi";
-import { IoGitMergeOutline } from "react-icons/io5";
-import TypewriterText from '../components/TypewriterText';
-import { TbNetwork } from "react-icons/tb";
-import { TbLocationStar } from "react-icons/tb";
+import React, { useEffect, useState } from 'react';
 import BlogFeed from '../components/BlogFeed';
 import '../styles/blog.css';
 
+interface NewsArticle {
+    title: string;
+    description: string | null;
+    url: string;
+    urlToImage: string | null;
+}
+
+// Foundation fallback pool — swap these paths once you drop your ~10 curated
+// images into /public/news-fallback/. Using existing public images for now
+// so the feature works end-to-end today.
+const FALLBACK_IMAGES = ['/pic2.png', '/picc.png', '/see.png', '/1.png'];
+
+const getRandomFallback = () =>
+    FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
+
 const Hero: React.FC = () => {
-    const heroRef = useRef<HTMLDivElement>(null);
-    const [side, setSide] = useState<'left' | 'right' | null>(null);
-    const { startTour } = useTour(); 
+    const [article, setArticle] = useState<NewsArticle | null>(null);
+    const [bgImage, setBgImage] = useState<string>(getRandomFallback());
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const hero = heroRef.current;
-        if (!hero) return;
+        let isMounted = true;
 
-        const handleMouseMove = (e: MouseEvent) => {
-            const viewportWidth = window.innerWidth;
-            const mouseX = e.clientX;
-            setSide(mouseX < viewportWidth / 2 ? 'left' : 'right');
-        };
-
-        const handleMouseLeave = () => {
-            setSide(null);
-        };
-
-        hero.addEventListener('mousemove', handleMouseMove);
-        hero.addEventListener('mouseleave', handleMouseLeave);
+        fetch('/api/news')
+            .then((res) => {
+                if (!res.ok) throw new Error('News fetch failed');
+                return res.json();
+            })
+            .then((data) => {
+                if (!isMounted) return;
+                if (data.article && data.article.urlToImage) {
+                    setArticle(data.article);
+                    setBgImage(data.article.urlToImage);
+                } else {
+                    setBgImage(getRandomFallback());
+                }
+            })
+            .catch(() => {
+                if (isMounted) setBgImage(getRandomFallback());
+            })
+            .finally(() => {
+                if (isMounted) setLoading(false);
+            });
 
         return () => {
-            hero.removeEventListener('mousemove', handleMouseMove);
-            hero.removeEventListener('mouseleave', handleMouseLeave);
+            isMounted = false;
         };
     }, []);
-
-    const topWords = ['Creative', 'Innovative', 'Passionate', 'Detail-Oriented'];
-    const bottomWords = ['5+ years', '10+ projects', '3 startups', '20+ repos'];
 
     return (
         <div>
             <h1 className="visually-hidden">Victor Mayowa – Web Developer & Designer Blog</h1>
 
-            <div ref={heroRef} className="hero" aria-label="Interactive hero section with mouse‑sensitive blur effect">
-                <div className="hero-grid">
-                    {/* Left column – artistic name */}
-                    <div className={`left-column ${side === 'right' ? 'blur' : ''}`}>
-                        <div className='hero-name-art'>
-                            <img src="VIC.png" alt="Artistic logo of Victor Mayowa's name" />
-                        </div>
-                        <div className="button-group">
-                            <button className="hero-button" onClick={startTour} aria-label="Start guided tour of the blog">
-                                Get Started
-                            </button>
-                        </div>
-                    </div>
+            <div
+                className="news-hero"
+                style={{ backgroundImage: `url(${bgImage})` }}
+                aria-label="Latest trending tech news"
+            >
+                <div className="news-hero-overlay" />
+                <div className="news-hero-content">
+                    <span className="news-hero-tag">
+                        {loading ? 'Loading latest tech news…' : 'Trending in Tech'}
+                    </span>
 
-                    {/* Right column – unchanged */}
-                    <div className={`right-column ${side === 'left' ? 'blur' : ''}`}>
-                        <div className="right-content">
-                            <div className="image-wrapper">
-                                <div className="image-circle">
-                                    <img src="/pic2.png" alt="Profile portrait of Victor Mayowa" className="profile-image" />
-                                </div>
-                                <div className="rect rect-top-right">
-                                    <TbLocationStar aria-hidden="true" /> <TypewriterText words={topWords} />
-                                </div>
-                                <div className="rect rect-bottom-left">
-                                    <TbNetwork aria-hidden="true" /> <TypewriterText words={bottomWords} />
-                                </div>
-                            </div>
-                            <div className="icon-circles-vertical">
-                                <FiMousePointer className="icon-circle" aria-label="Mouse pointer icon" />
-                                <FaLaptopCode className="icon-circle" aria-label="Laptop code icon" />
-                                <IoGitMergeOutline className="icon-circle" aria-label="Git merge icon" />
-                            </div>
-                        </div>
-                    </div>
+                    <h2 className="news-hero-headline">
+                        {article ? article.title : 'Stay tuned for the latest in tech'}
+                    </h2>
+
+                    {article?.description && (
+                        <p className="news-hero-desc">{article.description}</p>
+                    )}
+
+                    {article?.url && (
+                        <a
+                            href={article.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="news-hero-cta"
+                        >
+                            Read Full Article
+                        </a>
+                    )}
                 </div>
             </div>
 
