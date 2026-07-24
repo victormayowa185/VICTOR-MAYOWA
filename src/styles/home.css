@@ -27,6 +27,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 3rem;
+   padding: 0.1rem 2rem 0 1rem;
   width: 100%;
   max-width: 1400px;
   overflow-x: visible;
@@ -36,6 +37,11 @@ body {
 
 /* ========== SIDEBAR ========== */
 .sidebar-rotate {
+  position: absolute;
+  /* ← taken out of flex flow */
+  left: 4rem;
+  /* ← move it left independently */
+  top: 5rem;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   display: flex;
@@ -43,12 +49,6 @@ body {
   gap: 1rem;
   flex-shrink: 0;
   height: fit-content;
-  padding-top: 0;
-  margin-top: 0;
-  position: relative;
-  top: 1rem;
-  margin-left: -1rem;
-  margin-right: 3rem;
   font-family: 'Google Sans', sans-serif;
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -56,7 +56,7 @@ body {
 }
 
 .sidebar-text {
-  font-size: 0.7rem;
+   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   white-space: nowrap;
@@ -76,6 +76,7 @@ body {
   max-width: 600px;
   padding-top: 0;
   height: fit-content;
+   margin-left: 5rem;
 }
 
 .hero-name {
@@ -111,6 +112,10 @@ body {
   font-weight: 600;
   text-decoration: none;
   transition: 0.2s;
+}
+
+.hero-cta:hover{
+  border-radius: 20px;
 }
 
 /* ========== RIGHT COLUMN ========== */

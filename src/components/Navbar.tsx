@@ -12,25 +12,33 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">
-        <div className="brand-logo-wrapper">
-          <img src="/logo.png" alt="MAYO X Logo" className="brand-logo-img" />
+      {/* Inner container – the pill */}
+      <div className="navbar-inner">
+        {/* Logo / Brand */}
+        <div className="navbar-brand">
+          <div className="brand-logo-wrapper">
+            <img src="/logo.png" alt="MAYO X Logo" className="brand-logo-img" />
+          </div>
         </div>
-      </div>
 
-      <button className="hamburger" onClick={toggleMenu}>
-        {menuOpen ? <HiX /> : <HiMenu />}
-      </button>
+        {/* Hamburger (visible only on mobile) */}
+        <button className="hamburger" onClick={toggleMenu}>
+          {menuOpen ? <HiX /> : <HiMenu />}
+        </button>
 
-      <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-        <li><NavLink to="/" end onClick={closeMenu}>Home</NavLink></li>
-        <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
-        <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
-        <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
-      </ul>
+        {/* Navigation links */}
+        <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
+          <li><NavLink to="/" end onClick={closeMenu}>Home</NavLink></li>
+          <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
+          <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
+          <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
+          <li className="blog-nav-item"><NavLink to="/blog" onClick={closeMenu}>Blog</NavLink></li>
+        </ul>
 
-      <div className="blog-nav-wrapper">
-        <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+        {/* Desktop Blog link (outside the mobile menu) */}
+        <div className="blog-nav-wrapper">
+          <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+        </div>
       </div>
     </nav>
   );

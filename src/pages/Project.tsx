@@ -66,6 +66,7 @@ const ProjectsPage = () => {
         </p>
       </div>
 
+      {/* Filter buttons – will be sticky via CSS */}
       <div className="filter-buttons">
         {categories.map((cat) => (
           <button
