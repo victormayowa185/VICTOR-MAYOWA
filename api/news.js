@@ -1,4 +1,12 @@
-import { kv } from '@vercel/kv';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+
+import { Redis } from '@upstash/redis';
+
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL,
+  token: process.env.KV_REST_API_TOKEN,
+});
 
 const TIMEZONE = 'Africa/Lagos';
 
@@ -46,6 +54,12 @@ async function fetchTwoArticles() {
 }
 
 export default async function handler(req, res) {
+  console.log('DEBUG ENV CHECK:', {
+    hasKvUrl: !!process.env.KV_REST_API_URL,
+    hasKvToken: !!process.env.KV_REST_API_TOKEN,
+    hasNewsKey: !!process.env.NEWSAPI_KEY,
+  });
+
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
@@ -54,13 +68,12 @@ export default async function handler(req, res) {
     const { dateKey, hour } = getLagosDateAndHour();
     const cacheKey = `daily-news:${dateKey}`;
 
-    let picks = await kv.get(cacheKey);
+    let picks = await redis.get(cacheKey);
 
-    // No picks saved yet for today → fetch once, save for the rest of the day
     if (!picks || !Array.isArray(picks) || picks.length === 0) {
       picks = await fetchTwoArticles();
       if (picks.length > 0) {
-        await kv.set(cacheKey, picks, { ex: 60 * 60 * 30 }); // safety expiry, 30hrs
+        await redis.set(cacheKey, picks, { ex: 60 * 60 * 30 });
       }
     }
 
@@ -68,7 +81,6 @@ export default async function handler(req, res) {
       return res.status(200).json({ article: null });
     }
 
-    // Morning (00:00–11:59) = picks[0]. Evening (12:00–23:59) = picks[1].
     const chosen = hour < 12 ? picks[0] : (picks[1] || picks[0]);
 
     return res.status(200).json({ article: chosen });
