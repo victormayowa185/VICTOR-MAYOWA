@@ -27,7 +27,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 3rem;
-   padding: 0.1rem 2rem 0 1rem;
+  padding: 0.1rem 2rem 0 1rem;
   width: 100%;
   max-width: 1400px;
   overflow-x: visible;
@@ -38,9 +38,7 @@ body {
 /* ========== SIDEBAR ========== */
 .sidebar-rotate {
   position: absolute;
-  /* ← taken out of flex flow */
   left: 4rem;
-  /* ← move it left independently */
   top: 5rem;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
@@ -56,7 +54,7 @@ body {
 }
 
 .sidebar-text {
-   font-size: 0.7rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   white-space: nowrap;
@@ -76,7 +74,7 @@ body {
   max-width: 600px;
   padding-top: 0;
   height: fit-content;
-   margin-left: 5rem;
+  margin-left: 5rem;
 }
 
 .hero-name {
@@ -114,8 +112,15 @@ body {
   transition: 0.2s;
 }
 
-.hero-cta:hover{
+.hero-cta:hover {
   border-radius: 20px;
+}
+
+/* ========== MOBILE-ONLY TYPEWRITER FOOTER ========== */
+/* Hidden on desktop — this is the duplicate typewriter block that only
+   shows up under 900px, acting as a footer for the homepage. */
+.mobile-footer-type {
+  display: none;
 }
 
 /* ========== RIGHT COLUMN ========== */
@@ -220,56 +225,39 @@ body {
     text-align: center;
     max-width: 100%;
     height: auto;
+    margin-left: 0;
   }
   .hero-bio {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
+
+  /* Hide the whole scattered-icons column on mobile */
   .hero-right {
-    width: 100%;
-    min-height: 350px;
-    height: auto;
-  }
-  .boxes-container {
-    aspect-ratio: 4 / 3;
-    max-width: 100%;
-  }
-  .scatter-box {
-    min-width: 70px;
-    min-height: 70px;
-    padding: 0.7rem 0.9rem;
-  }
-  .box-icon {
-    font-size: 1.5rem;
-  }
-  .box-label {
-    font-size: 0.65rem;
-  }
-  /* Hide sidebar on mobile */
-  .sidebar-rotate {
     display: none;
+  }
+
+  /* Show the typewriter as a footer-style block under the CTA */
+  .mobile-footer-type {
+    display: block;
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e5e5e5;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1e24;
+  }
+
+  .sidebar-rotate {
+    left: 1rem;   /* 👈 move it left — lower number = further left */
+    top: 7rem;    /* adjust vertical position too if needed */
   }
 }
 
 @media (max-width: 600px) {
   .hero-new {
     padding: 1rem;
-  }
-  .hero-right {
-    min-height: 300px;
-  }
-  .scatter-box {
-    min-width: 60px;
-    min-height: 60px;
-    padding: 0.5rem 0.7rem;
-    border-radius: 12px;
-  }
-  .box-icon {
-    font-size: 1.2rem;
-  }
-  .box-label {
-    font-size: 0.55rem;
   }
 }
 
@@ -286,20 +274,5 @@ body {
   .hero-cta {
     padding: 0.6rem 1.5rem;
     font-size: 0.9rem;
-  }
-  .hero-right {
-    min-height: 250px;
-  }
-  .scatter-box {
-    min-width: 50px;
-    min-height: 50px;
-    padding: 0.4rem 0.5rem;
-    border-radius: 10px;
-  }
-  .box-icon {
-    font-size: 1rem;
-  }
-  .box-label {
-    font-size: 0.5rem;
   }
 }

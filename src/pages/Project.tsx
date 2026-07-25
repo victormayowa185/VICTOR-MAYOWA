@@ -1,4 +1,3 @@
-// src/pages/Project.tsx
 import { useState, useEffect, useRef } from 'react';
 import ProjectCard from './ProjectCard';
 import { client } from '../sanity/client';
@@ -29,6 +28,11 @@ const PROJECTS_QUERY = `*[_type == "project"] | order(_createdAt desc){
 
 const categories = ['All', 'Website', 'App', 'UI'];
 
+// Buffer zone (in px) around the trigger point so tiny scroll jitter near
+// the threshold doesn't cause the pill to flicker on/off rapidly.
+const SHOW_THRESHOLD = -20;
+const HIDE_THRESHOLD = 20;
+
 const ProjectsPage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,6 +43,7 @@ const ProjectsPage = () => {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
   const pillActiveRef = useRef(false);
+  const scrollingDownRef = useRef(false);
 
   useEffect(() => {
     client.fetch(PROJECTS_QUERY)
@@ -52,18 +57,34 @@ const ProjectsPage = () => {
       });
   }, []);
 
-  // Same navbar-swap scroll mechanic as the blog page's search bar
+  // Same navbar-swap scroll mechanic as the blog page, but with the sentinel
+  // sitting right at the very top of the page (so even a short page with
+  // little scroll room can still cross the trigger), plus a buffer zone
+  // to prevent rapid on/off flicker right at the boundary.
   useEffect(() => {
     const handleScroll = () => {
       if (!sentinelRef.current) return;
 
-      const sentinelTop = sentinelRef.current.getBoundingClientRect().top;
-      const pastThreshold = sentinelTop <= 0;
       const currentY = window.scrollY;
-      const scrollingDown = currentY > lastScrollY.current;
-      lastScrollY.current = currentY;
+      const delta = currentY - lastScrollY.current;
 
-      const shouldShowPill = pastThreshold ? scrollingDown : false;
+      // Ignore tiny jitter (common with trackpads/inertia scrolling) so
+      // direction detection doesn't flip-flop on every 1-2px micro-movement.
+      if (Math.abs(delta) > 4) {
+        scrollingDownRef.current = delta > 0;
+        lastScrollY.current = currentY;
+      }
+
+      const sentinelTop = sentinelRef.current.getBoundingClientRect().top;
+      const scrollingDown = scrollingDownRef.current;
+
+      let shouldShowPill = pillActiveRef.current;
+
+      if (!pillActiveRef.current && sentinelTop <= SHOW_THRESHOLD && scrollingDown) {
+        shouldShowPill = true;
+      } else if (pillActiveRef.current && (sentinelTop >= HIDE_THRESHOLD || !scrollingDown)) {
+        shouldShowPill = false;
+      }
 
       if (shouldShowPill !== pillActiveRef.current) {
         pillActiveRef.current = shouldShowPill;
@@ -89,7 +110,6 @@ const ProjectsPage = () => {
     }
   };
 
-  // Helper to get category label for display
   const getCategoryLabel = (category: string) => {
     const map: Record<string, string> = {
       website: 'Website',
@@ -100,7 +120,6 @@ const ProjectsPage = () => {
     return map[category] || category;
   };
 
-  // Helper to get category color
   const getCategoryColor = (category: string) => {
     const map: Record<string, string> = {
       website: '#7C3EFF',
@@ -113,6 +132,11 @@ const ProjectsPage = () => {
 
   return (
     <div className="projects-page">
+      {/* Sentinel now sits at the very top of the page, right under the
+          navbar, so even a short page with little scroll room still
+          crosses it easily. */}
+      <div ref={sentinelRef} className="filter-sentinel" />
+
       <div className="projects-header">
         <h1>View my Works</h1>
         <p>
@@ -120,8 +144,6 @@ const ProjectsPage = () => {
           Each project reflects a unique challenge and solution.
         </p>
       </div>
-
-      <div ref={sentinelRef} className="filter-sentinel" />
 
       <div className={`project-filter-buttons ${isPillSticky ? 'pill-mode' : ''}`}>
         {categories.map((cat) => (
@@ -146,13 +168,12 @@ const ProjectsPage = () => {
                 title={project.title}
                 imageUrl={project.imageUrl}
                 createdAt={project.createdAt}
-                category={project.category}
                 onClick={() => setSelectedProject(project)}
               />
             ))}
           </div>
           {filteredProjects.length === 0 && (
-            <p className="no-projects-message">No projects in this category yet.</p>
+            <p className="no-projects-message">Project in this category is yet to be deployed.</p>
           )}
         </>
       )}
@@ -161,15 +182,7 @@ const ProjectsPage = () => {
         <div className="project-modal-overlay" onClick={handleOverlayClick}>
           <div className="project-modal">
             <div className="project-modal-header">
-              <div className="project-modal-title-wrapper">
-                <h2>{selectedProject.title}</h2>
-                <span 
-                  className="project-modal-category"
-                  style={{ backgroundColor: getCategoryColor(selectedProject.category) }}
-                >
-                  {getCategoryLabel(selectedProject.category)}
-                </span>
-              </div>
+              <h2>{selectedProject.title}</h2>
               <button
                 className="project-modal-close"
                 onClick={() => setSelectedProject(null)}
@@ -186,16 +199,14 @@ const ProjectsPage = () => {
                   ))}
                 </div>
               )}
-              {selectedProject.projectUrl && (
-                <a
-                  href={selectedProject.projectUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-modal-link"
-                >
-                  Visit Site →
-                </a>
-              )}
+              <a
+                href={selectedProject.projectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-modal-link"
+              >
+                Visit Site →
+              </a>
             </div>
           </div>
         </div>

@@ -132,6 +132,10 @@ const Home: React.FC = () => {
             from responsive websites to cross-platform desktop apps.
           </p>
           <a href="/contact" className="hero-cta">Connect With Me</a>
+
+          <div className="mobile-footer-type">
+            <TypewriterText words={badgeWords} />
+          </div>
         </div>
 
         {/* Right column – scattered boxes */}
