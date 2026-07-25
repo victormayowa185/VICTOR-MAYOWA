@@ -185,14 +185,20 @@
 }
 
 /* ---------- Responsive Breakpoints ---------- */
+/* ---------- Responsive Breakpoints ---------- */
 @media (max-width: 820px) {
   .projects-grid {
-    column-count: 3;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 768px) { 
   .projects-grid {
-    column-count: 2;
+    /* 2 cards per row on mobile */
+    grid-template-columns: repeat(2, 1fr);
+
+    /* If you want 1 per row instead, comment the line above
+       and uncomment this one: */
+    /* grid-template-columns: 1fr; */
   }
 
   .project-filter-buttons.pill-mode {
@@ -202,7 +208,12 @@
 
 @media (max-width: 480px) {
   .projects-grid {
-    column-count: 1;
+    /* Still 2 per row at small phone widths */
+    grid-template-columns: repeat(2, 1fr);
+
+    /* If you want 1 per row instead, comment the line above
+       and uncomment this one: */
+    /* grid-template-columns: 1fr; */
   }
 
   .project-filter-buttons button {
