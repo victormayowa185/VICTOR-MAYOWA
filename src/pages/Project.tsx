@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+// src/pages/Project.tsx
+import { useState, useEffect, useRef } from 'react';
 import ProjectCard from './ProjectCard';
 import { client } from '../sanity/client';
 import { FiX } from 'react-icons/fi';
@@ -12,16 +13,18 @@ interface Project {
   imageUrl: string;
   category: 'website' | 'app' | 'ui' | 'other';
   projectUrl: string;
+  createdAt: string;
 }
 
-const PROJECTS_QUERY = `*[_type == "project"]{
+const PROJECTS_QUERY = `*[_type == "project"] | order(_createdAt desc){
   title,
   description,
   tags,
   category,
   "logoUrl": logo.asset->url,
   "imageUrl": image.asset->url,
-  projectUrl            
+  projectUrl,
+  "createdAt": _createdAt
 }`;
 
 const categories = ['All', 'Website', 'App', 'UI'];
@@ -31,6 +34,11 @@ const ProjectsPage = () => {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isPillSticky, setIsPillSticky] = useState(false);
+
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
+  const pillActiveRef = useRef(false);
 
   useEffect(() => {
     client.fetch(PROJECTS_QUERY)
@@ -44,16 +52,63 @@ const ProjectsPage = () => {
       });
   }, []);
 
+  // Same navbar-swap scroll mechanic as the blog page's search bar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sentinelRef.current) return;
+
+      const sentinelTop = sentinelRef.current.getBoundingClientRect().top;
+      const pastThreshold = sentinelTop <= 0;
+      const currentY = window.scrollY;
+      const scrollingDown = currentY > lastScrollY.current;
+      lastScrollY.current = currentY;
+
+      const shouldShowPill = pastThreshold ? scrollingDown : false;
+
+      if (shouldShowPill !== pillActiveRef.current) {
+        pillActiveRef.current = shouldShowPill;
+        setIsPillSticky(shouldShowPill);
+        window.dispatchEvent(
+          new CustomEvent('navbar-visibility', { detail: { hidden: shouldShowPill } })
+        );
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const filteredProjects = projects.filter((project) => {
     if (activeFilter === 'All') return true;
     return project.category === activeFilter.toLowerCase();
   });
 
-  // Close modal when clicking overlay
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       setSelectedProject(null);
     }
+  };
+
+  // Helper to get category label for display
+  const getCategoryLabel = (category: string) => {
+    const map: Record<string, string> = {
+      website: 'Website',
+      app: 'App',
+      ui: 'UI',
+      other: 'Other'
+    };
+    return map[category] || category;
+  };
+
+  // Helper to get category color
+  const getCategoryColor = (category: string) => {
+    const map: Record<string, string> = {
+      website: '#7C3EFF',
+      app: '#059669',
+      ui: '#2563EB',
+      other: '#D97706'
+    };
+    return map[category] || '#7C3EFF';
   };
 
   return (
@@ -66,8 +121,9 @@ const ProjectsPage = () => {
         </p>
       </div>
 
-      {/* Filter buttons – will be sticky via CSS */}
-      <div className="filter-buttons">
+      <div ref={sentinelRef} className="filter-sentinel" />
+
+      <div className={`project-filter-buttons ${isPillSticky ? 'pill-mode' : ''}`}>
         {categories.map((cat) => (
           <button
             key={cat}
@@ -89,23 +145,32 @@ const ProjectsPage = () => {
                 key={project.title}
                 title={project.title}
                 imageUrl={project.imageUrl}
+                createdAt={project.createdAt}
+                category={project.category}
                 onClick={() => setSelectedProject(project)}
               />
             ))}
           </div>
           {filteredProjects.length === 0 && (
-            <p className="no-projects-message">Project in this category is yet to be deployed.</p>
+            <p className="no-projects-message">No projects in this category yet.</p>
           )}
         </>
       )}
 
-      {/* ===== PROJECT DETAIL MODAL ===== */}
       {selectedProject && (
         <div className="project-modal-overlay" onClick={handleOverlayClick}>
           <div className="project-modal">
             <div className="project-modal-header">
-              <h2>{selectedProject.title}</h2>
-              <button 
+              <div className="project-modal-title-wrapper">
+                <h2>{selectedProject.title}</h2>
+                <span 
+                  className="project-modal-category"
+                  style={{ backgroundColor: getCategoryColor(selectedProject.category) }}
+                >
+                  {getCategoryLabel(selectedProject.category)}
+                </span>
+              </div>
+              <button
                 className="project-modal-close"
                 onClick={() => setSelectedProject(null)}
               >
@@ -121,14 +186,16 @@ const ProjectsPage = () => {
                   ))}
                 </div>
               )}
-              <a 
-                href={selectedProject.projectUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="project-modal-link"
-              >
-                Visit Site →
-              </a>
+              {selectedProject.projectUrl && (
+                <a
+                  href={selectedProject.projectUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-modal-link"
+                >
+                  Visit Site →
+                </a>
+              )}
             </div>
           </div>
         </div>
