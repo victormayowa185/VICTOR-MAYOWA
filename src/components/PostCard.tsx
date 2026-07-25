@@ -26,11 +26,13 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
   const navigate = useNavigate();
   const [hearts, setHearts] = useState<{ id: number; x: number; y: number }[]>([]);
   const [loved, setLoved] = useState(false);
-  const navigateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); // ✅ fixed
+  const navigateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const hasUploadedImage = !!post.mainImage;
+  // No forced height here anymore — letting the image keep its natural
+  // aspect ratio is what makes the masonry grid actually look like masonry.
   const imageSrc = hasUploadedImage
-    ? urlFor(post.mainImage!).width(400).height(250).url()
+    ? urlFor(post.mainImage!).width(500).url()
     : (post.categories && post.categories[0] && defaultImageMap[post.categories[0]]) || fallbackDefaultImage;
 
   const handleCardClick = () => {
@@ -81,46 +83,45 @@ const PostCard: React.FC<PostCardProps> = ({ post, defaultImageMap, fallbackDefa
     setLoved(prev => !prev);
   };
 
-  const imagePositionClass = hasUploadedImage ? 'image-right' : 'image-left';
-
   return (
     <div className="post-card" onClick={handleCardClick}>
-      <div className="post-card-header">
-        <button className="love-button" onClick={handleLoveClick}>
-          {loved ? <FaHeart color="black" /> : <FiHeart color="black" />}
+      <div className="post-image-wrapper" onClick={handleImageClick}>
+        <img src={imageSrc} alt={post.title} className="post-image" loading="lazy" />
+
+        <button
+          className={`love-button-overlay ${loved ? 'loved' : ''}`}
+          onClick={handleLoveClick}
+          aria-label="Love this post"
+        >
+          {loved ? <FaHeart /> : <FiHeart />}
         </button>
+
+        {hearts.map(heart => (
+          <span key={heart.id} className="heart" style={{ left: heart.x, top: heart.y }}>❤️</span>
+        ))}
       </div>
 
-      <div className={`post-card-main ${imagePositionClass}`}>
-        <div className="post-image-wrapper" onClick={handleImageClick}>
-          <img src={imageSrc} alt={post.title} className="post-image animate-image" />
-          {hearts.map(heart => (
-            <span key={heart.id} className="heart" style={{ left: heart.x, top: heart.y }}>❤️</span>
-          ))}
-        </div>
-
-        <div className="post-content">
-          <h3>{post.title}</h3>
-          <p className="excerpt">{post.excerpt}</p>
-          <div className="post-footer">
-            <div className="action-buttons">
-              {post.liveDemoUrl && (
-                <a
-                  href={post.liveDemoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="external-link-btn"
-                  onClick={e => e.stopPropagation()}
-                >
-                  Visit Site
-                </a>
-              )}
-              <button className="share-btn" onClick={handleShare}>
-                Share
-              </button>
-            </div>
-            <span className="timestamp">{timeAgo(post.publishedAt)}</span>
+      <div className="post-content">
+        <h3>{post.title}</h3>
+        <p className="excerpt">{post.excerpt}</p>
+        <div className="post-footer">
+          <div className="action-buttons">
+            {post.liveDemoUrl && (
+              <a
+                href={post.liveDemoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="external-link-btn"
+                onClick={e => e.stopPropagation()}
+              >
+                Visit Site
+              </a>
+            )}
+            <button className="share-btn" onClick={handleShare}>
+              Share
+            </button>
           </div>
+          <span className="timestamp">{timeAgo(post.publishedAt)}</span>
         </div>
       </div>
     </div>

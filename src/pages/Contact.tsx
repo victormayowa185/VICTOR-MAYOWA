@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import React, { useState, useRef, useEffect } from 'react';
+import * as maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   FaGithub,
   FaHandshake,
@@ -12,16 +11,13 @@ import {
 import { FiX } from 'react-icons/fi';
 import '../styles/contact.css';
 
-// Custom purple pin marker
-const customIcon = L.divIcon({
-  className: 'custom-marker',
-  html: `<div class="marker-pulse"></div><div class="marker-pin"></div>`,
-  iconSize: [26, 26],
-  iconAnchor: [13, 13],
-  popupAnchor: [0, -16],
-});
+const FUTO_LAT = 5.3959;
+const FUTO_LNG = 7.0102;
 
 const ContactPage: React.FC = () => {
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<maplibregl.Map | null>(null);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -31,6 +27,46 @@ const ContactPage: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    if (!mapContainerRef.current || mapRef.current) return;
+
+    const map = new maplibregl.Map({
+      container: mapContainerRef.current,
+      style: 'https://tiles.openfreemap.org/styles/positron',
+      center: [FUTO_LNG, FUTO_LAT],
+      zoom: 15,
+      attributionControl: false,
+    });
+
+    mapRef.current = map;
+
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    map.addControl(
+      new maplibregl.AttributionControl({ compact: true }),
+      'bottom-right'
+    );
+
+    const markerEl = document.createElement('div');
+    markerEl.className = 'custom-marker';
+    markerEl.innerHTML = `<div class="marker-pulse"></div><div class="marker-pin"></div>`;
+
+    const popup = new maplibregl.Popup({ offset: 22, closeButton: true }).setHTML(`
+      <strong>📍 FUTO – My Base</strong><br />
+      Federal University of Technology, Owerri<br />
+      <span style="font-size: 0.9rem;">Let's build something amazing.</span>
+    `);
+
+    new maplibregl.Marker({ element: markerEl, anchor: 'center' })
+      .setLngLat([FUTO_LNG, FUTO_LAT])
+      .setPopup(popup)
+      .addTo(map);
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -92,28 +128,13 @@ const ContactPage: React.FC = () => {
       {/* Map Section */}
       <div className="map-section-wrapper">
         <div className="map-section">
-          <MapContainer center={[5.3959, 7.0102]} zoom={15} scrollWheelZoom={true}>
-            <TileLayer
-              attribution='&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-            />
-            <Marker position={[5.3959, 7.0102]} icon={customIcon}>
-              <Popup className="map-popup">
-                <strong>📍 FUTO – My Base</strong>
-                <br />
-                Federal University of Technology, Owerri
-                <br />
-                <span style={{ fontSize: '0.9rem' }}>Let’s build something amazing.</span>
-              </Popup>
-            </Marker>
-          </MapContainer>
+          <div ref={mapContainerRef} className="maplibre-container" />
         </div>
       </div>
 
       {/* ===== 4 ACTION BOXES – 2x2 grid ===== */}
       <div className="action-boxes-wrapper">
         <div className="action-boxes-grid">
-          {/* Box 1 – Contribute on GitHub */}
           <a
             href="https://github.com/victormayowa185"
             target="_blank"
@@ -127,7 +148,6 @@ const ContactPage: React.FC = () => {
             <h3 className="box-title">Contribute on GitHub</h3>
           </a>
 
-          {/* Box 2 – Hire Me (opens modal) */}
           <button className="action-box box-hire" onClick={openModal} aria-label="Hire me">
             <div className="box-icon-wrapper">
               <FaHandshake className="box-icon" />
@@ -135,7 +155,6 @@ const ContactPage: React.FC = () => {
             <h3 className="box-title">Hire Me</h3>
           </button>
 
-          {/* Box 3 – Let's Collaborate (coming soon) */}
           <div className="action-box box-collab coming-soon" title="Coming soon – stay tuned!">
             <div className="box-icon-wrapper">
               <FaUsers className="box-icon" />
@@ -144,7 +163,6 @@ const ContactPage: React.FC = () => {
             <span className="coming-soon-badge">Soon</span>
           </div>
 
-          {/* Box 4 – Send a Quick Message (coming soon) */}
           <div className="action-box box-quick coming-soon" title="Coming soon – stay tuned!">
             <div className="box-icon-wrapper">
               <FaEnvelope className="box-icon" />
@@ -170,7 +188,7 @@ const ContactPage: React.FC = () => {
             </div>
 
             <div className="modal-body">
-              <p className="modal-sub">Fill in your details and I’ll get back to you within 24h.</p>
+              <p className="modal-sub">Fill in your details and I'll get back to you within 24h.</p>
 
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -226,7 +244,7 @@ const ContactPage: React.FC = () => {
 
                 {submitStatus === 'success' && (
                   <div className="form-message success">
-                    ✨ Message sent! I’ll get back to you soon.
+                    ✨ Message sent! I'll get back to you soon.
                   </div>
                 )}
 
