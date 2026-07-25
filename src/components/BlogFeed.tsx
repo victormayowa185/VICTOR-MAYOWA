@@ -1,6 +1,8 @@
-import { useState } from 'react'; // useEffect no longer needed
+import { useState, useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import { useCachedPosts } from '../utils/useCachedPosts';
 import PostCard from './PostCard';
+import { HiSearch, HiX } from 'react-icons/hi';
 import '../styles/blogFeed.css';
 
 const defaultImageMap: Record<string, string> = {
@@ -13,9 +15,76 @@ const defaultImageMap: Record<string, string> = {
 const fallbackDefaultImage = '/defaults/default.png';
 
 const BlogFeed = () => {
-  const { posts, loading } = useCachedPosts(); 
+  const { posts, loading } = useCachedPosts();
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('all');
+  const [isPillSticky, setIsPillSticky] = useState(false);
+  const [searchActive, setSearchActive] = useState(false);
+
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const filterButtonsRef = useRef<HTMLDivElement>(null);
+  const filterNaturalWidthRef = useRef<number>(0);
+  const lastScrollY = useRef(0);
+  const pillActiveRef = useRef(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sentinelRef.current) return;
+
+      const sentinelTop = sentinelRef.current.getBoundingClientRect().top;
+      const pastThreshold = sentinelTop <= 0;
+      const currentY = window.scrollY;
+      const scrollingDown = currentY > lastScrollY.current;
+      lastScrollY.current = currentY;
+
+      const shouldShowPill = pastThreshold ? scrollingDown : false;
+
+      if (shouldShowPill !== pillActiveRef.current) {
+        pillActiveRef.current = shouldShowPill;
+        setIsPillSticky(shouldShowPill);
+        window.dispatchEvent(
+          new CustomEvent('navbar-visibility', { detail: { hidden: shouldShowPill } })
+        );
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const el = filterButtonsRef.current;
+    if (!el) return;
+
+    if (searchActive) {
+      if (filterNaturalWidthRef.current === 0) {
+        filterNaturalWidthRef.current = el.offsetWidth;
+      }
+      gsap.to(el, {
+        width: 0,
+        opacity: 0,
+        marginLeft: 0,
+        duration: 0.3,
+        ease: 'power2.in',
+        overflow: 'hidden',
+      });
+    } else {
+      gsap.to(el, {
+        width: filterNaturalWidthRef.current || 'auto',
+        opacity: 1,
+        marginLeft: '0.5rem',
+        duration: 0.35,
+        ease: 'power2.out',
+      });
+    }
+  }, [searchActive]);
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    setSearchActive(false);
+    searchInputRef.current?.blur();
+  };
 
   const filteredPosts = posts.filter(post => {
     const matchesCategory = filter === 'all' ||
@@ -38,16 +107,48 @@ const BlogFeed = () => {
 
   return (
     <div className="blog-feed">
-      <div className="search-bar-sticky">
+      <div ref={sentinelRef} className="search-sentinel" />
+
+      <div className={`search-bar-sticky ${isPillSticky ? 'pill-mode' : ''}`}>
         <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search posts..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="search-input"
-          />
-          <div className="filter-buttons">
+          <div className="search-input-wrapper">
+            <button
+              type="button"
+              className="search-icon-btn"
+              onClick={() => {
+                setSearchActive(true);
+                searchInputRef.current?.focus();
+              }}
+              aria-label="Search"
+            >
+              <HiSearch />
+            </button>
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder="Search posts..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              onFocus={() => setSearchActive(true)}
+              onBlur={() => {
+                if (searchTerm.trim() === '') setSearchActive(false);
+              }}
+              className="search-input"
+            />
+            {(searchActive || searchTerm.trim() !== '') && (
+              <button
+                type="button"
+                className="clear-search-btn"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={handleClearSearch}
+                aria-label="Clear search"
+              >
+                <HiX />
+              </button>
+            )}
+          </div>
+
+          <div className="filter-buttons" ref={filterButtonsRef}>
             {['all', 'React', 'CSS', 'News', 'JavaScript'].map(cat => (
               <button
                 key={cat}

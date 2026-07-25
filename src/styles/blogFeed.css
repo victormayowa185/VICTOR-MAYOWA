@@ -1,21 +1,46 @@
 /* ===== BLOG FEED STYLES ===== */
 
-/* Main feed container */
-/* Main feed container */
 .blog-feed {
   background-color: #ffffff;
   padding: 2rem 2rem;
 }
 
-/* Sticky search bar */
+.search-sentinel {
+  height: 1px;
+  width: 100%;
+}
+
 .search-bar-sticky {
   position: sticky;
-  top: 60px; /* adjust based on navbar height */
+  top: 60px;
   background-color: white;
   z-index: 100;
   padding: 1rem 0;
   border-bottom: 1px solid #eaeaea;
   margin-bottom: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar-sticky.pill-mode {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  max-width: 1400px;
+  background: white;
+  border-radius: 9999px !important;
+  padding: 0.5rem 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-bottom: none;
+  margin-bottom: 0;
+  overflow: hidden;
+  animation: pillFadeIn 0.35s ease forwards;
+}
+
+@keyframes pillFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 .search-container {
@@ -23,8 +48,64 @@
   flex-direction: column;
   gap: 1rem;
   max-width: 1400px;
-  
   margin: 0 auto;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.pill-mode .search-container {
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.search-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #1a1e24;
+  padding: 0.4rem;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.search-icon-btn:hover {
+  color: #7C3EFF;
+}
+
+.clear-search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #9a9a9a;
+  padding: 0.3rem;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.clear-search-btn:hover {
+  color: #1a1e24;
 }
 
 .search-input {
@@ -33,25 +114,49 @@
   border-radius: 40px;
   font-size: 1rem;
   outline: none;
+  text-align: center;
+  background: white !important;
+  box-shadow: none !important;
   transition: border-color 0.2s;
+}
+
+.pill-mode .search-input {
+  flex: 1 1 auto !important;
+  width: 100%;
+  min-width: 0;
+  border: none !important;
+  padding: 0.5rem 0.8rem;
+  text-align: center !important;
+  caret-color: #1a1e24;
+  background: transparent !important;
 }
 
 .search-input:focus {
   border-color: #1a1e24;
 }
 
+/* This is the actual element that was likely showing as a "box" —
+   forcing it flat and transparent no matter what else targets it */
 .filter-buttons {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-bottom: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
 }
 
 .filter-buttons button {
-  background: none;
-  border: 1px solid #ddd;
-  padding: 0.5rem 1.5rem;
-  border-radius: 10px;
+  background: #f5f5f7;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.5rem 1.2rem;
+  white-space: nowrap;
+  box-shadow: none;
   cursor: pointer;
   font-weight: 500;
   transition: all 0.2s;
@@ -60,15 +165,17 @@
 .filter-buttons button.active {
   background-color: #1a1e24;
   color: white;
-  border-color: #1a1e24;
 }
 
-.filter-buttons button:hover {
-  background-color: #f0f0f0;
+.filter-buttons button:not(.active):hover {
+  background-color: #e8e8ea;
 }
 
-/* Posts feed – single column */
-/* Posts feed – single column */
+.pill-mode .filter-buttons {
+  overflow: hidden;
+  margin-left: 0.5rem;
+}
+
 .posts-feed {
   max-width: 1400px;
   margin: 0 auto;
@@ -77,7 +184,6 @@
   gap: 1rem;
 }
 
-/* Loading and no posts messages */
 .loading-message,
 .no-posts-message {
   text-align: center;
@@ -85,9 +191,11 @@
   color: #5b6876;
 }
 
-/* Responsive for feed */
 @media (max-width: 600px) {
-  .blog-feed {
-    padding: 2rem 1.5rem;
+  .blog-feed { padding: 2rem 1.5rem; }
+  .search-bar-sticky.pill-mode {
+    width: 92%;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px !important;
   }
 }
