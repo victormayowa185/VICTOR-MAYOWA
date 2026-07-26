@@ -14,6 +14,19 @@ const Navbar: React.FC = () => {
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [menuOpen]);
+
+  useEffect(() => {
     const handleVisibility = (e: Event) => {
       const { hidden } = (e as CustomEvent).detail;
       if (hidden === isHiddenRef.current) return;
@@ -58,6 +71,7 @@ const Navbar: React.FC = () => {
           <NavLink to="/blog" className="blog-link" onClick={closeMenu}>Blog</NavLink>
         </div>
       </div>
+      {menuOpen && <div className="menu-overlay" onClick={closeMenu} />}
     </nav>
   );
 };

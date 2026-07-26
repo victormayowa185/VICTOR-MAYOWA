@@ -293,9 +293,14 @@ const About: React.FC = () => {
               </div>
 
               {/* Timeline Popup */}
-              {showTimeline && (
-                <div className="timeline-overlay">
-                  <div className="timeline-popup">
+             {showTimeline && (
+                <div
+                  className="timeline-overlay"
+                  onClick={(e) => {
+                    if (e.target === e.currentTarget) toggleTimeline();
+                  }}
+                >
+                  <div className="timeline-popup" onClick={(e) => e.stopPropagation()}>
                     <div className="timeline-popup-scroll">
                       <div className="timeline-popup-header">
                         <h3>Certificates &amp; Achievements</h3>
@@ -315,12 +320,8 @@ const About: React.FC = () => {
                             <div className="timeline-item-right">
                               <h3>{item.title}</h3>
                               <p>{item.description}</p>
-                              {/* badge image removed */}
-                              {item.type === 'project' && (
-                                <div className="timeline-project-icon">
-                                  {item.icon}
-                                </div>
-                              )}
+                           
+                            
                               {item.verifyLink && (
                                 <a
                                   href={item.verifyLink}
@@ -328,7 +329,7 @@ const About: React.FC = () => {
                                   rel="noopener noreferrer"
                                   className="timeline-verify-link"
                                 >
-                                  🔗 Verify on Google →
+                                  Verify on Google →
                                 </a>
                               )}
                             </div>

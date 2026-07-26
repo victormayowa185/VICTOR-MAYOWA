@@ -212,7 +212,7 @@ const ProjectsPage = () => {
                 rel="noopener noreferrer"
                 className="project-modal-link"
               >
-                Visit Site →
+                Visit Site
               </a>
             </div>
           </div>

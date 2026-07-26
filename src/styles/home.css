@@ -14,7 +14,7 @@ body {
 .hero-new {
   height: 100vh;
   width: 100%;
-  background: #d6bc9924;
+  background: #F8F8FF;
   display: flex;
   align-items: flex-start;
   padding: 5rem 1rem 1rem 1rem;
@@ -106,14 +106,14 @@ body {
   border: 1px solid black;
   color: black;
   padding: 0.8rem 2rem;
-  border-radius: 40px;
+  border-radius: 30px;
   font-weight: 600;
   text-decoration: none;
   transition: 0.2s;
 }
 
 .hero-cta:hover {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 /* ========== MOBILE-ONLY TYPEWRITER FOOTER ========== */
@@ -184,7 +184,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
+  background: none;
   padding: 0.75rem 2.5rem;
   font-weight: 600;
   font-size: 1.3rem;
@@ -220,6 +220,7 @@ body {
     align-items: center;
     height: auto;
     overflow: visible;
+    height: 100%;
   }
   .main-content {
     text-align: center;
@@ -240,13 +241,24 @@ body {
 
   /* Show the typewriter as a footer-style block under the CTA */
   .mobile-footer-type {
-    display: block;
-    margin-top: 2.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid #e5e5e5;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1a1e24;
+  display: block;
+  position: absolute;
+  bottom: 2.5rem;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  padding-top: 1.25rem;
+  border-top: 1px solid #ccc;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1e24;
+  text-align: center;
+}
+
+  .sidebar-divider{
+    height: 380px;
   }
 
   .sidebar-rotate {
