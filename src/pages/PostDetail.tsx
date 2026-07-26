@@ -67,15 +67,6 @@ const PostDetail = () => {
 
       hasPlayedEntrance.current = true;
 
-      const validRefs = [
-        mediaRef.current,
-        titleRef.current,
-        excerptRef.current,
-        timeRef.current,
-        ctaRef.current,
-        bodyRef.current,
-      ].filter(Boolean);
-
       gsap.set(mediaRef.current, { opacity: 0, y: 20, scale: 0.98 });
       gsap.set(
         [titleRef.current, excerptRef.current, timeRef.current, ctaRef.current],
