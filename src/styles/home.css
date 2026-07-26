@@ -153,11 +153,12 @@ body {
   border-radius: 16px;
   padding: 1rem 1.2rem;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
   will-change: transform;
   min-width: 90px;
   min-height: 90px;
   gap: 0.3rem;
+  transform: translate(var(--mouse-x, 0), var(--mouse-y, 0));
 }
 
 .scatter-box:hover {

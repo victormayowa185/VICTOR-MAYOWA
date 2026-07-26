@@ -181,9 +181,7 @@ body {
     display: none;
   }
 
-  /* Blog inside ul is already visible; no extra rule needed */
 
-  /* Overlay */
   body.menu-open::after {
     content: '';
     position: fixed;
@@ -235,4 +233,19 @@ body {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(3px);
   z-index: 1040;
+}
+
+.navbar-inner {
+  pointer-events: auto;
+  background: white;
+  border-radius: 9999px;
+  padding: 0.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  width: 70%;
+  max-width: 1400px;
+  transition: all 0.3s ease;
+  transform-origin: center center; /* new — makes scaleX expand from the middle outward */
 }

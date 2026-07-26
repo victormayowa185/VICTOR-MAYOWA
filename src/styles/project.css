@@ -19,11 +19,15 @@
   padding: clamp(1rem, 5vw, 1rem) clamp(1rem, 5vw, 5rem);
   background-color: #F8F8FF;
   background-repeat: no-repeat;
-  /* animation removed from here */
+  min-height: 80vh;
+  
+  display: flex;
+  flex-direction: column;
 }
 
 .page-fade-in {
   animation: fadeInUp 0.8s ease forwards;
+  flex: 1;
 }
 
 .filter-sentinel {
@@ -393,6 +397,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .project-modal-overlay,
   .project-modal {
     animation: none;

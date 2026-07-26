@@ -6,9 +6,15 @@ import Preloader from './components/Preloader';
 const Root: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
+  const handlePreloaderFinished = () => {
+    setLoading(false);
+    // Let any component (like Navbar) know it's safe to play entrance animations
+    window.dispatchEvent(new Event('preloader-finished'));
+  };
+
   return (
     <>
-      {loading && <Preloader onFinished={() => setLoading(false)} />}
+      {loading && <Preloader onFinished={handlePreloaderFinished} />}
       <App />
     </>
   );

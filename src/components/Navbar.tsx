@@ -8,7 +8,9 @@ import '../styles/navbar.css';
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const navInnerRef = useRef<HTMLDivElement>(null);
   const isHiddenRef = useRef(false);
+  const hasPlayedEntrance = useRef(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
@@ -44,9 +46,44 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('navbar-visibility', handleVisibility);
   }, []);
 
+  // ---------- Center-expand entrance, plays once, gated on Preloader finishing ----------
+// ---------- Drop-from-top entrance, plays once, gated on Preloader finishing ----------
+  useEffect(() => {
+    const playEntrance = () => {
+      if (hasPlayedEntrance.current || !navInnerRef.current) return;
+      hasPlayedEntrance.current = true;
+
+      gsap.fromTo(
+        navInnerRef.current,
+        { y: '-120%', opacity: 0 },
+        {
+          y: '0%',
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          delay: 0.1, // tiny beat after content is visible, before the navbar drops in
+        }
+      );
+    };
+
+    // Start off-screen above immediately so there's no flash of the pill before animating
+    if (navInnerRef.current) {
+      gsap.set(navInnerRef.current, { y: '-120%', opacity: 0 });
+    }
+
+    // If the preloader already finished before Navbar mounted, play right away.
+    if ((window as any).__preloaderFinished) {
+      playEntrance();
+    } else {
+      window.addEventListener('preloader-finished', playEntrance);
+    }
+
+    return () => window.removeEventListener('preloader-finished', playEntrance);
+  }, []);
+
   return (
     <nav className="navbar" ref={navRef}>
-      <div className="navbar-inner">
+      <div className="navbar-inner" ref={navInnerRef}>
         <div className="navbar-brand">
           <div className="brand-logo-wrapper">
             <img src="/logo.png" alt="MAYO X Logo" className="brand-logo-img" />

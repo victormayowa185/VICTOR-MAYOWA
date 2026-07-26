@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { MdOutlineLaptopMac } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -6,13 +6,32 @@ import { IoColorPalette } from "react-icons/io5";
 import { LuTabletSmartphone } from "react-icons/lu";
 import { FaGithub, FaUsers, FaRocket, FaCode, FaLaptopCode } from "react-icons/fa";
 import { SiFramework } from "react-icons/si";
-import { FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import TypewriterText from '../components/TypewriterText';
 import '../styles/about.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const About: React.FC = () => {
   const [showTimeline, setShowTimeline] = useState(false);
   const [selectedAchievement, setSelectedAchievement] = useState<typeof achievements[0] | null>(null);
+
+  const hasPlayedEntrance = useRef(false);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const textRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
+
+  const skillsTitleRef = useRef<HTMLHeadingElement>(null);
+  const skillCardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const statsTitleRef = useRef<HTMLHeadingElement>(null);
+  const statCardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const certsTitleRef = useRef<HTMLHeadingElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const timelineBtnRef = useRef<HTMLDivElement>(null);
 
   // Achievement data with verify links for Google badges
   const achievements = [
@@ -115,6 +134,102 @@ const About: React.FC = () => {
     setShowTimeline(!showTimeline);
   };
 
+  // ---------- Above-the-fold entrance: profile image + bio, gated on Preloader ----------
+  useEffect(() => {
+    const playEntrance = () => {
+      if (hasPlayedEntrance.current) return;
+      hasPlayedEntrance.current = true;
+
+      const validTextRefs = textRefs.current.filter(Boolean);
+
+      gsap.set(imageRef.current, { opacity: 0, x: -40, scale: 0.96 });
+      gsap.set([nameRef.current, ...validTextRefs, ctaRef.current], { opacity: 0, y: 24 });
+      gsap.set(dividerRef.current, { scaleX: 0, opacity: 0 });
+
+      const tl = gsap.timeline({ delay: 0.15 });
+
+      tl.to(imageRef.current, { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: 'power3.out' })
+        .to(nameRef.current, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.55')
+        .to(dividerRef.current, { scaleX: 1, opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+        .to(validTextRefs, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.12 }, '-=0.25')
+        .to(ctaRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3');
+    };
+
+    if ((window as any).__preloaderFinished) {
+      playEntrance();
+    } else {
+      window.addEventListener('preloader-finished', playEntrance);
+    }
+
+    return () => window.removeEventListener('preloader-finished', playEntrance);
+  }, []);
+
+  // ---------- Scroll-triggered reveals for everything below the fold ----------
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const validSkillCards = skillCardRefs.current.filter(Boolean);
+      const validStatCards = statCardRefs.current.filter(Boolean);
+
+      // Skills section
+      gsap.set([skillsTitleRef.current, ...validSkillCards], { opacity: 0, y: 30 });
+      ScrollTrigger.create({
+        trigger: skillsTitleRef.current,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          gsap.to(skillsTitleRef.current, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+          gsap.to(validSkillCards, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power3.out',
+            stagger: 0.12,
+            delay: 0.1,
+          });
+        },
+      });
+
+      // Stats section
+      gsap.set([statsTitleRef.current, ...validStatCards], { opacity: 0, y: 30 });
+      ScrollTrigger.create({
+        trigger: statsTitleRef.current,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          gsap.to(statsTitleRef.current, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+          gsap.to(validStatCards, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.5,
+            ease: 'back.out(1.6)',
+            stagger: 0.1,
+            delay: 0.1,
+          });
+        },
+      });
+
+      // Certificates section
+      gsap.set([certsTitleRef.current, carouselRef.current, timelineBtnRef.current], {
+        opacity: 0,
+        y: 30,
+      });
+      ScrollTrigger.create({
+        trigger: certsTitleRef.current,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          const tl = gsap.timeline();
+          tl.to(certsTitleRef.current, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
+            .to(carouselRef.current, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.35')
+            .to(timelineBtnRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.35');
+        },
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -139,7 +254,7 @@ const About: React.FC = () => {
             {/* ROW 1: Profile Image + Bio */}
             <div className="about-row about-row-top">
               <div className="about-col about-col-left">
-                <div className="profile-image-wrapper">
+                <div className="profile-image-wrapper" ref={imageRef}>
                   <img
                     src="/pic2.png"
                     alt="Victor Mayowa – Web Developer"
@@ -150,19 +265,19 @@ const About: React.FC = () => {
 
               <div className="about-col about-col-right">
                 <div className="bio-content">
-                  <h1 className="about-name">Victor Mayowa</h1>
-                  <div className="about-divider"></div>
-                  <p className="about-text">
+                  <h1 className="about-name" ref={nameRef}>Victor Mayowa</h1>
+                  <div className="about-divider" ref={dividerRef}></div>
+                  <p className="about-text" ref={(el) => { textRefs.current[0] = el; }}>
                     I'm a web developer with a passion for crafting beautiful, functional digital experiences.
                     With over 2 years of experience in front-end and full-stack development, I specialize in
                     React, TypeScript, and modern CSS. I believe in writing clean, maintainable code and designing
                     interfaces that users love.
                   </p>
-                  <p className="about-text">
+                  <p className="about-text" ref={(el) => { textRefs.current[1] = el; }}>
                     Based in Nigeria, I focus on building practical projects that simulate real startup and business needs.
                     When I'm not coding, you'll find me dancing, or experimenting with new technologies.
                   </p>
-                  <a href="/contact" className="about-cta">Let's Work Together</a>
+                  <a href="/contact" className="about-cta" ref={ctaRef}>Let's Work Together</a>
                 </div>
               </div>
             </div>
@@ -171,24 +286,24 @@ const About: React.FC = () => {
             <div className="about-row about-row-bottom">
               <div className="about-col about-col-left">
                 <div className="skills-section">
-                  <h2 className="skills-title">What I Do</h2>
+                  <h2 className="skills-title" ref={skillsTitleRef}>What I Do</h2>
                   <div className="skills-grid">
-                    <div className="skill-card">
+                    <div className="skill-card" ref={(el) => { skillCardRefs.current[0] = el; }}>
                       <MdOutlineLaptopMac className='skill-icon' />
                       <h3>Frontend Development</h3>
                       <p>React, Vue, TypeScript, responsive design, and interactive interfaces.</p>
                     </div>
-                    <div className="skill-card">
+                    <div className="skill-card" ref={(el) => { skillCardRefs.current[1] = el; }}>
                       <IoSettingsOutline className='skill-icon' />
                       <h3>Backend &amp; APIs</h3>
                       <p>Node.js, Express, RESTful APIs, and database integration.</p>
                     </div>
-                    <div className="skill-card">
+                    <div className="skill-card" ref={(el) => { skillCardRefs.current[2] = el; }}>
                       <IoColorPalette className='skill-icon' />
                       <h3>UI/UX Design</h3>
                       <p>From wireframes to high-fidelity prototypes, focusing on user experience.</p>
                     </div>
-                    <div className="skill-card">
+                    <div className="skill-card" ref={(el) => { skillCardRefs.current[3] = el; }}>
                       <LuTabletSmartphone className='skill-icon' />
                       <h3>Mobile-First</h3>
                       <p>Building apps that work seamlessly across all devices.</p>
@@ -199,9 +314,9 @@ const About: React.FC = () => {
 
               <div className="about-col about-col-right">
                 <div className="extra-stats-section">
-                  <h2 className="extra-stats-title">More Highlights</h2>
+                  <h2 className="extra-stats-title" ref={statsTitleRef}>More Highlights</h2>
                   <div className="stats-grid stats-grid-extra">
-                    <div className="stat-item stat-item-extra">
+                    <div className="stat-item stat-item-extra" ref={(el) => { statCardRefs.current[0] = el; }}>
                       <SiFramework className="stat-extra-icon" />
                       <span className="stat-number">
                         <TypewriterText
@@ -213,7 +328,7 @@ const About: React.FC = () => {
                       </span>
                       <span className="stat-label">Frameworks</span>
                     </div>
-                    <div className="stat-item stat-item-extra">
+                    <div className="stat-item stat-item-extra" ref={(el) => { statCardRefs.current[1] = el; }}>
                       <FaGithub className="stat-extra-icon" />
                       <span className="stat-number">
                         <TypewriterText
@@ -225,7 +340,7 @@ const About: React.FC = () => {
                       </span>
                       <span className="stat-label">GitHub Repos</span>
                     </div>
-                    <div className="stat-item stat-item-extra">
+                    <div className="stat-item stat-item-extra" ref={(el) => { statCardRefs.current[2] = el; }}>
                       <FaRocket className="stat-extra-icon" />
                       <span className="stat-number">
                         <TypewriterText
@@ -237,7 +352,7 @@ const About: React.FC = () => {
                       </span>
                       <span className="stat-label">Startups</span>
                     </div>
-                    <div className="stat-item stat-item-extra">
+                    <div className="stat-item stat-item-extra" ref={(el) => { statCardRefs.current[3] = el; }}>
                       <FaUsers className="stat-extra-icon" />
                       <span className="stat-number">
                         <TypewriterText
@@ -256,10 +371,10 @@ const About: React.FC = () => {
 
             {/* ===== ROW 3: Certificates & Achievements (auto‑scrolling marquee) ===== */}
             <div className="certificates-section">
-              <h2 className="certificates-title">Certificates &amp; Achievements</h2>
+              <h2 className="certificates-title" ref={certsTitleRef}>Certificates &amp; Achievements</h2>
 
               {/* Horizontal Carousel – infinite scroll */}
-              <div className="carousel-container">
+              <div className="carousel-container" ref={carouselRef}>
                 <div className="carousel-track">
                   {carouselItems.map((item, index) => (
                     <div
@@ -289,7 +404,7 @@ const About: React.FC = () => {
               </div>
 
               {/* View Timeline Button */}
-              <div className="timeline-button-wrapper">
+              <div className="timeline-button-wrapper" ref={timelineBtnRef}>
                 <button
                   className="view-timeline-btn"
                   onClick={toggleTimeline}
@@ -329,7 +444,7 @@ const About: React.FC = () => {
 
 
                               {item.verifyLink && (
-                                <a
+                                
                                   href={item.verifyLink}
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -378,7 +493,7 @@ const About: React.FC = () => {
               </p>
 
               {selectedAchievement.verifyLink && (
-                <a
+                
                   href={selectedAchievement.verifyLink}
                   target="_blank"
                   rel="noopener noreferrer"

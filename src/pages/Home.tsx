@@ -4,15 +4,25 @@ import {
   FaJsSquare,
   FaCss3Alt,
   FaGitAlt,
-  FaGithub,          // 👈 new
+  FaGithub,
 } from 'react-icons/fa';
-import { SiTypescript, SiPython, SiNodedotjs } from 'react-icons/si'; // 👈 new
+import { SiTypescript, SiPython, SiNodedotjs } from 'react-icons/si';
+import gsap from 'gsap';
 import TypewriterText from '../components/TypewriterText';
 import '../styles/home.css';
 
 const Home: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const taglineRef = useRef<HTMLParagraphElement>(null);
+  const bioRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
+  const mobileFooterRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const boxRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const hasPlayedEntrance = useRef(false);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -29,6 +39,53 @@ const Home: React.FC = () => {
     return () => hero.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // ---------- Premium entrance sequence, gated on Preloader finishing ----------
+  useEffect(() => {
+    const playEntrance = () => {
+      if (hasPlayedEntrance.current) return;
+      hasPlayedEntrance.current = true;
+
+      const validBoxes = boxRefs.current.filter(Boolean);
+
+      // Set initial hidden states up front, so nothing flashes before animating
+      gsap.set([nameRef.current, taglineRef.current, bioRef.current, ctaRef.current, mobileFooterRef.current], {
+        y: 24,
+        opacity: 0,
+      });
+      gsap.set(validBoxes, { y: 30, opacity: 0, scale: 0.85 });
+      gsap.set(badgeRef.current, { opacity: 0, scale: 0.8 });
+
+      const tl = gsap.timeline({ delay: 0.15 });
+
+      tl.to(nameRef.current, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' })
+        .to(taglineRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.45')
+        .to(bioRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+        .to(ctaRef.current, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.35')
+        .to(mobileFooterRef.current, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+        .to(
+          validBoxes,
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: 'back.out(1.6)',
+            stagger: 0.09,
+          },
+          '-=0.3'
+        )
+        .to(badgeRef.current, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+    };
+
+    if ((window as any).__preloaderFinished) {
+      playEntrance();
+    } else {
+      window.addEventListener('preloader-finished', playEntrance);
+    }
+
+    return () => window.removeEventListener('preloader-finished', playEntrance);
+  }, []);
+
   const boxes = [
     {
       id: 1,
@@ -36,7 +93,6 @@ const Home: React.FC = () => {
       label: 'React',
       color: '#61dafb',
       offset: 0.3,
-      // static position (top/left/right/bottom) – one set per box
       top: '-3%',
       left: '6%',
     },
@@ -76,7 +132,6 @@ const Home: React.FC = () => {
       top: '60%',
       left: '35%',
     },
-    // ─── new boxes ──────────────────────────────
     {
       id: 6,
       icon: <FaGithub size={38} />,
@@ -120,20 +175,20 @@ const Home: React.FC = () => {
 
         {/* Left column */}
         <div className="main-content">
-          <h1 className="hero-name">
+          <h1 className="hero-name" ref={nameRef}>
             Code. Design.<br /> Build. Innovate.
           </h1>
-          <p className="hero-tagline">
+          <p className="hero-tagline" ref={taglineRef}>
             I'm Victor Mayowa — a Software Developer &amp; Designer.
           </p>
-          <p className="hero-bio">
+          <p className="hero-bio" ref={bioRef}>
             I specialize in UI/UX Design, Responsive Web Design, and Visual Development.
             I build <b>digital products</b> that are fast, accessible, and beautifully designed —
             from responsive websites to cross-platform desktop apps.
           </p>
-          <a href="/contact" className="hero-cta">Connect With Me</a>
+          <a href="/contact" className="hero-cta" ref={ctaRef}>Connect With Me</a>
 
-          <div className="mobile-footer-type">
+          <div className="mobile-footer-type" ref={mobileFooterRef}>
             <TypewriterText words={badgeWords} />
           </div>
         </div>
@@ -141,12 +196,10 @@ const Home: React.FC = () => {
         {/* Right column – scattered boxes */}
         <div className="hero-right">
           <div className="boxes-container">
-            {boxes.map((box) => {
-              // Mouse‑driven movement
+            {boxes.map((box, index) => {
               const translateX = mousePos.x * 30 * box.offset;
               const translateY = mousePos.y * 30 * box.offset;
 
-              // Build the static position CSS (top, left, right, bottom)
               const positionStyles: React.CSSProperties = {};
               if (box.top !== undefined) positionStyles.top = box.top;
               if (box.left !== undefined) positionStyles.left = box.left;
@@ -156,12 +209,14 @@ const Home: React.FC = () => {
               return (
                 <div
                   key={box.id}
+                  ref={(el) => { boxRefs.current[index] = el; }}
                   className="scatter-box"
                   style={{
                     ...positionStyles,
-                    transform: `translate(${translateX}px, ${translateY}px)`,
                     borderColor: box.color,
-                  }}
+                    '--mouse-x': `${translateX}px`,
+                    '--mouse-y': `${translateY}px`,
+                  } as React.CSSProperties}
                 >
                   <div className="box-icon" style={{ color: box.color }}>
                     {box.icon}
@@ -172,7 +227,7 @@ const Home: React.FC = () => {
             })}
 
             {/* Central badge */}
-            <div className="central-badge">
+            <div className="central-badge" ref={badgeRef}>
               <TypewriterText words={badgeWords} />
             </div>
           </div>

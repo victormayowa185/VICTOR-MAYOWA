@@ -12,7 +12,7 @@ interface NewsArticle {
 // Foundation fallback pool — swap these paths once you drop your ~10 curated
 // images into /public/news-fallback/. Using existing public images for now
 // so the feature works end-to-end today.
-const FALLBACK_IMAGES = ['/pic2.png', '/picc.png', '/see.png', '/1.png'];
+const FALLBACK_IMAGES = ['/pic2.png', '/pic1.png', '/pic3.png', '/logo.png'];
 
 const getRandomFallback = () =>
     FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];

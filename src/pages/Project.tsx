@@ -110,26 +110,6 @@ const ProjectsPage = () => {
     }
   };
 
-  const getCategoryLabel = (category: string) => {
-    const map: Record<string, string> = {
-      website: 'Website',
-      app: 'App',
-      ui: 'UI',
-      other: 'Other'
-    };
-    return map[category] || category;
-  };
-
-  const getCategoryColor = (category: string) => {
-    const map: Record<string, string> = {
-      website: '#7C3EFF',
-      app: '#059669',
-      ui: '#2563EB',
-      other: '#D97706'
-    };
-    return map[category] || '#7C3EFF';
-  };
-
   return (
     <div className="projects-page">
       {/* Sentinel sits at the very top of the page, right under the
