@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import ProjectCard from './ProjectCard';
 import { client } from '../sanity/client';
 import { FiX } from 'react-icons/fi';
+import gsap from 'gsap';
 import '../styles/project.css';
 
 interface Project {
@@ -45,6 +46,15 @@ const ProjectsPage = () => {
   const pillActiveRef = useRef(false);
   const scrollingDownRef = useRef(false);
 
+  const headerTitleRef = useRef<HTMLHeadingElement>(null);
+  const headerTextRef = useRef<HTMLParagraphElement>(null);
+  const filterWrapperRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const hasPlayedEntrance = useRef(false);
+
+  const modalOverlayRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     client.fetch(PROJECTS_QUERY)
       .then(data => {
@@ -57,10 +67,7 @@ const ProjectsPage = () => {
       });
   }, []);
 
-  // Same navbar-swap scroll mechanic as the blog page, but with the sentinel
-  // sitting right at the very top of the page (so even a short page with
-  // little scroll room can still cross the trigger), plus a buffer zone
-  // to prevent rapid on/off flicker right at the boundary.
+  // Same navbar-swap scroll mechanic as the blog page
   useEffect(() => {
     const handleScroll = () => {
       if (!sentinelRef.current) return;
@@ -68,8 +75,6 @@ const ProjectsPage = () => {
       const currentY = window.scrollY;
       const delta = currentY - lastScrollY.current;
 
-      // Ignore tiny jitter (common with trackpads/inertia scrolling) so
-      // direction detection doesn't flip-flop on every 1-2px micro-movement.
       if (Math.abs(delta) > 4) {
         scrollingDownRef.current = delta > 0;
         lastScrollY.current = currentY;
@@ -99,10 +104,70 @@ const ProjectsPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // ---------- Header + filter pills entrance, gated on Preloader ----------
+  useEffect(() => {
+    const playEntrance = () => {
+      if (hasPlayedEntrance.current) return;
+      hasPlayedEntrance.current = true;
+
+      gsap.set([headerTitleRef.current, headerTextRef.current], { opacity: 0, y: 24 });
+      gsap.set(filterWrapperRef.current, { opacity: 0, y: 16 });
+
+      const tl = gsap.timeline({ delay: 0.15 });
+      tl.to(headerTitleRef.current, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
+        .to(headerTextRef.current, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.45')
+        .to(filterWrapperRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3');
+    };
+
+    if ((window as any).__preloaderFinished) {
+      playEntrance();
+    } else {
+      window.addEventListener('preloader-finished', playEntrance);
+    }
+
+    return () => window.removeEventListener('preloader-finished', playEntrance);
+  }, []);
+
   const filteredProjects = projects.filter((project) => {
     if (activeFilter === 'All') return true;
     return project.category === activeFilter.toLowerCase();
   });
+
+  // ---------- Card stagger reveal — replays on every filter change ----------
+  useEffect(() => {
+    if (loading || !gridRef.current) return;
+    const cards = gridRef.current.children;
+    if (!cards.length) return;
+
+    gsap.fromTo(
+      cards,
+      { opacity: 0, y: 30, scale: 0.96 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.55,
+        ease: 'power3.out',
+        stagger: 0.07,
+      }
+    );
+  }, [activeFilter, loading, projects.length]);
+
+  // ---------- Modal open animation ----------
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    gsap.fromTo(
+      modalOverlayRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.25, ease: 'power2.out' }
+    );
+    gsap.fromTo(
+      modalRef.current,
+      { opacity: 0, y: 24, scale: 0.96 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'power3.out', delay: 0.05 }
+    );
+  }, [selectedProject]);
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -112,24 +177,17 @@ const ProjectsPage = () => {
 
   return (
     <div className="projects-page">
-      {/* Sentinel sits at the very top of the page, right under the
-          navbar, so even a short page with little scroll room still
-          crosses it easily. */}
       <div ref={sentinelRef} className="filter-sentinel" />
 
-      {/* Fade-in animation lives on this wrapper instead of the page root —
-          a `transform`/`animation` on an ancestor breaks `position: fixed`
-          for any descendant, which was making the sticky pill scroll away
-          with the page instead of staying glued to the screen. The filter
-          buttons below sit OUTSIDE this wrapper for that exact reason. */}
-      <div className="page-fade-in">
-        <div className="projects-header">
-          <h1>View my Works</h1>
-         <p>Web, mobile, and UI projects — built to solve real problems.</p>
-        </div>
+      <div className="projects-header">
+        <h1 ref={headerTitleRef}>View my Works</h1>
+        <p ref={headerTextRef}>Web, mobile, and UI projects — built to solve real problems.</p>
       </div>
 
-      <div className={`project-filter-buttons ${isPillSticky ? 'pill-mode' : ''}`}>
+      <div
+        ref={filterWrapperRef}
+        className={`project-filter-buttons ${isPillSticky ? 'pill-mode' : ''}`}
+      >
         {categories.map((cat) => (
           <button
             key={cat}
@@ -144,8 +202,8 @@ const ProjectsPage = () => {
       {loading && <p className="loading-message">Loading projects...</p>}
 
       {!loading && (
-        <div className="page-fade-in">
-          <div className="projects-grid">
+        <div>
+          <div className="projects-grid" ref={gridRef}>
             {filteredProjects.map((project) => (
               <ProjectCard
                 key={project.title}
@@ -163,8 +221,8 @@ const ProjectsPage = () => {
       )}
 
       {selectedProject && (
-        <div className="project-modal-overlay" onClick={handleOverlayClick}>
-          <div className="project-modal">
+        <div className="project-modal-overlay" ref={modalOverlayRef} onClick={handleOverlayClick}>
+          <div className="project-modal" ref={modalRef}>
             <div className="project-modal-header">
               <h2>{selectedProject.title}</h2>
               <button

@@ -10,6 +10,7 @@ import {
   FaWhatsapp,
 } from 'react-icons/fa';
 import { FiX } from 'react-icons/fi';
+import gsap from 'gsap';
 import '../styles/contact.css';
 
 const FUTO_LAT = 5.3959;
@@ -82,6 +83,13 @@ const ContactPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  const mapSectionRef = useRef<HTMLDivElement>(null);
+  const boxesWrapperRef = useRef<HTMLDivElement>(null);
+  const hasPlayedEntrance = useRef(false);
+
+  const modalOverlayRef = useRef<HTMLDivElement>(null);
+  const modalContentRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
@@ -145,6 +153,60 @@ const ContactPage: React.FC = () => {
     };
   }, []);
 
+  // ---------- Entrance: map section + action boxes, gated on Preloader ----------
+  useEffect(() => {
+    const playEntrance = () => {
+      if (hasPlayedEntrance.current) return;
+      hasPlayedEntrance.current = true;
+
+      const boxes = boxesWrapperRef.current
+        ? Array.from(boxesWrapperRef.current.children)
+        : [];
+
+      gsap.set(mapSectionRef.current, { opacity: 0, y: 30, scale: 0.98 });
+      gsap.set(boxes, { opacity: 0, y: 30, scale: 0.94 });
+
+      const tl = gsap.timeline({ delay: 0.15 });
+      tl.to(mapSectionRef.current, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' })
+        .to(
+          boxes,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.55,
+            ease: 'back.out(1.5)',
+            stagger: 0.1,
+          },
+          '-=0.4'
+        );
+    };
+
+    if ((window as any).__preloaderFinished) {
+      playEntrance();
+    } else {
+      window.addEventListener('preloader-finished', playEntrance);
+    }
+
+    return () => window.removeEventListener('preloader-finished', playEntrance);
+  }, []);
+
+  // ---------- Modal open animation ----------
+  useEffect(() => {
+    if (!modalOpen) return;
+
+    gsap.fromTo(
+      modalOverlayRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.25, ease: 'power2.out' }
+    );
+    gsap.fromTo(
+      modalContentRef.current,
+      { opacity: 0, y: 24, scale: 0.96 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'power3.out', delay: 0.05 }
+    );
+  }, [modalOpen]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
@@ -204,14 +266,14 @@ const ContactPage: React.FC = () => {
     <div className="contact-page">
       {/* Map Section */}
       <div className="map-section-wrapper">
-        <div className="map-section">
+        <div className="map-section" ref={mapSectionRef}>
           <div ref={mapContainerRef} className="maplibre-container" />
         </div>
       </div>
 
       {/* ===== 4 ACTION BOXES – 2x2 grid ===== */}
       <div className="action-boxes-wrapper">
-        <div className="action-boxes-grid">
+        <div className="action-boxes-grid" ref={boxesWrapperRef}>
           <a
             href="https://github.com/victormayowa185"
             target="_blank"
@@ -258,102 +320,102 @@ const ContactPage: React.FC = () => {
             <h3 className="box-title">Let's Collaborate</h3>
             <span className="coming-soon-badge">Soon</span>
           </div>
-
-
         </div>
       </div>
 
       {/* ===== HIRE ME MODAL ===== */}
-      {modalOpen && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>
-                <FaHandshake style={{ marginRight: '8px' }} />
-                Hire Me
-              </h2>
-              <button className="modal-close-btn" onClick={closeModal}>
-                <FiX />
-              </button>
-            </div>
+      {
+        modalOpen && (
+          <div className="modal-overlay" ref={modalOverlayRef} onClick={closeModal}>
+            <div className="modal-content" ref={modalContentRef} onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h2>
+                  <FaHandshake style={{ marginRight: '8px' }} />
+                  Hire Me
+                </h2>
+                <button className="modal-close-btn" onClick={closeModal}>
+                  <FiX />
+                </button>
+              </div>
 
-            <div className="modal-body-scroll">
-              <div className="modal-body">
-                <p className="modal-sub">Fill in your details and I'll get back to you within 24h.</p>
+              <div className="modal-body-scroll">
+                <div className="modal-body">
+                  <p className="modal-sub">Fill in your details and I'll get back to you within 24h.</p>
 
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label>Full name <span className="required-star">*</span></label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="e.g., Alex M."
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Email <span className="required-star">*</span></label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="xy...@gmail.com"
-                      required
-                      pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Project type</label>
-                    <CustomSelect
-                      value={formData.projectType}
-                      onChange={(val) => setFormData({ ...formData, projectType: val })}
-                      options={[
-                        { value: 'webdev', label: 'Web Dev' },
-                        { value: 'uiux', label: 'UI/UX' },
-                        { value: 'other', label: 'Other' },
-                      ]}
-                    />
-                  </div>
-                  <input type="hidden" name="projectType" value={formData.projectType} />
-
-                  <div className="form-group">
-                    <label>Message</label>
-                    <textarea
-                      name="message"
-                      rows={4}
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Tell me about your idea..."
-                    />
-                  </div>
-
-                  {submitStatus === 'error' && (
-                    <div className="form-message error">
-                      ⚠️ Something went wrong. Check your connection and try again.
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                      <label>Full name <span className="required-star">*</span></label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="e.g., Alex M."
+                        required
+                      />
                     </div>
-                  )}
 
-                  {submitStatus === 'success' && (
-                    <div className="form-message success">
-                      ✨ Message sent! I'll get back to you soon.
+                    <div className="form-group">
+                      <label>Email <span className="required-star">*</span></label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="xy...@gmail.com"
+                        required
+                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                      />
                     </div>
-                  )}
 
-                  <button type="submit" className="submit-btn" disabled={loading}>
-                    {loading ? 'Sending...' : 'Send Message'} <FaPaperPlane />
-                  </button>
-                </form>
+                    <div className="form-group">
+                      <label>Project type</label>
+                      <CustomSelect
+                        value={formData.projectType}
+                        onChange={(val) => setFormData({ ...formData, projectType: val })}
+                        options={[
+                          { value: 'webdev', label: 'Web Dev' },
+                          { value: 'uiux', label: 'UI/UX' },
+                          { value: 'other', label: 'Other' },
+                        ]}
+                      />
+                    </div>
+                    <input type="hidden" name="projectType" value={formData.projectType} />
+
+                    <div className="form-group">
+                      <label>Message</label>
+                      <textarea
+                        name="message"
+                        rows={4}
+                        value={formData.message}
+                        onChange={handleChange}
+                        placeholder="Tell me about your idea..."
+                      />
+                    </div>
+
+                    {submitStatus === 'error' && (
+                      <div className="form-message error">
+                        ⚠️ Something went wrong. Check your connection and try again.
+                      </div>
+                    )}
+
+                    {submitStatus === 'success' && (
+                      <div className="form-message success">
+                        ✨ Message sent! I'll get back to you soon.
+                      </div>
+                    )}
+
+                    <button type="submit" className="submit-btn" disabled={loading}>
+                      {loading ? 'Sending...' : 'Send Message'} <FaPaperPlane />
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 
