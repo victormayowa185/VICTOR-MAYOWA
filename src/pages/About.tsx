@@ -217,7 +217,7 @@ const About: React.FC = () => {
                       <FaGithub className="stat-extra-icon" />
                       <span className="stat-number">
                         <TypewriterText
-                          words={['20+', '25+', '30+', '35+', '40+']}
+                          words={['2+', '1+', '2+', '2+', '2+']}
                           typingSpeed={80}
                           deletingSpeed={40}
                           pauseDuration={2000}
@@ -229,7 +229,7 @@ const About: React.FC = () => {
                       <FaRocket className="stat-extra-icon" />
                       <span className="stat-number">
                         <TypewriterText
-                          words={['3+', '5+', '7+', '10+', '12+']}
+                          words={['23+', '20+', '19+', '21+', '22+']}
                           typingSpeed={80}
                           deletingSpeed={40}
                           pauseDuration={2000}
@@ -241,7 +241,7 @@ const About: React.FC = () => {
                       <FaUsers className="stat-extra-icon" />
                       <span className="stat-number">
                         <TypewriterText
-                          words={['50+', '60+', '75+', '100+', '120+']}
+                          words={['10+', '2+', '5+', '2+', '2+']}
                           typingSpeed={80}
                           deletingSpeed={40}
                           pauseDuration={2000}

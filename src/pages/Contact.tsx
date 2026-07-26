@@ -6,13 +6,67 @@ import {
   FaHandshake,
   FaUsers,
   FaEnvelope,
-  FaPaperPlane
+  FaPaperPlane,
+  FaWhatsapp,
 } from 'react-icons/fa';
 import { FiX } from 'react-icons/fi';
 import '../styles/contact.css';
 
 const FUTO_LAT = 5.3959;
 const FUTO_LNG = 7.0102;
+
+interface CustomSelectProps {
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+}
+
+const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, options }) => {
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const selected = options.find((o) => o.value === value);
+
+  return (
+    <div className="custom-select" ref={wrapperRef}>
+      <button
+        type="button"
+        className={`custom-select-trigger ${open ? 'open' : ''}`}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <span>{selected?.label}</span>
+        <span className="custom-select-arrow" />
+      </button>
+
+      {open && (
+        <ul className="custom-select-options">
+          {options.map((opt) => (
+            <li
+              key={opt.value}
+              className={`custom-select-option ${opt.value === value ? 'selected' : ''}`}
+              onClick={() => {
+                onChange(opt.value);
+                setOpen(false);
+              }}
+            >
+              {opt.label}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 
 const ContactPage: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -31,36 +85,36 @@ const ContactPage: React.FC = () => {
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
-   const map = new maplibregl.Map({
-  container: mapContainerRef.current,
-  style: {
-    version: 8,
-    sources: {
-      'carto-light': {
-        type: 'raster',
-        tiles: [
-          'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-          'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-          'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    const map = new maplibregl.Map({
+      container: mapContainerRef.current,
+      style: {
+        version: 8,
+        sources: {
+          'carto-light': {
+            type: 'raster',
+            tiles: [
+              'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+              'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+              'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+            ],
+            tileSize: 256,
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+          },
+        },
+        layers: [
+          {
+            id: 'carto-light-layer',
+            type: 'raster',
+            source: 'carto-light',
+            minzoom: 0,
+            maxzoom: 20,
+          },
         ],
-        tileSize: 256,
-        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
       },
-    },
-    layers: [
-      {
-        id: 'carto-light-layer',
-        type: 'raster',
-        source: 'carto-light',
-        minzoom: 0,
-        maxzoom: 20,
-      },
-    ],
-  },
-  center: [FUTO_LNG, FUTO_LAT],
-  zoom: 15,
-  attributionControl: false,
-});
+      center: [FUTO_LNG, FUTO_LAT],
+      zoom: 15,
+      attributionControl: false,
+    });
 
     mapRef.current = map;
 
@@ -178,6 +232,25 @@ const ContactPage: React.FC = () => {
             <h3 className="box-title">Hire Me</h3>
           </button>
 
+          <div className="action-box box-quick">
+            <div className="box-icon-wrapper">
+              <FaEnvelope className="box-icon" />
+            </div>
+            <h3 className="box-title">Send a Quick Message</h3>
+
+            <div className="quick-contact-links">
+              <a
+                href="https://wa.me/2348113270110"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="quick-contact-link"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <FaWhatsapp /> WhatsApp
+              </a>
+            </div>
+          </div>
+
           <div className="action-box box-collab coming-soon" title="Coming soon – stay tuned!">
             <div className="box-icon-wrapper">
               <FaUsers className="box-icon" />
@@ -186,13 +259,7 @@ const ContactPage: React.FC = () => {
             <span className="coming-soon-badge">Soon</span>
           </div>
 
-          <div className="action-box box-quick coming-soon" title="Coming soon – stay tuned!">
-            <div className="box-icon-wrapper">
-              <FaEnvelope className="box-icon" />
-            </div>
-            <h3 className="box-title">Send a Quick Message</h3>
-            <span className="coming-soon-badge">Soon</span>
-          </div>
+
         </div>
       </div>
 
@@ -210,71 +277,78 @@ const ContactPage: React.FC = () => {
               </button>
             </div>
 
-            <div className="modal-body">
-              <p className="modal-sub">Fill in your details and I'll get back to you within 24h.</p>
+            <div className="modal-body-scroll">
+              <div className="modal-body">
+                <p className="modal-sub">Fill in your details and I'll get back to you within 24h.</p>
 
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Full name <span className="required-star">*</span></label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="e.g., Alex M."
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Email <span className="required-star">*</span></label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="xy...@gmail.com"
-                    required
-                    pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Project type</label>
-                  <select name="projectType" value={formData.projectType} onChange={handleChange}>
-                    <option value="webdev">Web Dev</option>
-                    <option value="uiux">UI/UX</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Message</label>
-                  <textarea
-                    name="message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell me about your idea..."
-                  />
-                </div>
-
-                {submitStatus === 'error' && (
-                  <div className="form-message error">
-                    ⚠️ Something went wrong. Check your connection and try again.
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label>Full name <span className="required-star">*</span></label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="e.g., Alex M."
+                      required
+                    />
                   </div>
-                )}
 
-                {submitStatus === 'success' && (
-                  <div className="form-message success">
-                    ✨ Message sent! I'll get back to you soon.
+                  <div className="form-group">
+                    <label>Email <span className="required-star">*</span></label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="xy...@gmail.com"
+                      required
+                      pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                    />
                   </div>
-                )}
 
-                <button type="submit" className="submit-btn" disabled={loading}>
-                  {loading ? 'Sending...' : 'Send Message'} <FaPaperPlane />
-                </button>
-              </form>
+                  <div className="form-group">
+                    <label>Project type</label>
+                    <CustomSelect
+                      value={formData.projectType}
+                      onChange={(val) => setFormData({ ...formData, projectType: val })}
+                      options={[
+                        { value: 'webdev', label: 'Web Dev' },
+                        { value: 'uiux', label: 'UI/UX' },
+                        { value: 'other', label: 'Other' },
+                      ]}
+                    />
+                  </div>
+                  <input type="hidden" name="projectType" value={formData.projectType} />
+
+                  <div className="form-group">
+                    <label>Message</label>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Tell me about your idea..."
+                    />
+                  </div>
+
+                  {submitStatus === 'error' && (
+                    <div className="form-message error">
+                      ⚠️ Something went wrong. Check your connection and try again.
+                    </div>
+                  )}
+
+                  {submitStatus === 'success' && (
+                    <div className="form-message success">
+                      ✨ Message sent! I'll get back to you soon.
+                    </div>
+                  )}
+
+                  <button type="submit" className="submit-btn" disabled={loading}>
+                    {loading ? 'Sending...' : 'Send Message'} <FaPaperPlane />
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

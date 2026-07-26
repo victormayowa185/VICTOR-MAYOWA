@@ -103,7 +103,7 @@
   border-radius: 30px;
   font-size: 0.875rem;
   font-weight: 500;
-  border: 1px solid rgba(0, 0, 0, 0.622);
+  border: 1px solid rgba(59, 57, 57, 0.237);
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s, transform 0.1s;
   background-color: white;
