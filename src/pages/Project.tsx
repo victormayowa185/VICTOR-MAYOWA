@@ -132,17 +132,24 @@ const ProjectsPage = () => {
 
   return (
     <div className="projects-page">
-      {/* Sentinel now sits at the very top of the page, right under the
+      {/* Sentinel sits at the very top of the page, right under the
           navbar, so even a short page with little scroll room still
           crosses it easily. */}
       <div ref={sentinelRef} className="filter-sentinel" />
 
-      <div className="projects-header">
-        <h1>View my Works</h1>
-        <p>
-          A selection of my recent work across web, mobile, and user interfaces.
-          Each project reflects a unique challenge and solution.
-        </p>
+      {/* Fade-in animation lives on this wrapper instead of the page root —
+          a `transform`/`animation` on an ancestor breaks `position: fixed`
+          for any descendant, which was making the sticky pill scroll away
+          with the page instead of staying glued to the screen. The filter
+          buttons below sit OUTSIDE this wrapper for that exact reason. */}
+      <div className="page-fade-in">
+        <div className="projects-header">
+          <h1>View my Works</h1>
+          <p>
+            A selection of my recent work across web, mobile, and user interfaces.
+            Each project reflects a unique challenge and solution.
+          </p>
+        </div>
       </div>
 
       <div className={`project-filter-buttons ${isPillSticky ? 'pill-mode' : ''}`}>
@@ -160,7 +167,7 @@ const ProjectsPage = () => {
       {loading && <p className="loading-message">Loading projects...</p>}
 
       {!loading && (
-        <>
+        <div className="page-fade-in">
           <div className="projects-grid">
             {filteredProjects.map((project) => (
               <ProjectCard
@@ -175,7 +182,7 @@ const ProjectsPage = () => {
           {filteredProjects.length === 0 && (
             <p className="no-projects-message">Project in this category is yet to be deployed.</p>
           )}
-        </>
+        </div>
       )}
 
       {selectedProject && (
