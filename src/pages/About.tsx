@@ -442,9 +442,8 @@ const About: React.FC = () => {
                               <h3>{item.title}</h3>
                               <p>{item.description}</p>
 
-
                               {item.verifyLink && (
-                                
+                                <a
                                   href={item.verifyLink}
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -493,7 +492,7 @@ const About: React.FC = () => {
               </p>
 
               {selectedAchievement.verifyLink && (
-                
+                <a
                   href={selectedAchievement.verifyLink}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -505,7 +504,7 @@ const About: React.FC = () => {
               )}
             </div>
           </div>
-        </div>
+        </div >
       )}
     </>
   );
