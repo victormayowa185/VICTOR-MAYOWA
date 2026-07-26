@@ -109,7 +109,7 @@ body {
 /* ---------- Tablet ---------- */
 @media (max-width: 768px) {
   .news-hero {
-    height: 85vh;
+    height: 100vh;
   }
 
   .news-hero-content {
@@ -119,12 +119,15 @@ body {
   .news-hero-desc {
     -webkit-line-clamp: 3;
   }
+  .news-hero-headline {
+    font-size: 1.5rem;
+  }
 }
 
 /* ---------- Small phones ---------- */
 @media (max-width: 480px) {
   .news-hero {
-    height: 80vh;
+    height: 100vh;
   }
 
   .news-hero-content {
