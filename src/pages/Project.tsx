@@ -145,10 +145,7 @@ const ProjectsPage = () => {
       <div className="page-fade-in">
         <div className="projects-header">
           <h1>View my Works</h1>
-          <p>
-            A selection of my recent work across web, mobile, and user interfaces.
-            Each project reflects a unique challenge and solution.
-          </p>
+         <p>Web, mobile, and UI projects — built to solve real problems.</p>
         </div>
       </div>
 

@@ -31,13 +31,36 @@ const ContactPage: React.FC = () => {
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
-    const map = new maplibregl.Map({
-      container: mapContainerRef.current,
-      style: 'https://tiles.openfreemap.org/styles/positron',
-      center: [FUTO_LNG, FUTO_LAT],
-      zoom: 15,
-      attributionControl: false,
-    });
+   const map = new maplibregl.Map({
+  container: mapContainerRef.current,
+  style: {
+    version: 8,
+    sources: {
+      'carto-light': {
+        type: 'raster',
+        tiles: [
+          'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+          'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+          'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+        ],
+        tileSize: 256,
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      },
+    },
+    layers: [
+      {
+        id: 'carto-light-layer',
+        type: 'raster',
+        source: 'carto-light',
+        minzoom: 0,
+        maxzoom: 20,
+      },
+    ],
+  },
+  center: [FUTO_LNG, FUTO_LAT],
+  zoom: 15,
+  attributionControl: false,
+});
 
     mapRef.current = map;
 

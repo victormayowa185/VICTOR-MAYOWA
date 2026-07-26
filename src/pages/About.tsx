@@ -12,6 +12,7 @@ import '../styles/about.css';
 
 const About: React.FC = () => {
   const [showTimeline, setShowTimeline] = useState(false);
+  const [selectedAchievement, setSelectedAchievement] = useState<typeof achievements[0] | null>(null);
 
   // Achievement data with verify links for Google badges
   const achievements = [
@@ -261,7 +262,12 @@ const About: React.FC = () => {
               <div className="carousel-container">
                 <div className="carousel-track">
                   {carouselItems.map((item, index) => (
-                    <div key={`${item.id}-${index}`} className="achievement-card">
+                    <div
+                      key={`${item.id}-${index}`}
+                      className="achievement-card"
+                      onClick={() => setSelectedAchievement(item)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <div className="achievement-image-wrapper">
                         {item.type === 'badge' && item.badgeImage ? (
                           <img
@@ -293,7 +299,7 @@ const About: React.FC = () => {
               </div>
 
               {/* Timeline Popup */}
-             {showTimeline && (
+              {showTimeline && (
                 <div
                   className="timeline-overlay"
                   onClick={(e) => {
@@ -320,8 +326,8 @@ const About: React.FC = () => {
                             <div className="timeline-item-right">
                               <h3>{item.title}</h3>
                               <p>{item.description}</p>
-                           
-                            
+
+
                               {item.verifyLink && (
                                 <a
                                   href={item.verifyLink}
@@ -345,6 +351,47 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* ===== ACHIEVEMENT MODAL ===== */}
+      {selectedAchievement && (
+        <div
+          className="project-modal-overlay"
+          onClick={() => setSelectedAchievement(null)}
+        >
+          <div className="project-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="project-modal-header">
+              <h2>{selectedAchievement.title}</h2>
+              <button
+                className="project-modal-close"
+                onClick={() => setSelectedAchievement(null)}
+              >
+                <FiX />
+              </button>
+            </div>
+            <div className="project-modal-body">
+              <p style={{ color: '#7C3EFF', fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                {selectedAchievement.date}
+              </p>
+
+              <p className="project-modal-description" style={{ marginBottom: '1.5rem' }}>
+                {selectedAchievement.description}
+              </p>
+
+              {selectedAchievement.verifyLink && (
+                <a
+                  href={selectedAchievement.verifyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="timeline-verify-link"
+                  style={{ display: 'inline-block' }}
+                >
+                  Verify on Google →
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

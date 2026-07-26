@@ -968,7 +968,7 @@ video {
 .achievement-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 30px rgba(124, 62, 255, 0.12);
-  border-color: #7C3EFF;
+
 }
 
 .achievement-image-wrapper {
@@ -1328,8 +1328,6 @@ video {
 
 .timeline-verify-link:hover {
   border-radius: 10px;
-
-  transform: translateY(-2px);
 }
 
 /* Responsive */
