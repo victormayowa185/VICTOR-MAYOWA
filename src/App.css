@@ -1,3 +1,85 @@
-*{
+* {
     font-family: 'Google Sans', sans-serif;
+}
+
+/* ========================================
+   BLOG POST STYLES
+   ======================================== */
+
+/* 1. Inline links inside the blog post */
+.blog-post a, 
+.prose a,
+[data-sanity="body"] a {
+  color: black;                 /* Your purple */
+  text-decoration: none;          /* Remove underline */
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.blog-post a:hover,
+.prose a:hover {
+  color: #6A28E6;
+  border-bottom-color: #7C3EFF;
+  text-decoration: underline;     /* Underline only on hover */
+}
+
+/* ========================================
+   "VISIT SITE" BUTTON
+   ======================================== */
+
+/* If the button is a plain <a> tag */
+.blog-post .btn,
+.prose .btn,
+a.btn,
+a[class*="button"],
+a[class*="btn"] {
+  display: inline-block;
+  background: black;            /* Purple background */
+  color: #ffffff !important;      /* White text */
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none !important; /* NO underline ever */
+  border: none;
+  transition: all 0.2s ease;
+}
+
+/* Hover state for the button */
+.blog-post .btn:hover,
+.prose .btn:hover,
+a.btn:hover,
+a[class*="button"]:hover,
+a[class*="btn"]:hover {
+  background: #6A28E6;            /* Darker purple on hover */
+  color: #ffffff !important;
+  transform: translateY(-2px);    /* Slight lift effect */
+  box-shadow: 0 4px 12px rgba(124, 62, 255, 0.4);
+  text-decoration: none !important; /* Still NO underline */
+}
+
+/* ========================================
+   FALLBACK: If the button has no class
+   ======================================== */
+
+/* This catches ANY link that looks like a button */
+.blog-post a[href*="vercel.app"],
+.blog-post a[href*="mayo-share"] {
+  display: inline-block;
+  background: #7C3EFF;
+  color: #ffffff !important;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+}
+
+.blog-post a[href*="vercel.app"]:hover,
+.blog-post a[href*="mayo-share"]:hover {
+  background: #6A28E6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 62, 255, 0.4);
+  text-decoration: none !important;
 }

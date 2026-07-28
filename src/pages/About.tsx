@@ -125,6 +125,15 @@ const About: React.FC = () => {
       type: 'project',
       icon: <FaLaptopCode size={48} />,
     },
+    {
+      id: 11,
+      title: 'Pull Shark',
+      date: '2025', // Replace with the actual date you earned it (e.g., 'Apr 2025')
+      description: 'Earned the Pull Shark achievement on GitHub for having a pull request merged into a public repository.',
+      badgeImage: '/Certificate/pull-shark.png', // 👈 Place your image file here
+      type: 'badge',
+      verifyLink: 'https://github.com/victormayowa185?achievement=pull-shark', // or link to your GitHub profile
+    },
   ];
 
   // Duplicate array for seamless marquee
