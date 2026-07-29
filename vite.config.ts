@@ -7,14 +7,14 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate', // Automatically update the service worker
+      registerType: 'autoUpdate',
       manifest: {
         name: 'Victor Mayowa - Web Developer Portfolio',
         short_name: 'VM Portfolio',
         description: 'Portfolio of Victor Mayowa, a creative web developer and designer.',
-        theme_color: '#1a1e24', // Match your site's theme
+        theme_color: '#1a1e24',
         background_color: '#ffffff',
-        display: 'standalone', // Makes it open like a native app
+        display: 'standalone',
         scope: '/',
         start_url: '/',
         icons: [
@@ -36,33 +36,33 @@ export default defineConfig({
         ]
       },
       workbox: {
-       maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'], // Cache these file types
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/cdnjs\.cloudflare\.com\/.*/i, // Cache leaflet CSS/JS from CDN
+            urlPattern: /^https:\/\/cdnjs\.cloudflare\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'external-cdn-cache',
               expiration: {
                 maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30
               }
             }
           },
           {
-            urlPattern: /\.(?:png|jpg|jpeg|svg|webp)$/, // Cache images
+            urlPattern: /\.(?:png|jpg|jpeg|svg|webp)$/,
             handler: 'CacheFirst',
             options: {
               cacheName: 'image-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30
               }
             }
           },
           {
-            urlPattern: /^https:\/\/victormayowa\.vercel\.app\/api\/.*/i, // Your API calls
+            urlPattern: /^https:\/\/victormayowa\.vercel\.app\/api\/.*/i,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',
@@ -81,5 +81,35 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:3000',
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React libraries – rarely change, good for caching
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+
+          // GSAP – animation library, large but stable
+          'gsap': ['gsap'],
+
+          // Sanity – only used on certain pages
+          'sanity': [
+            '@sanity/client',
+            '@sanity/image-url',
+            '@portabletext/react',
+            '@sanity/block-content-to-react'
+          ],
+
+          // Icons – used on every page, but small enough to be separate
+          'icons': ['react-icons'],
+
+          // Maplibre – ONLY used on Contact page (lazy‑loaded)
+          // Kept separate so it doesn't load on Home/About
+          'maplibre': ['maplibre-gl']
+        }
+      }
+    },
+    // Increase warning limit (optional)
+    chunkSizeWarningLimit: 1000
   }
 })
