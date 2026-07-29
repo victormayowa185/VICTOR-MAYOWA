@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { MdOutlineLaptopMac } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -144,16 +144,22 @@ const About: React.FC = () => {
   };
 
   // ---------- Above-the-fold entrance: profile image + bio, gated on Preloader ----------
+  // ---------- Hide everything BEFORE first paint — prevents the flash ----------
+  useLayoutEffect(() => {
+    const validTextRefs = textRefs.current.filter(Boolean);
+
+    gsap.set(imageRef.current, { opacity: 0, x: -40, scale: 0.96 });
+    gsap.set([nameRef.current, ...validTextRefs, ctaRef.current], { opacity: 0, y: 24 });
+    gsap.set(dividerRef.current, { scaleX: 0, opacity: 0 });
+  }, []);
+
+  // ---------- Above-the-fold entrance: profile image + bio, gated on Preloader ----------
   useEffect(() => {
     const playEntrance = () => {
       if (hasPlayedEntrance.current) return;
       hasPlayedEntrance.current = true;
 
       const validTextRefs = textRefs.current.filter(Boolean);
-
-      gsap.set(imageRef.current, { opacity: 0, x: -40, scale: 0.96 });
-      gsap.set([nameRef.current, ...validTextRefs, ctaRef.current], { opacity: 0, y: 24 });
-      gsap.set(dividerRef.current, { scaleX: 0, opacity: 0 });
 
       const tl = gsap.timeline({ delay: 0.15 });
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import ProjectCard from './ProjectCard';
 import { client } from '../sanity/client';
 import { FiX } from 'react-icons/fi';
@@ -104,14 +104,18 @@ const ProjectsPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // NEW
+  // ---------- Hide everything BEFORE first paint — prevents the flash ----------
+  useLayoutEffect(() => {
+    gsap.set([headerTitleRef.current, headerTextRef.current], { opacity: 0, y: 24 });
+    gsap.set(filterWrapperRef.current, { opacity: 0, y: 16 });
+  }, []);
+
   // ---------- Header + filter pills entrance, gated on Preloader ----------
   useEffect(() => {
     const playEntrance = () => {
       if (hasPlayedEntrance.current) return;
       hasPlayedEntrance.current = true;
-
-      gsap.set([headerTitleRef.current, headerTextRef.current], { opacity: 0, y: 24 });
-      gsap.set(filterWrapperRef.current, { opacity: 0, y: 16 });
 
       const tl = gsap.timeline({ delay: 0.15 });
       tl.to(headerTitleRef.current, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })

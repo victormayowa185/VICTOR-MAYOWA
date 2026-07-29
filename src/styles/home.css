@@ -201,6 +201,7 @@ body {
   .hero-new {
     padding: 5rem 2rem 2rem;
   }
+
   .homepage-container {
     gap: 2rem;
   }
@@ -214,6 +215,7 @@ body {
     padding: 1.5rem;
     align-items: center;
   }
+
   .homepage-container {
     flex-direction: column;
     text-align: center;
@@ -223,13 +225,15 @@ body {
     overflow: visible;
     height: 100%;
   }
+
   .main-content {
     text-align: center;
     max-width: 100%;
     height: auto;
     margin-left: 0;
-     padding-left: 2rem !important;
+    padding-left: 2rem !important;
   }
+
   .hero-bio {
     max-width: 100%;
     margin-left: auto;
@@ -243,29 +247,35 @@ body {
 
   /* Show the typewriter as a footer-style block under the CTA */
   .mobile-footer-type {
-  display: block;
-  position: absolute;
-  bottom: 2.5rem;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 500px;
-  padding-top: 1.25rem;
-  border-top: 1px solid #ccc;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1a1e24;
-  text-align: center;
-}
+    display: block;
+    position: absolute;
+    bottom: 2.5rem;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    padding-top: 1.25rem;
+    border-top: 1px solid #ccc;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1e24;
+    text-align: center;
+  }
 
-  .sidebar-divider{
+  .sidebar-text {
+    font-size: 0.6rem;
+  }
+
+  .sidebar-divider {
     height: 380px;
   }
 
   .sidebar-rotate {
-    left: 1rem;   /* 👈 move it left — lower number = further left */
-    top: 7rem;    /* adjust vertical position too if needed */
+    left: 1rem;
+    /* 👈 move it left — lower number = further left */
+    top: 9rem;
+    /* adjust vertical position too if needed */
   }
 }
 
@@ -279,12 +289,15 @@ body {
   .hero-name {
     font-size: 2rem !important;
   }
+
   .hero-tagline {
     font-size: 1rem;
   }
+
   .hero-bio {
     font-size: 0.9rem;
   }
+
   .hero-cta {
     padding: 0.6rem 1.5rem;
     font-size: 0.9rem;

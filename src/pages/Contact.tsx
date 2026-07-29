@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
@@ -154,6 +154,16 @@ const ContactPage: React.FC = () => {
   }, []);
 
   // ---------- Entrance: map section + action boxes, gated on Preloader ----------
+  // ---------- Hide everything BEFORE first paint — prevents the flash ----------
+  useLayoutEffect(() => {
+    const boxes = boxesWrapperRef.current
+      ? Array.from(boxesWrapperRef.current.children)
+      : [];
+
+    gsap.set(mapSectionRef.current, { opacity: 0, y: 30, scale: 0.98 });
+    gsap.set(boxes, { opacity: 0, y: 30, scale: 0.94 });
+  }, []);
+
   useEffect(() => {
     const playEntrance = () => {
       if (hasPlayedEntrance.current) return;
@@ -162,9 +172,6 @@ const ContactPage: React.FC = () => {
       const boxes = boxesWrapperRef.current
         ? Array.from(boxesWrapperRef.current.children)
         : [];
-
-      gsap.set(mapSectionRef.current, { opacity: 0, y: 30, scale: 0.98 });
-      gsap.set(boxes, { opacity: 0, y: 30, scale: 0.94 });
 
       const tl = gsap.timeline({ delay: 0.15 });
       tl.to(mapSectionRef.current, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' })

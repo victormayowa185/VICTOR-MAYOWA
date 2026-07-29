@@ -120,14 +120,15 @@ body {
     padding: 0.8rem 0;        /* ← was 0.8rem 1rem — side padding removed */
   }
 
-  .navbar-inner {
+   .navbar-inner {
     border-radius: 40px;
     padding: 0.5rem 1.2rem;
-    width: 100%;
-    max-width: 100%;
+    width: 92%;                 /* ← shrink the pill (adjust % to taste) */
+    max-width: 92%;
+    margin: 0 auto;              /* ← keeps it centered */
     gap: 0.5rem;
   }
-
+  
   .hamburger {
     display: block;
     margin-left: auto;

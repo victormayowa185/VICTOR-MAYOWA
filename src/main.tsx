@@ -9,6 +9,7 @@ const Root: React.FC = () => {
   const handlePreloaderFinished = () => {
     setLoading(false);
     // Let any component (like Navbar) know it's safe to play entrance animations
+    (window as any).__preloaderFinished = true;
     window.dispatchEvent(new Event('preloader-finished'));
   };
 

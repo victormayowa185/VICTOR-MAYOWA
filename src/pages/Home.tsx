@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import {
   FaReact,
   FaJsSquare,
@@ -40,20 +40,25 @@ const Home: React.FC = () => {
   }, []);
 
   // ---------- Premium entrance sequence, gated on Preloader finishing ----------
+// ---------- Hide everything BEFORE first paint — prevents the flash ----------
+  useLayoutEffect(() => {
+    const validBoxes = boxRefs.current.filter(Boolean);
+
+    gsap.set([nameRef.current, taglineRef.current, bioRef.current, ctaRef.current, mobileFooterRef.current], {
+      y: 24,
+      opacity: 0,
+    });
+    gsap.set(validBoxes, { y: 30, opacity: 0, scale: 0.85 });
+    gsap.set(badgeRef.current, { opacity: 0, scale: 0.8 });
+  }, []);
+
+  // ---------- Premium entrance sequence, gated on Preloader finishing ----------
   useEffect(() => {
     const playEntrance = () => {
       if (hasPlayedEntrance.current) return;
       hasPlayedEntrance.current = true;
 
       const validBoxes = boxRefs.current.filter(Boolean);
-
-      // Set initial hidden states up front, so nothing flashes before animating
-      gsap.set([nameRef.current, taglineRef.current, bioRef.current, ctaRef.current, mobileFooterRef.current], {
-        y: 24,
-        opacity: 0,
-      });
-      gsap.set(validBoxes, { y: 30, opacity: 0, scale: 0.85 });
-      gsap.set(badgeRef.current, { opacity: 0, scale: 0.8 });
 
       const tl = gsap.timeline({ delay: 0.15 });
 
