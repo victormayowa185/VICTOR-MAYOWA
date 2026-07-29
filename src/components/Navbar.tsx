@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   // ---------- Center-expand entrance, plays once, gated on Preloader finishing ----------
-// ---------- Drop-from-top entrance, plays once, gated on Preloader finishing ----------
+  // ---------- Drop-from-top entrance, plays once, gated on Preloader finishing ----------
   useEffect(() => {
     const playEntrance = () => {
       if (hasPlayedEntrance.current || !navInnerRef.current) return;
@@ -89,26 +89,24 @@ const Navbar: React.FC = () => {
             <img src="/logo.png" alt="MAYO X Logo" className="brand-logo-img" />
           </div>
         </div>
-
         <button className="hamburger" onClick={toggleMenu}>
           {menuOpen ? <HiX /> : <HiMenu />}
         </button>
-
-        <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-          <li><NavLink to="/" end onClick={closeMenu}>Home</NavLink></li>
-          <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
-          <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
-          <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
-          <li className="blog-nav-item">
-            <NavLink to="/blog" className="blog-link" onClick={closeMenu}>Blog</NavLink>
-          </li>
-        </ul>
-
         <div className="blog-nav-wrapper">
           <NavLink to="/blog" className="blog-link" onClick={closeMenu}>Blog</NavLink>
         </div>
       </div>
+
       {menuOpen && <div className="menu-overlay" onClick={closeMenu} />}
+      <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
+        <li><NavLink to="/" end onClick={closeMenu}>Home</NavLink></li>
+        <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
+        <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
+        <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
+        <li className="blog-nav-item">
+          <NavLink to="/blog" className="blog-link" onClick={closeMenu}>Blog</NavLink>
+        </li>
+      </ul>
     </nav>
   );
 };
