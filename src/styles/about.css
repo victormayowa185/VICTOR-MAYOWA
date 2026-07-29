@@ -615,6 +615,7 @@
 
   .skills-grid {
     grid-template-columns: 1fr;
+    padding: 0 1rem;
   }
 
   .stats-grid-extra {
