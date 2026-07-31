@@ -165,6 +165,106 @@ const About: React.FC = () => {
       type: 'badge',
       verifyLink: 'https://elearning-adbi.org/certificate-verifier/?&code=180062-178-153-1261',
     },
+    {
+      id: 14,
+      title: 'Create Digital Content, Communicate and Collaborate Online',
+      date: 'June 13, 2026',
+      sortDate: '2026-06-13',
+      description: 'Cisco, in collaboration with OpenEDG, verifies that the learner has demonstrated the ability to create digital content, effectively communicate, and collaborate online through this entry-level course.',
+      badgeImage: '/Certificate/badge-cisco-digital-content.png',
+      type: 'badge',
+      verifyLink: 'https://www.credly.com/badges/b894d307-93c5-42b7-93b2-0d530d10c5db/public_url',
+    },
+    {
+      id: 15,
+      title: 'CSS Essentials',
+      date: 'June 08, 2026',
+      sortDate: '2026-06-08',
+      description: 'Cisco, in collaboration with JS Institute, verifies that the earner of this badge has successfully completed the CSS Essentials course and achieved student-level credentials. The course covered CSS3 fundamentals, including styling web pages and applying layout techniques.',
+      badgeImage: '/Certificate/badge-cisco-css-essentials.png',
+      type: 'badge',
+      verifyLink: 'https://www.credly.com/badges/d94a09ba-aac1-4870-9ca7-969b8e187926/public_url',
+    },
+    {
+      id: 16,
+      title: 'DevNet Associate',
+      date: 'May 06, 2026',
+      sortDate: '2026-05-06',
+      description: 'Cisco verifies the earner of this badge successfully completed the DevNet Associate course, completed 25+ hands-on labs using a virtual lab environment, and achieved this student-level credential.',
+      badgeImage: '/Certificate/badge-cisco-devnet-associate.png',
+      type: 'badge',
+      verifyLink: 'https://www.credly.com/badges/caedfbaa-41a9-488f-8f69-7684555abb73/public_url',
+    },
+    {
+      id: 17,
+      title: 'HTML Essentials',
+      date: 'June 11, 2026',
+      sortDate: '2026-06-11',
+      description: 'Cisco, in collaboration with JS Institute, verifies that the earner of this badge has successfully completed the HTML Essentials course and achieved student-level credentials. The course covered HTML5 fundamentals, including document structure and text formatting.',
+      badgeImage: '/Certificate/badge-cisco-html-essentials.png',
+      type: 'badge',
+      verifyLink: 'https://www.credly.com/badges/6553e187-5c4e-4814-b336-5660c316254e/public_url',
+    },
+    {
+      id: 18,
+      title: 'JavaScript Essentials 1',
+      date: 'June 16, 2026',
+      sortDate: '2026-06-16',
+      description: 'Cisco, in collaboration with OpenEDG JS Institute, verifies the earner of this badge successfully completed the JavaScript Essentials 1 course and achieved student-level credentials. Earners know the syntax of core JavaScript and can work with variables, operators, flow control, and more.',
+      badgeImage: '/Certificate/badge-cisco-javascript-essentials.png',
+      type: 'badge',
+      verifyLink: 'https://www.credly.com/badges/368c03c0-0fa1-4cb7-9121-fed559846111/public_url',
+    },
+    {
+      id: 19,
+      title: 'Python Essentials 1',
+      date: 'June 11, 2026',
+      sortDate: '2026-06-11',
+      description: 'Cisco, in collaboration with OpenEDG Python Institute, verifies the earner of this badge successfully completed the Python Essentials 1 course and achieved student-level credentials. Earners have knowledge of the concepts of computer programming and the syntax of Python.',
+      badgeImage: '/Certificate/badge-cisco-python-essentials.png',
+      type: 'badge',
+      verifyLink: 'https://www.credly.com/badges/0182b145-083c-42c9-a0e7-f7e9d079b80d/public_url',
+    },
+    {
+      id: 20,
+      title: 'Design Thinking',
+      date: 'May 29, 2026',
+      sortDate: '2026-05-29',
+      description: 'HP LIFE – Discover basic design thinking concepts to identify, define, explore, generate, and test ideas to solve difficult customer problems. Learn to define problems, conduct interviews, explore solutions, and iterate using feedback.',
+      badgeImage: '/Certificate/badge-hplife-design-thinking.png',
+      type: 'badge',
+      verifyLink: 'https://www.life-global.org/certificate/462298a7-cd14-4a5f-8acd-2f4f186ad699',
+    },
+    {
+      id: 21,
+      title: 'Critical Thinking in the AI Era',
+      date: 'May 29, 2026',
+      sortDate: '2026-05-29',
+      description: 'HP LIFE – Sharpen essential skills to evaluate online content, detect misinformation and bias, and apply decision-making frameworks to make more informed choices in the AI era. Learn to recognize disinformation, evaluate sources, and fact-check effectively.',
+      badgeImage: '/Certificate/badge-hplife-critical-thinking.png',
+      type: 'badge',
+      verifyLink: 'https://www.life-global.org/certificate/37decd5e-fa43-4868-8a0b-210d49b4f298',
+    },
+    {
+      id: 22,
+      title: 'Effective Leadership',
+      date: 'May 29, 2026',
+      sortDate: '2026-05-29',
+      description: 'HP LIFE – Improve your leadership skills and explore the art of effective leadership through self-awareness, strategic planning, and learning how to catalyze change. Cultivate your leadership style, build strong teams, and navigate change effectively.',
+      badgeImage: '/Certificate/badge-hplife-effective-leadership.png',
+      type: 'badge',
+      verifyLink: 'https://www.life-global.org/certificate/ff189900-de03-43e5-9083-032e4d105f31',
+    },
+    {
+      id: 23,
+      title: 'Python Coder',
+      date: 'July 2026',
+      sortDate: '2026-07-30',
+      description: 'Created a Python notebook. Python is one of the most popular general purpose programming languages and has gained widespread use in the machine learning community.',
+      badgeImage: '/Certificate/badge-kaggle-python-coder.png',
+      type: 'badge',
+      verifyLink: 'https://www.kaggle.com/certification/badges/victormayowaakinwale/30',
+    },
   ];
 
   // Sort achievements by sortDate (newest first)
@@ -502,7 +602,7 @@ const About: React.FC = () => {
                                   rel="noopener noreferrer"
                                   className="timeline-verify-link"
                                 >
-                                  Verify on Google →
+                                  Verify Online →
                                 </a>
                               )}
                             </div>

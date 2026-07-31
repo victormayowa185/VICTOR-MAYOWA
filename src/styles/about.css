@@ -840,7 +840,7 @@ video {
   display: flex;
   gap: 2rem;
   width: max-content;
-  animation: scrollTrack 25s linear infinite;
+  animation: scrollTrack 45s linear infinite;
 }
 
 /* Pause on hover (optional) */
