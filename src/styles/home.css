@@ -274,7 +274,7 @@ body {
   .sidebar-rotate {
     left: 1rem;
     /* 👈 move it left — lower number = further left */
-    top: 9rem;
+    top: 8rem;
     /* adjust vertical position too if needed */
   }
 }

@@ -134,6 +134,25 @@ const About: React.FC = () => {
       type: 'badge',
       verifyLink: 'https://github.com/victormayowa185?achievement=pull-shark', // or link to your GitHub profile
     },
+    // … inside the achievements array (after the Pull Shark entry)
+    {
+      id: 12,
+      title: 'Artificial Intelligence (AI) for Social Impact',
+      date: '15 June 2026',
+      description: 'Completed the Artificial Intelligence (AI) for Social Impact course offered by the Asian Development Bank Institute (ADBI).',
+      badgeImage: '/Certificate/cert-Artificial Intelligence -adbi.png',
+      type: 'badge',
+      verifyLink: 'https://elearning-adbi.org/certificate-verifier/?&code=180062-178-152-0672',
+    },
+    {
+      id: 13,
+      title: 'Cybersecurity',
+      date: '15 June 2026',
+      description: 'Completed the Cybersecurity course offered by the Asian Development Bank Institute (ADBI).',
+      badgeImage: '/Certificate/cert-cybersecurity-adbi.png',
+      type: 'badge',
+      verifyLink: 'https://elearning-adbi.org/certificate-verifier/?&code=180062-178-153-1261',
+    },
   ];
 
   // Duplicate array for seamless marquee
@@ -514,7 +533,7 @@ const About: React.FC = () => {
                   className="timeline-verify-link"
                   style={{ display: 'inline-block' }}
                 >
-                  Verify on Google →
+                  Verify Online →
                 </a>
               )}
             </div>
