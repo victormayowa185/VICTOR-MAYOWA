@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { MdOutlineLaptopMac } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -39,6 +39,7 @@ const About: React.FC = () => {
       id: 1,
       title: 'I/O 2026 - Registered',
       date: 'Apr 15, 2026',
+      sortDate: '2026-04-15',
       description: 'Registered for Google I/O 2026 – the annual developer conference featuring the latest in Google technology, AI, and developer tools.',
       badgeImage: '/Certificate/badge-io2026.png',
       type: 'badge',
@@ -48,6 +49,7 @@ const About: React.FC = () => {
       id: 2,
       title: 'Google Developer Group on Campus member',
       date: 'Apr 13, 2026',
+      sortDate: '2026-04-13',
       description: 'Member of Google Developer Group on Campus – connecting with fellow developers and participating in community events.',
       badgeImage: '/Certificate/badge-gdg-campus.png',
       type: 'badge',
@@ -57,6 +59,7 @@ const About: React.FC = () => {
       id: 3,
       title: 'GDG on Campus Federal University of Technology - Owerri, Nigeria Member',
       date: 'Apr 13, 2026',
+      sortDate: '2026-04-13',
       description: 'Member of GDG on Campus at FUTO, Owerri, Nigeria – building a local developer community and sharing knowledge.',
       badgeImage: '/Certificate/badge-gdg-futo.png',
       type: 'badge',
@@ -66,6 +69,7 @@ const About: React.FC = () => {
       id: 4,
       title: 'Learning',
       date: 'Mar 22, 2026',
+      sortDate: '2026-03-22',
       description: 'Google Developer Profile badge for learning activities – demonstrating commitment to continuous learning and skill development.',
       badgeImage: '/Certificate/badge-learning.png',
       type: 'badge',
@@ -75,6 +79,7 @@ const About: React.FC = () => {
       id: 5,
       title: 'Identity',
       date: 'Mar 22, 2026',
+      sortDate: '2026-03-22',
       description: 'Google Developer Profile badge for identity verification – confirming the authenticity of your developer profile.',
       badgeImage: '/Certificate/badge-identity.png',
       type: 'badge',
@@ -84,6 +89,7 @@ const About: React.FC = () => {
       id: 6,
       title: 'Chrome DevTools User',
       date: 'Mar 21, 2026',
+      sortDate: '2026-03-21',
       description: 'Earned the Chrome DevTools User badge by opening Chrome DevTools and inspecting a website. This badge reflects hands‑on familiarity with the browser\'s developer tools – essential for debugging and performance optimisation.',
       badgeImage: '/Certificate/badge-chrome-devtools.png',
       type: 'badge',
@@ -93,6 +99,7 @@ const About: React.FC = () => {
       id: 7,
       title: 'Google Developer Group discovery',
       date: 'Nov 14, 2025',
+      sortDate: '2025-11-14',
       description: 'Discovered and joined a Google Developer Group (GDG) account – connecting with local developer communities and staying updated on tech events and initiatives.',
       badgeImage: '/Certificate/badge-gdg-discovery.png',
       type: 'badge',
@@ -102,6 +109,7 @@ const About: React.FC = () => {
       id: 8,
       title: 'Joined the Google Developer Program',
       date: 'Nov 14, 2025',
+      sortDate: '2025-11-14',
       description: 'Joined the official Google Developer Program – an official recognition of engagement with Google\'s developer ecosystem.',
       badgeImage: '/Certificate/badge-google-dev-program.png',
       type: 'badge',
@@ -111,6 +119,7 @@ const About: React.FC = () => {
       id: 9,
       title: 'Frontend Web Developer',
       date: '2024 – Present',
+      sortDate: '2024-01-01',
       description: 'Actively building modern, responsive web projects using HTML, CSS, JavaScript, and React. Focused on clean UI, performance, and maintainable code.',
       badgeImage: null,
       type: 'project',
@@ -120,6 +129,7 @@ const About: React.FC = () => {
       id: 10,
       title: 'Personal Practice Projects',
       date: '2024 – Present',
+      sortDate: '2024-01-01',
       description: 'Developing hands-on projects that simulate real-world use cases, including portfolio websites, landing pages, and interactive interfaces.',
       badgeImage: null,
       type: 'project',
@@ -128,17 +138,18 @@ const About: React.FC = () => {
     {
       id: 11,
       title: 'Pull Shark',
-      date: '2025', // Replace with the actual date you earned it (e.g., 'Apr 2025')
+      date: '2025',
+      sortDate: '2025-01-01',
       description: 'Earned the Pull Shark achievement on GitHub for having a pull request merged into a public repository.',
-      badgeImage: '/Certificate/pull-shark.png', // 👈 Place your image file here
+      badgeImage: '/Certificate/pull-shark.png',
       type: 'badge',
-      verifyLink: 'https://github.com/victormayowa185?achievement=pull-shark', // or link to your GitHub profile
+      verifyLink: 'https://github.com/victormayowa185?achievement=pull-shark',
     },
-    // … inside the achievements array (after the Pull Shark entry)
     {
       id: 12,
       title: 'Artificial Intelligence (AI) for Social Impact',
       date: '15 June 2026',
+      sortDate: '2026-06-15',
       description: 'Completed the Artificial Intelligence (AI) for Social Impact course offered by the Asian Development Bank Institute (ADBI).',
       badgeImage: '/Certificate/cert-Artificial Intelligence -adbi.png',
       type: 'badge',
@@ -148,6 +159,7 @@ const About: React.FC = () => {
       id: 13,
       title: 'Cybersecurity',
       date: '15 June 2026',
+      sortDate: '2026-06-15',
       description: 'Completed the Cybersecurity course offered by the Asian Development Bank Institute (ADBI).',
       badgeImage: '/Certificate/cert-cybersecurity-adbi.png',
       type: 'badge',
@@ -155,8 +167,15 @@ const About: React.FC = () => {
     },
   ];
 
+  // Sort achievements by sortDate (newest first)
+  const sortedAchievements = useMemo(() => {
+    return [...achievements].sort((a, b) =>
+      new Date(b.sortDate).getTime() - new Date(a.sortDate).getTime()
+    );
+  }, [achievements]);
+
   // Duplicate array for seamless marquee
-  const carouselItems = [...achievements, ...achievements];
+  const carouselItems = [...sortedAchievements, ...sortedAchievements];
 
   const toggleTimeline = () => {
     setShowTimeline(!showTimeline);
@@ -464,11 +483,11 @@ const About: React.FC = () => {
                         </button>
                       </div>
                       <div className="timeline-popup-content">
-                        {achievements.map((item, index) => (
+                        {sortedAchievements.map((item, index) => (
                           <div key={item.id} className="timeline-item">
                             <div className="timeline-item-left">
                               <span className="timeline-year">{item.date}</span>
-                              {index < achievements.length - 1 && (
+                              {index < sortedAchievements.length - 1 && (
                                 <div className="timeline-connector"></div>
                               )}
                             </div>
