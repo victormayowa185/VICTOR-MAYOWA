@@ -4,7 +4,7 @@ import { MdOutlineLaptopMac } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoColorPalette } from "react-icons/io5";
 import { LuTabletSmartphone } from "react-icons/lu";
-import { FaGithub, FaUsers, FaRocket, FaCode, FaLaptopCode } from "react-icons/fa";
+import { FaGithub, FaUsers, FaRocket} from "react-icons/fa";
 import { SiFramework } from "react-icons/si";
 import { FiX } from "react-icons/fi";
 import gsap from 'gsap';
@@ -244,6 +244,7 @@ const About: React.FC = () => {
       badgeImage: '/Certificate/badge-kaggle-python-coder.png',
       type: 'badge',
       verifyLink: 'https://www.kaggle.com/certification/badges/victormayowaakinwale/30',
+      icon: null,
     },
     {
       id: 24,
@@ -254,6 +255,7 @@ const About: React.FC = () => {
       badgeImage: '/Certificate/badge-learning-aug2026.png', // ← NEW unique name
       type: 'badge',
       verifyLink: 'https://developers.google.com/profile/badges/playlists/machine-learning-crash-course/linear-regression?u=victormayowa185',
+      icon: null,
     },
     {
       id: 25,
