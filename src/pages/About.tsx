@@ -116,26 +116,6 @@ const About: React.FC = () => {
       verifyLink: 'https://developers.google.com/profile/badges/profile/created-profile?u=victormayowa185',
     },
     {
-      id: 9,
-      title: 'Frontend Web Developer',
-      date: '2024 – Present',
-      sortDate: '2024-01-01',
-      description: 'Actively building modern, responsive web projects using HTML, CSS, JavaScript, and React. Focused on clean UI, performance, and maintainable code.',
-      badgeImage: null,
-      type: 'project',
-      icon: <FaCode size={48} />,
-    },
-    {
-      id: 10,
-      title: 'Personal Practice Projects',
-      date: '2024 – Present',
-      sortDate: '2024-01-01',
-      description: 'Developing hands-on projects that simulate real-world use cases, including portfolio websites, landing pages, and interactive interfaces.',
-      badgeImage: null,
-      type: 'project',
-      icon: <FaLaptopCode size={48} />,
-    },
-    {
       id: 11,
       title: 'Pull Shark',
       date: '2025',
@@ -264,6 +244,26 @@ const About: React.FC = () => {
       badgeImage: '/Certificate/badge-kaggle-python-coder.png',
       type: 'badge',
       verifyLink: 'https://www.kaggle.com/certification/badges/victormayowaakinwale/30',
+    },
+    {
+      id: 24,
+      title: 'Learning',
+      date: 'Aug 8, 2026',
+      sortDate: '2026-08-08',
+      description: 'Completed Learning Activities across Google\'s developer ecosystem, including quizzes and modules.',
+      badgeImage: '/Certificate/badge-learning-aug2026.png', // ← NEW unique name
+      type: 'badge',
+      verifyLink: 'https://developers.google.com/profile/badges/playlists/machine-learning-crash-course/linear-regression?u=victormayowa185',
+    },
+    {
+      id: 25,
+      title: 'Machine Learning Crash Course: Linear regression',
+      date: 'Aug 8, 2026',
+      sortDate: '2026-08-08',
+      description: 'Completed the Machine Learning Crash Course linear regression module, learning how to train an ML model that can make numerical predictions.',
+      badgeImage: '/Certificate/badge-ml-linear-regression.png',
+      type: 'badge',
+      verifyLink: 'https://developers.google.com/profile/badges/playlists/ml-crash-course-linear-regression?u=victormayowa185', // optional
     },
   ];
 
