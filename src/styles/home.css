@@ -116,13 +116,6 @@ body {
   border-radius: 10px;
 }
 
-/* ========== MOBILE-ONLY TYPEWRITER FOOTER ========== */
-/* Hidden on desktop — this is the duplicate typewriter block that only
-   shows up under 900px, acting as a footer for the homepage. */
-.mobile-footer-type {
-  display: none;
-}
-
 /* ========== RIGHT COLUMN ========== */
 .hero-right {
   flex: 1;
@@ -245,24 +238,6 @@ body {
     display: none;
   }
 
-  /* Show the typewriter as a footer-style block under the CTA */
-  .mobile-footer-type {
-    display: block;
-    position: absolute;
-    bottom: 2.5rem;
-    bottom: 12%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 500px;
-    padding-top: 1.25rem;
-    border-top: 1px solid #ccc;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1a1e24;
-    text-align: center;
-  }
-
   .sidebar-text {
     font-size: 0.6rem;
   }
@@ -273,9 +248,7 @@ body {
 
   .sidebar-rotate {
     left: 1rem;
-    /* 👈 move it left — lower number = further left */
     top: 8rem;
-    /* adjust vertical position too if needed */
   }
 }
 

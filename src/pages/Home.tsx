@@ -19,7 +19,6 @@ const Home: React.FC = () => {
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const bioRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
-  const mobileFooterRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
   const boxRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hasPlayedEntrance = useRef(false);
@@ -39,12 +38,11 @@ const Home: React.FC = () => {
     return () => hero.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // ---------- Premium entrance sequence, gated on Preloader finishing ----------
-// ---------- Hide everything BEFORE first paint — prevents the flash ----------
+  // ---------- Hide everything BEFORE first paint ----------
   useLayoutEffect(() => {
     const validBoxes = boxRefs.current.filter(Boolean);
 
-    gsap.set([nameRef.current, taglineRef.current, bioRef.current, ctaRef.current, mobileFooterRef.current], {
+    gsap.set([nameRef.current, taglineRef.current, bioRef.current, ctaRef.current], {
       y: 24,
       opacity: 0,
     });
@@ -52,7 +50,7 @@ const Home: React.FC = () => {
     gsap.set(badgeRef.current, { opacity: 0, scale: 0.8 });
   }, []);
 
-  // ---------- Premium entrance sequence, gated on Preloader finishing ----------
+  // ---------- Premium entrance sequence ----------
   useEffect(() => {
     const playEntrance = () => {
       if (hasPlayedEntrance.current) return;
@@ -66,7 +64,6 @@ const Home: React.FC = () => {
         .to(taglineRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.45')
         .to(bioRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.4')
         .to(ctaRef.current, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.35')
-        .to(mobileFooterRef.current, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.3')
         .to(
           validBoxes,
           {
@@ -192,10 +189,6 @@ const Home: React.FC = () => {
             from responsive websites to cross-platform desktop apps.
           </p>
           <a href="/contact" className="hero-cta" ref={ctaRef}>Connect With Me</a>
-
-          <div className="mobile-footer-type" ref={mobileFooterRef}>
-            <TypewriterText words={badgeWords} />
-          </div>
         </div>
 
         {/* Right column – scattered boxes */}
