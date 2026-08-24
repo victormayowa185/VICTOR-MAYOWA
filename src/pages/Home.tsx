@@ -38,11 +38,13 @@ const Home: React.FC = () => {
     return () => hero.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // ---------- Hide everything BEFORE first paint ----------
+  // ---------- Hide everything EXCEPT the main headline BEFORE first paint ----------
   useLayoutEffect(() => {
     const validBoxes = boxRefs.current.filter(Boolean);
 
-    gsap.set([nameRef.current, taglineRef.current, bioRef.current, ctaRef.current], {
+    // 🚀 LCP FIX: We do NOT hide the main headline (nameRef) anymore.
+    // We only hide the secondary elements so they can fade in nicely.
+    gsap.set([taglineRef.current, bioRef.current, ctaRef.current], {
       y: 24,
       opacity: 0,
     });
@@ -50,7 +52,7 @@ const Home: React.FC = () => {
     gsap.set(badgeRef.current, { opacity: 0, scale: 0.8 });
   }, []);
 
-  // ---------- Premium entrance sequence ----------
+  // ---------- Premium entrance sequence for secondary elements ----------
   useEffect(() => {
     const playEntrance = () => {
       if (hasPlayedEntrance.current) return;
@@ -60,10 +62,11 @@ const Home: React.FC = () => {
 
       const tl = gsap.timeline({ delay: 0.15 });
 
-      tl.to(nameRef.current, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' })
-        .to(taglineRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.45')
-        .to(bioRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-        .to(ctaRef.current, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.35')
+      // 🚀 LCP FIX: The main headline (nameRef) is already visible.
+      // We only animate the tagline, bio, CTA, boxes, and badge.
+      tl.to(taglineRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' })
+        .to(bioRef.current, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }, '-=0.3')
+        .to(ctaRef.current, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.3')
         .to(
           validBoxes,
           {
@@ -74,7 +77,7 @@ const Home: React.FC = () => {
             ease: 'back.out(1.6)',
             stagger: 0.09,
           },
-          '-=0.3'
+          '-=0.2'
         )
         .to(badgeRef.current, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2');
     };

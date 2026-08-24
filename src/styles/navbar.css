@@ -24,22 +24,36 @@ body {
   pointer-events: none;
 }
 
-/* ---------- The Pill ---------- */
+/* ---------- The Pill – ALWAYS glassy, no matter what's behind it ---------- */
 .navbar-inner {
   pointer-events: auto;
-  background: white;
+  
+  /* ★ Subtle gradient gives it depth even on white backgrounds */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.10) 100%);
+  
+  /* ★ Keep the blur for when there IS content behind it */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  
+  /* ★ Bright, crisp border for that "glass edge" */
+  border: 1px solid rgba(255, 255, 255, 0.50);
   border-radius: 9999px;
   padding: 0.5rem 2rem;
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  
+  /* ★ The magic: inner shine + subtle inner shadow to create the glass texture */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.10),           /* outer drop shadow */
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),    /* ← bright top-edge shine */
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);        /* ← faint bottom inner shadow */
+  
   width: 70%;
   max-width: 1400px;
   transition: all 0.3s ease;
   transform-origin: center center;
 }
-
 /* ---------- Brand / Logo ---------- */
 .navbar-brand {
   display: flex;

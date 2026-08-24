@@ -28,15 +28,15 @@ const Preloader: React.FC<PreloaderProps> = ({ onFinished }) => {
       }, remaining);
     };
 
-    const img = new Image();
-    img.src = '/pic2.png';
-    img.onload = finish;
-    img.onerror = finish; // don't hang the site forever on a genuinely broken image
+    const safetyTimer = setTimeout(finish, 3000);
 
-    // Safety net: if something goes wrong and neither event fires, don't trap the user
-    const fallbackTimer = setTimeout(finish, 8000);
+    // Start the countdown immediately
+    const startTimer = setTimeout(finish, 0);
 
-    return () => clearTimeout(fallbackTimer);
+    return () => {
+      clearTimeout(safetyTimer);
+      clearTimeout(startTimer);
+    };
   }, [onFinished]);
 
   return (
