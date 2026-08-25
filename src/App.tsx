@@ -20,7 +20,10 @@ function RootLayout() {
   return (
     <>
       <Navbar />
-      <Outlet />
+      {/* ✅ FIXED: Wrapped Outlet in <main> landmark for screen readers */}
+      <main>
+        <Outlet />
+      </main>
       {!isHome && <Footer />}
       <TourOverlay />
     </>
@@ -51,8 +54,10 @@ function App() {
           <meta name="description" content="Portfolio and blog of Victor Mayowa, a creative web developer sharing coding news, tutorials, and resources." />
           <meta property="og:title" content="Victor Mayowa" />
           <meta property="og:description" content="Portfolio and blog of Victor Mayowa, a creative web developer." />
-          <meta property="og:image" content="https://yourdomain.com/default-og-image.png" />
-          <meta property="og:url" content="https://yourdomain.com" />
+          {/* ✅ FIXED: OG image now uses your actual profile picture */}
+          <meta property="og:image" content="https://victormayowa.vercel.app/pic2.png" />
+          {/* ✅ FIXED: OG URL now points to your actual domain */}
+          <meta property="og:url" content="https://victormayowa.vercel.app/" />
           <meta name="twitter:card" content="summary_large_image" />
         </Helmet>
         <RouterProvider router={router} />

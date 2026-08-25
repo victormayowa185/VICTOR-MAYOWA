@@ -103,7 +103,8 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <button className="hamburger" onClick={toggleMenu}>
+          {/* ✅ FIXED: Added aria-label for screen readers */}
+          <button className="hamburger" onClick={toggleMenu} aria-label="Toggle navigation menu">
             {menuOpen ? <HiX /> : <HiMenu />}
           </button>
 
