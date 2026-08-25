@@ -41,7 +41,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onFinished }) => {
 
   return (
     <div className={`preloader-overlay ${fadingOut ? 'preloader-fade-out' : ''}`}>
-      <img src="/logo.png" alt="Loading" className="preloader-logo" />
+      <img src="/logo.webp" alt="Loading" className="preloader-logo" />
     </div>
   );
 };

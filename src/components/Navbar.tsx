@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
         <div className="navbar-inner" ref={navInnerRef}>
           <div className="navbar-brand">
             <div className="brand-logo-wrapper">
-              <img src="/logo.png" alt="MAYO X Logo" className="brand-logo-img" />
+              <img src="/logo.webp" alt="MAYO X Logo" className="brand-logo-img" />
             </div>
           </div>
 

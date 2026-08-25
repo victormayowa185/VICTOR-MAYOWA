@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
-import * as maplibregl from 'maplibre-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
+// 🚀 REMOVED: import * as maplibregl from 'maplibre-gl';
+// 🚀 REMOVED: import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   FaGithub,
   FaHandshake,
@@ -71,7 +71,8 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, options })
 
 const ContactPage: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<maplibregl.Map | null>(null);
+  // 🚀 Changed type to 'any' since we dynamically import
+  const mapRef = useRef<any>(null);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -90,66 +91,88 @@ const ContactPage: React.FC = () => {
   const modalOverlayRef = useRef<HTMLDivElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
 
+  // ---------- Map Initialization (lazy-loaded) ----------
   useEffect(() => {
+    // Only run if we have the container and map isn't already created
     if (!mapContainerRef.current || mapRef.current) return;
 
-    const map = new maplibregl.Map({
-      container: mapContainerRef.current,
-      style: {
-        version: 8,
-        sources: {
-          'carto-light': {
-            type: 'raster',
-            tiles: [
-              'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-              'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-              'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    let isMounted = true;
+
+    const initMap = async () => {
+      try {
+        // 🚀 DYNAMIC IMPORT: Loads Maplibre ONLY when this component mounts
+        const maplibregl = await import('maplibre-gl');
+        await import('maplibre-gl/dist/maplibre-gl.css');
+
+        if (!isMounted || !mapContainerRef.current) return;
+
+        const map = new maplibregl.default.Map({
+          container: mapContainerRef.current,
+          style: {
+            version: 8,
+            sources: {
+              'carto-light': {
+                type: 'raster',
+                tiles: [
+                  'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+                  'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+                  'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+                ],
+                tileSize: 256,
+                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+              },
+            },
+            layers: [
+              {
+                id: 'carto-light-layer',
+                type: 'raster',
+                source: 'carto-light',
+                minzoom: 0,
+                maxzoom: 20,
+              },
             ],
-            tileSize: 256,
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
           },
-        },
-        layers: [
-          {
-            id: 'carto-light-layer',
-            type: 'raster',
-            source: 'carto-light',
-            minzoom: 0,
-            maxzoom: 20,
-          },
-        ],
-      },
-      center: [FUTO_LNG, FUTO_LAT],
-      zoom: 15,
-      attributionControl: false,
-    });
+          center: [FUTO_LNG, FUTO_LAT],
+          zoom: 15,
+          attributionControl: false,
+        });
 
-    mapRef.current = map;
+        mapRef.current = map;
 
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-    map.addControl(
-      new maplibregl.AttributionControl({ compact: true }),
-      'bottom-right'
-    );
+        map.addControl(new maplibregl.default.NavigationControl({ showCompass: false }), 'top-right');
+        map.addControl(
+          new maplibregl.default.AttributionControl({ compact: true }),
+          'bottom-right'
+        );
 
-    const markerEl = document.createElement('div');
-    markerEl.className = 'custom-marker';
-    markerEl.innerHTML = `<div class="marker-pulse"></div><div class="marker-pin"></div>`;
+        const markerEl = document.createElement('div');
+        markerEl.className = 'custom-marker';
+        markerEl.innerHTML = `<div class="marker-pulse"></div><div class="marker-pin"></div>`;
 
-    const popup = new maplibregl.Popup({ offset: 22, closeButton: true }).setHTML(`
-      <strong>📍 FUTO – My Base</strong><br />
-      Federal University of Technology, Owerri<br />
-      <span style="font-size: 0.9rem;">Let's build something amazing.</span>
-    `);
+        const popup = new maplibregl.default.Popup({ offset: 22, closeButton: true }).setHTML(`
+          <strong>📍 FUTO – My Base</strong><br />
+          Federal University of Technology, Owerri<br />
+          <span style="font-size: 0.9rem;">Let's build something amazing.</span>
+        `);
 
-    new maplibregl.Marker({ element: markerEl, anchor: 'center' })
-      .setLngLat([FUTO_LNG, FUTO_LAT])
-      .setPopup(popup)
-      .addTo(map);
+        new maplibregl.default.Marker({ element: markerEl, anchor: 'center' })
+          .setLngLat([FUTO_LNG, FUTO_LAT])
+          .setPopup(popup)
+          .addTo(map);
+
+      } catch (error) {
+        console.error('Failed to load Maplibre:', error);
+      }
+    };
+
+    initMap();
 
     return () => {
-      map.remove();
-      mapRef.current = null;
+      isMounted = false;
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
     };
   }, []);
 
