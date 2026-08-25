@@ -83,6 +83,8 @@ export default defineConfig({
     }
   },
   build: {
+    // ✅ ADDED: Ensures CSS is still built for other pages
+    cssCodeSplit: false,
     rollupOptions: {
       output: {
         manualChunks: {

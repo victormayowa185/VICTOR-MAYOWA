@@ -5,6 +5,285 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- ---------- Critical CSS (inline for faster render) ---------- -->
+  <style>
+    /* 🚀 Critical styles for above-the-fold content */
+    /* These styles are needed immediately to render the hero section */
+
+    /* --- Reset & Base --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'Google Sans', sans-serif;
+      background: #F8F8FF;
+    }
+
+    /* --- Hero Section --- */
+    .hero-new {
+      height: 100vh;
+      width: 100%;
+      background: #F8F8FF;
+      display: flex;
+      align-items: flex-start;
+      padding: 5rem 1rem 1rem 1rem;
+      position: relative;
+      overflow: visible;
+    }
+
+    .homepage-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 3rem;
+      padding: 0.1rem 2rem 0 1rem;
+      width: 100%;
+      max-width: 1400px;
+      overflow-x: visible;
+      margin: 0 auto;
+      height: 100%;
+    }
+
+    /* --- Sidebar --- */
+    .sidebar-rotate {
+      position: absolute;
+      left: 4rem;
+      top: 5rem;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
+      height: fit-content;
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: #1a1e24;
+    }
+
+    .sidebar-text {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    .sidebar-divider {
+      width: 1px;
+      height: 300px;
+      background: #ccc;
+      flex-shrink: 0;
+    }
+
+    /* --- Main Content --- */
+    .main-content {
+      flex: 1;
+      min-width: 280px;
+      max-width: 600px;
+      padding-top: 0;
+      height: fit-content;
+      margin-left: 5rem;
+    }
+
+    .hero-name {
+      font-size: 4rem !important;
+      font-weight: 500 !important;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: black;
+      line-height: 1.2;
+    }
+
+    .hero-tagline {
+      font-size: 1.7rem;
+      color: #1a1e24;
+      font-weight: 300;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-bio {
+      font-size: 1rem;
+      color: #5b6876;
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      border: 1px solid black;
+      color: black;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .hero-cta:hover {
+      border-radius: 10px;
+    }
+
+    /* --- Mobile Responsive (critical) --- */
+    @media (max-width: 900px) {
+      .hero-new {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+        padding: 1.5rem;
+        align-items: center;
+      }
+      
+      .homepage-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+        align-items: center;
+        height: auto;
+        overflow: visible;
+        height: 100%;
+      }
+      
+      .main-content {
+        text-align: center;
+        max-width: 100%;
+        height: auto;
+        margin-left: 0;
+        padding-left: 2rem !important;
+      }
+      
+      .hero-bio {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      /* Hide sidebar on mobile */
+      .sidebar-rotate {
+        display: none;
+      }
+
+      .hero-right {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-new {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .hero-name {
+        font-size: 2rem !important;
+      }
+      .hero-tagline {
+        font-size: 1rem;
+      }
+      .hero-bio {
+        font-size: 0.9rem;
+      }
+      .hero-cta {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* --- Navbar (critical) --- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 1rem 2rem;
+      z-index: 1050;
+      pointer-events: none;
+    }
+
+    .navbar-inner {
+      pointer-events: auto;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.10) 100%);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.50);
+      border-radius: 9999px;
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+      width: 70%;
+      max-width: 1400px;
+      transition: all 0.3s ease;
+      transform-origin: center center;
+    }
+
+    .brand-logo-img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    /* Mobile navbar */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.8rem 0;
+      }
+      .navbar-inner {
+        border-radius: 40px;
+        padding: 0.5rem 1.2rem;
+        width: 92%;
+        max-width: 92%;
+        margin: 0 auto;
+        gap: 0.5rem;
+      }
+      .hamburger {
+        display: block;
+        margin-left: auto;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: black;
+        padding: 0.2rem;
+        line-height: 1;
+        transition: transform 0.2s;
+        touch-action: manipulation;
+      }
+      .nav-links {
+        display: none;
+      }
+      .blog-nav-wrapper {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        padding: 0.5rem 0;
+      }
+      .navbar-inner {
+        padding: 0.4rem 1rem;
+        border-radius: 30px;
+      }
+      .brand-logo-img {
+        height: 26px;
+      }
+      .hamburger {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+
   <!-- ---------- Primary SEO ---------- -->
   <title>Victor Mayowa | Web Developer, Designer & Founder of MAYO X</title>
   <meta name="description"
