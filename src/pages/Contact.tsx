@@ -71,7 +71,6 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ value, onChange, options })
 
 const ContactPage: React.FC = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  // 🚀 Changed type to 'any' since we dynamically import
   const mapRef = useRef<any>(null);
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -93,7 +92,6 @@ const ContactPage: React.FC = () => {
 
   // ---------- Map Initialization (lazy-loaded) ----------
   useEffect(() => {
-    // Only run if we have the container and map isn't already created
     if (!mapContainerRef.current || mapRef.current) return;
 
     let isMounted = true;
@@ -106,7 +104,8 @@ const ContactPage: React.FC = () => {
 
         if (!isMounted || !mapContainerRef.current) return;
 
-        const map = new maplibregl.default.Map({
+        // ✅ FIXED: Use maplibregl directly (no .default needed)
+        const map = new maplibregl.Map({
           container: mapContainerRef.current,
           style: {
             version: 8,
@@ -139,9 +138,10 @@ const ContactPage: React.FC = () => {
 
         mapRef.current = map;
 
-        map.addControl(new maplibregl.default.NavigationControl({ showCompass: false }), 'top-right');
+        // ✅ FIXED: Use maplibregl directly (no .default needed)
+        map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
         map.addControl(
-          new maplibregl.default.AttributionControl({ compact: true }),
+          new maplibregl.AttributionControl({ compact: true }),
           'bottom-right'
         );
 
@@ -149,13 +149,15 @@ const ContactPage: React.FC = () => {
         markerEl.className = 'custom-marker';
         markerEl.innerHTML = `<div class="marker-pulse"></div><div class="marker-pin"></div>`;
 
-        const popup = new maplibregl.default.Popup({ offset: 22, closeButton: true }).setHTML(`
+        // ✅ FIXED: Use maplibregl directly (no .default needed)
+        const popup = new maplibregl.Popup({ offset: 22, closeButton: true }).setHTML(`
           <strong>📍 FUTO – My Base</strong><br />
           Federal University of Technology, Owerri<br />
           <span style="font-size: 0.9rem;">Let's build something amazing.</span>
         `);
 
-        new maplibregl.default.Marker({ element: markerEl, anchor: 'center' })
+        // ✅ FIXED: Use maplibregl directly (no .default needed)
+        new maplibregl.Marker({ element: markerEl, anchor: 'center' })
           .setLngLat([FUTO_LNG, FUTO_LAT])
           .setPopup(popup)
           .addTo(map);
@@ -177,7 +179,6 @@ const ContactPage: React.FC = () => {
   }, []);
 
   // ---------- Entrance: map section + action boxes, gated on Preloader ----------
-  // ---------- Hide everything BEFORE first paint — prevents the flash ----------
   useLayoutEffect(() => {
     const boxes = boxesWrapperRef.current
       ? Array.from(boxesWrapperRef.current.children)
